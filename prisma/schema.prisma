@@ -1,0 +1,360 @@
+// ============================================================================
+// MIGHTY RIDES — Prisma schema
+// Models are PascalCase (idiomatic Prisma; delegates are camelCase singular)
+// and @@map to the existing snake_case table names.
+// ============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  // Runtime connection. On Vercel/serverless use the Supabase **transaction
+  // pooler** (port 6543, `?pgbouncer=true`); locally the session pooler is fine.
+  url       = env("DATABASE_URL")
+  // Migrations need a direct (non-pgbouncer) connection — the Supabase **session
+  // pooler** (port 5432). Used by `prisma migrate` / `prisma db push`.
+  directUrl = env("DIRECT_URL")
+}
+
+// ----------------------------------------------------------------------------
+// CORE MODELS (existing tables — field names kept snake_case to match app code)
+// ----------------------------------------------------------------------------
+
+model User {
+  id             String       @id @default(cuid())
+  full_name      String
+  email          String       @unique
+  phone          String
+  password_hash  String
+  role           String       @default("RENTEE")
+  dob            String?
+  nationality    String?
+  id_type        String?
+  id_front_url   String?
+  id_back_url    String?
+  id_verified    Boolean      @default(false)
+  email_verified Boolean      @default(false)
+  account_status String       @default("ACTIVE")
+  created_at     DateTime     @default(now())
+  bookings       Booking[]
+  complaints     Complaint[]
+  soft_locks     SoftLock[]
+
+  @@map("users")
+}
+
+model Vehicle {
+  id               String     @id @default(cuid())
+  name             String
+  make             String
+  model            String
+  year             Int
+  plate_number     String?
+  slug             String     @unique
+  type             String     @default("SALE")
+  status           String     @default("AVAILABLE")
+  sale_price_ugx   Float?
+  daily_rate_ugx   Float?
+  weekly_rate_ugx  Float?
+  monthly_rate_ugx Float?
+  photos           String
+  specs            String
+  description      String?
+  occasions        String?
+  published        Boolean    @default(true)
+  featured         Boolean    @default(false)
+  created_at       DateTime   @default(now())
+  updated_at       DateTime   @updatedAt
+  bookings         Booking[]
+  inquiries        Inquiry[]
+  sales_log        SalesLog[]
+
+  @@map("vehicles")
+}
+
+model Booking {
+  id                     String             @id @default(cuid())
+  booking_ref            String             @unique
+  rentee_id              String
+  vehicle_id             String
+  pickup_datetime        DateTime
+  return_datetime        DateTime
+  pickup_location        String?
+  driver_requested       Boolean            @default(false)
+  occasion_type          String?
+  total_cost_ugx         Float
+  deposit_ugx            Float
+  deposit_paid           Boolean            @default(false)
+  payment_ref            String?
+  status                 String             @default("PENDING")
+  special_notes          String?
+  admin_notes            String?
+  handover_fuel          String?
+  handover_odo           String?
+  handover_notes         String?
+  handover_photos        String?
+  extension_requested    Boolean            @default(false)
+  extension_req_datetime DateTime?
+  extension_reason       String?
+  refund_processed       Boolean            @default(false)
+  created_at             DateTime           @default(now())
+  updated_at             DateTime           @updatedAt
+  status_log             BookingStatusLog[]
+  vehicle                Vehicle            @relation(fields: [vehicle_id], references: [id])
+  rentee                 User               @relation(fields: [rentee_id], references: [id])
+  complaints             Complaint[]
+
+  @@map("bookings")
+}
+
+model BookingStatusLog {
+  id         String   @id @default(cuid())
+  booking_id String
+  old_status String
+  new_status String
+  changed_by String?
+  note       String?
+  created_at DateTime @default(now())
+  booking    Booking  @relation(fields: [booking_id], references: [id])
+
+  @@map("booking_status_log")
+}
+
+model Complaint {
+  id             String    @id @default(cuid())
+  user_id        String
+  booking_id     String?
+  type           String    @default("OTHER")
+  description    String
+  urgency        String    @default("MEDIUM")
+  status         String    @default("OPEN")
+  admin_response String?
+  created_at     DateTime  @default(now())
+  resolved_at    DateTime?
+  booking        Booking?  @relation(fields: [booking_id], references: [id])
+  user           User      @relation(fields: [user_id], references: [id])
+
+  @@map("complaints")
+}
+
+model Inquiry {
+  id                 String            @id @default(cuid())
+  name               String
+  phone              String
+  email              String
+  type               String            @default("GENERAL")
+  vehicle_id         String?
+  message            String?
+  budget_ugx         Float?
+  timeline           String?
+  contact_preference String?
+  status             String            @default("NEW")
+  admin_notes        String?
+  created_at         DateTime          @default(now())
+  vehicle            Vehicle?          @relation(fields: [vehicle_id], references: [id])
+  sourcing_request   SourcingRequest?
+
+  @@map("inquiries")
+}
+
+model SalesLog {
+  id              String   @id @default(cuid())
+  vehicle_id      String
+  sale_date       DateTime
+  sale_price_ugx  Float
+  buyer_reference String?
+  notes           String?
+  created_at      DateTime @default(now())
+  vehicle         Vehicle  @relation(fields: [vehicle_id], references: [id])
+
+  @@map("sales_log")
+}
+
+model Setting {
+  key        String   @id
+  value      String
+  updated_at DateTime @updatedAt
+
+  @@map("settings")
+}
+
+model SoftLock {
+  id         String   @id @default(cuid())
+  vehicle_id String
+  user_id    String?
+  expires_at DateTime
+  created_at DateTime @default(now())
+  user       User?    @relation(fields: [user_id], references: [id])
+
+  @@index([vehicle_id, expires_at])
+  @@map("soft_locks")
+}
+
+model SourcingRequest {
+  id             String   @id @default(cuid())
+  inquiry_id     String   @unique
+  vehicle_spec   String
+  budget_ugx     Float?
+  timeline       String?
+  status         String   @default("NEW")
+  progress_notes String?
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+  inquiry        Inquiry  @relation(fields: [inquiry_id], references: [id])
+
+  @@map("sourcing_requests")
+}
+
+model BlogPost {
+  id              String    @id @default(cuid())
+  title           String
+  slug            String    @unique
+  category        String    @default("GENERAL")
+  content         String
+  excerpt         String?
+  cover_image_url String?
+  published       Boolean   @default(false)
+  published_at    DateTime?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+
+  @@map("blog_posts")
+}
+
+model AdminAuditLog {
+  id          String   @id @default(cuid())
+  admin_id    String
+  action      String
+  entity_type String
+  entity_id   String?
+  details     String?
+  ip_address  String?
+  created_at  DateTime @default(now())
+
+  @@index([created_at])
+  @@index([entity_type, entity_id])
+  @@index([action])
+  @@index([admin_id])
+  @@map("admin_audit_log")
+}
+
+// ----------------------------------------------------------------------------
+// ADDITIONAL MODELS (referenced by app routes but missing from the old schema)
+// These use camelCase fields to match the route code that creates them.
+// ----------------------------------------------------------------------------
+
+model RentalVehicle {
+  id          String          @id @default(cuid())
+  name        String
+  make        String
+  model       String
+  year        Int
+  category    String
+  dailyRate   Int
+  weeklyRate  Int?
+  monthlyRate Int?
+  description String?
+  features    String?
+  images      String?
+  isAvailable Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  inquiries   RentalInquiry[]
+
+  @@map("rental_vehicles")
+}
+
+model RentalInquiry {
+  id        String         @id @default(cuid())
+  rentalId  String?
+  name      String
+  email     String
+  phone     String
+  occasion  String?
+  startDate DateTime?
+  endDate   DateTime?
+  message   String
+  status    String         @default("New")
+  createdAt DateTime       @default(now())
+  rental    RentalVehicle? @relation(fields: [rentalId], references: [id])
+
+  @@map("rental_inquiries")
+}
+
+model ConversionEvent {
+  id        String   @id @default(cuid())
+  eventType String
+  category  String?
+  source    String?
+  metadata  String?
+  sessionId String?
+  createdAt DateTime @default(now())
+
+  @@index([eventType])
+  @@index([category])
+  @@map("conversion_events")
+}
+
+model CorporateInquiry {
+  id                String   @id @default(cuid())
+  companyName       String
+  contactPerson     String
+  email             String
+  phone             String
+  industry          String?
+  serviceType       String
+  vehiclePreference String?
+  duration          String?
+  passengerCount    Int?
+  requirements      String?
+  message           String?
+  status            String   @default("New")
+  source            String   @default("Website")
+  createdAt         DateTime @default(now())
+
+  @@map("corporate_inquiries")
+}
+
+model AfterSaleRequest {
+  id               String   @id @default(cuid())
+  name             String
+  email            String
+  phone            String
+  vehiclePurchased String?
+  requestType      String
+  urgency          String   @default("Standard")
+  preferredDate    String?
+  preferredTime    String?
+  message          String?
+  status           String   @default("New")
+  source           String   @default("Website")
+  createdAt        DateTime @default(now())
+
+  @@map("after_sale_requests")
+}
+
+model TradeInRequest {
+  id               String   @id @default(cuid())
+  name             String
+  email            String
+  phone            String
+  preferredContact String   @default("WhatsApp")
+  currentMake      String
+  currentModel     String
+  currentYear      Int
+  currentMileage   Int?
+  currentCondition String
+  currentPhotos    String?
+  desiredMake      String?
+  desiredModel     String?
+  budgetTopUp      String?
+  financingNeeded  Boolean  @default(false)
+  message          String?
+  status           String   @default("New")
+  source           String   @default("Website")
+  createdAt        DateTime @default(now())
+
+  @@map("trade_in_requests")
+}
