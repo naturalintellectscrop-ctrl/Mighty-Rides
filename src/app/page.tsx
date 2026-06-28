@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import { db } from '@/lib/db'
 import { formatUGX, formatUSD } from '@/lib/utils'
+import { LocalBusinessJsonLd } from '@/components/analytics/JsonLd'
 import {
   MapPin, Calendar, Car, ArrowRight, Star,
   Search, CreditCard, BadgeCheck, Key, Headphones, Shield,
@@ -546,6 +547,7 @@ export default async function HomePage() {
 
   return (
     <main className="min-h-screen bg-[#0A0A0A]">
+      <LocalBusinessJsonLd />
       <Navbar />
       <Hero />
       <TrustBar />

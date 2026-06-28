@@ -8,6 +8,12 @@ import { ArrowRight, ChevronDown, Settings, Fuel } from 'lucide-react'
 // Live-data page: render per-request so the build never depends on the DB.
 export const dynamic = 'force-dynamic'
 
+export const metadata = {
+  title: 'Cars for Sale',
+  description: 'Browse premium and luxury cars for sale in Kampala, Uganda — verified pre-owned vehicles from Aston Martin to Range Rover at Mighty Rides.',
+  alternates: { canonical: '/cars' },
+}
+
 // ============================================================================
 // CARS/INVENTORY PAGE - Matching Design Specification
 // ============================================================================
@@ -214,8 +220,9 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 w-full lg:w-auto">
               {/* Make Dropdown */}
               <div className="relative group">
-                <select 
+                <select
                   name="make"
+                  aria-label="Filter by make"
                   form="filter-form"
                   defaultValue={params.make || 'all'}
                   className="appearance-none w-full bg-[#1A1A1A] border border-gray-700 rounded-xl px-3 md:px-4 py-3 text-white focus:outline-none focus:border-[#C8952A] transition-colors cursor-pointer min-h-[48px]"
@@ -230,8 +237,9 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
               
               {/* Body Type Dropdown */}
               <div className="relative group">
-                <select 
+                <select
                   name="body"
+                  aria-label="Filter by body type"
                   form="filter-form"
                   defaultValue={params.body || 'all'}
                   className="appearance-none w-full bg-[#1A1A1A] border border-gray-700 rounded-xl px-3 md:px-4 py-3 text-white focus:outline-none focus:border-[#C8952A] transition-colors cursor-pointer min-h-[48px]"
@@ -247,8 +255,9 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
               
               {/* Price Range Dropdown */}
               <div className="relative group">
-                <select 
+                <select
                   name="price"
+                  aria-label="Filter by price range"
                   form="filter-form"
                   defaultValue={params.price || 'all'}
                   className="appearance-none w-full bg-[#1A1A1A] border border-gray-700 rounded-xl px-3 md:px-4 py-3 text-white focus:outline-none focus:border-[#C8952A] transition-colors cursor-pointer min-h-[48px]"
@@ -263,8 +272,9 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
               
               {/* Year Dropdown */}
               <div className="relative group">
-                <select 
+                <select
                   name="year"
+                  aria-label="Filter by year"
                   form="filter-form"
                   defaultValue={params.year || 'all'}
                   className="appearance-none w-full bg-[#1A1A1A] border border-gray-700 rounded-xl px-3 md:px-4 py-3 text-white focus:outline-none focus:border-[#C8952A] transition-colors cursor-pointer min-h-[48px]"
@@ -332,15 +342,15 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
         {/* Pagination */}
         {vehicles.length > 0 && (
           <div className="mt-16 flex justify-center items-center space-x-4">
-            <button className="w-12 h-12 border border-gray-700 flex items-center justify-center text-gray-400 hover:text-[#C8952A] hover:border-[#C8952A] transition-all rounded-lg">
+            <button type="button" aria-label="Previous page" className="w-12 h-12 border border-gray-700 flex items-center justify-center text-gray-400 hover:text-[#C8952A] hover:border-[#C8952A] transition-all rounded-lg">
               <ArrowRight className="w-5 h-5 rotate-180" />
             </button>
             <div className="flex space-x-2">
-              <button className="w-12 h-12 bg-[#C8952A] text-black font-semibold text-sm rounded-lg">01</button>
-              <button className="w-12 h-12 border border-gray-700 text-white font-semibold text-sm hover:border-[#C8952A] transition-all rounded-lg">02</button>
-              <button className="w-12 h-12 border border-gray-700 text-white font-semibold text-sm hover:border-[#C8952A] transition-all rounded-lg">03</button>
+              <button type="button" aria-current="page" className="w-12 h-12 bg-[#C8952A] text-black font-semibold text-sm rounded-lg">01</button>
+              <button type="button" className="w-12 h-12 border border-gray-700 text-white font-semibold text-sm hover:border-[#C8952A] transition-all rounded-lg">02</button>
+              <button type="button" className="w-12 h-12 border border-gray-700 text-white font-semibold text-sm hover:border-[#C8952A] transition-all rounded-lg">03</button>
             </div>
-            <button className="w-12 h-12 border border-gray-700 flex items-center justify-center text-gray-400 hover:text-[#C8952A] hover:border-[#C8952A] transition-all rounded-lg">
+            <button type="button" aria-label="Next page" className="w-12 h-12 border border-gray-700 flex items-center justify-center text-gray-400 hover:text-[#C8952A] hover:border-[#C8952A] transition-all rounded-lg">
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>

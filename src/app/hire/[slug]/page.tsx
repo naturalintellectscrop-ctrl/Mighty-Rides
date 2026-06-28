@@ -1,10 +1,13 @@
+import type { Metadata } from 'next'
 import { db } from '@/lib/db'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import { BookingForm } from '@/components/booking'
+import { VehicleJsonLd } from '@/components/analytics/JsonLd'
 import { formatDualPrice } from '@/lib/utils'
+import { SITE_URL } from '@/lib/seo'
 import { ArrowRight, Check, MessageCircle, MapPin, Clock, AlertCircle } from 'lucide-react'
 
 // Live-data page: render per-request so the build never depends on the DB.
@@ -23,6 +26,24 @@ async function getVehicle(slug: string) {
     where: { slug }
   })
   return vehicle
+}
+
+export async function generateMetadata({ params }: RentalDetailPageProps): Promise<Metadata> {
+  const { slug } = await params
+  const vehicle = await getVehicle(slug)
+  if (!vehicle) return { title: 'Vehicle Not Found' }
+  const photos: string[] = vehicle.photos ? JSON.parse(vehicle.photos) : []
+  return {
+    title: `${vehicle.name} — Luxury Car Hire Kampala`,
+    description: vehicle.description || `Hire the ${vehicle.year} ${vehicle.make} ${vehicle.model} in Kampala, Uganda.`,
+    alternates: { canonical: `/hire/${slug}` },
+    openGraph: {
+      title: `${vehicle.name} for Hire | Mighty Rides`,
+      description: vehicle.description || undefined,
+      images: photos.length ? [photos[0]] : undefined,
+      type: 'website',
+    },
+  }
 }
 
 export default async function RentalDetailPage({ params }: RentalDetailPageProps) {
@@ -49,6 +70,21 @@ export default async function RentalDetailPage({ params }: RentalDetailPageProps
 
   return (
     <main className="min-h-screen bg-brand-black">
+      <VehicleJsonLd
+        name={vehicle.name}
+        description={vehicle.description || `Hire the ${vehicle.year} ${vehicle.make} ${vehicle.model} in Kampala, Uganda.`}
+        image={photos}
+        brand={vehicle.make}
+        model={vehicle.model}
+        year={vehicle.year}
+        mileage={typeof specs.mileage === 'number' ? specs.mileage : undefined}
+        fuelType={typeof specs.fuel === 'string' ? specs.fuel : undefined}
+        transmission={typeof specs.transmission === 'string' ? specs.transmission : undefined}
+        price={dailyRate}
+        priceCurrency="UGX"
+        availability={isAvailable ? 'InStock' : 'OutOfStock'}
+        url={`${SITE_URL}/hire/${vehicle.slug}`}
+      />
       <Navbar />
 
       {/* Breadcrumb */}

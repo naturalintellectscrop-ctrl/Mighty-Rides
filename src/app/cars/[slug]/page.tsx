@@ -4,7 +4,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import { VehicleCard } from '@/components/vehicles'
+import { VehicleJsonLd } from '@/components/analytics/JsonLd'
 import { formatDualPrice } from '@/lib/utils'
+import { SITE_URL } from '@/lib/seo'
 import { ArrowRight, Calendar, Fuel, Gauge, Users, Cog, Palette, Check, Phone, MessageCircle, Shield, Clock, Crown, List, Building, BadgeCheck } from 'lucide-react'
 
 // Live-data page: render per-request so the build never depends on the DB.
@@ -214,6 +216,21 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
 
   return (
     <main className="min-h-screen bg-brand-black">
+      <VehicleJsonLd
+        name={vehicle.name}
+        description={vehicle.description || `${vehicle.year} ${vehicle.make} ${vehicle.model} for sale in Kampala, Uganda.`}
+        image={photos}
+        brand={vehicle.make}
+        model={vehicle.model}
+        year={vehicle.year}
+        mileage={typeof specs.mileage === 'number' ? specs.mileage : undefined}
+        fuelType={typeof specs.fuel === 'string' ? specs.fuel : undefined}
+        transmission={typeof specs.transmission === 'string' ? specs.transmission : undefined}
+        price={vehicle.sale_price_ugx || 0}
+        priceCurrency="UGX"
+        availability={isSold || !isAvailable ? 'OutOfStock' : 'InStock'}
+        url={`${SITE_URL}/cars/${vehicle.slug}`}
+      />
       <Navbar />
 
       {/* Breadcrumb */}

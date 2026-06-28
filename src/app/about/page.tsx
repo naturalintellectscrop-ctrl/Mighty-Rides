@@ -5,6 +5,12 @@ import { Youtube, Instagram, Facebook, MapPin, Clock, MessageCircle, ArrowRight 
 // Live-data page: render per-request so the build never depends on the DB.
 export const dynamic = 'force-dynamic'
 
+export const metadata = {
+  title: 'About Us',
+  description: "Mighty Rides is East Africa's premium car dealership and luxury rental service, based in Kampala, Uganda since 2018.",
+  alternates: { canonical: '/about' },
+}
+
 // ============================================================================
 // ABOUT PAGE
 // ============================================================================

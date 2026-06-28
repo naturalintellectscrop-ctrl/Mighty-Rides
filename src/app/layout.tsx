@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Montserrat, Inter } from 'next/font/google'
 import { AuthProvider, CurrencyProvider } from '@/context'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
+import { SITE_URL } from '@/lib/seo'
 import './globals.css'
 
 // ============================================================================
@@ -34,6 +35,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'Mighty Rides — East Africa\'s Premium Car Dealership',
     template: '%s — Mighty Rides',
@@ -42,6 +44,7 @@ export const metadata: Metadata = {
   keywords: ['Mighty Rides', 'car dealership', 'luxury cars', 'car hire', 'Kampala', 'Uganda', 'premium vehicles'],
   authors: [{ name: 'Mighty Rides' }],
   creator: 'Mighty Rides',
+  alternates: { canonical: '/' },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: '32x32' },
@@ -58,15 +61,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_UG',
-    url: 'https://mightyrides.com',
+    url: SITE_URL,
     siteName: 'Mighty Rides',
     title: 'Mighty Rides — East Africa\'s Premium Car Dealership',
     description: 'Buy, hire, and source premium vehicles in Kampala, Uganda.',
+    images: [{ url: '/hero-bg.png', width: 1200, height: 630, alt: 'Mighty Rides — luxury vehicles in Kampala' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Mighty Rides — East Africa\'s Premium Car Dealership',
     description: 'Buy, hire, and source premium vehicles in Kampala, Uganda.',
+    images: ['/hero-bg.png'],
   },
   robots: {
     index: true,

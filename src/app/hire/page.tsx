@@ -7,6 +7,12 @@ import { ArrowRight, Car, Heart, Plane, Users, Calendar, Building } from 'lucide
 // Live-data page: render per-request so the build never depends on the DB.
 export const dynamic = 'force-dynamic'
 
+export const metadata = {
+  title: 'Luxury Car Hire Kampala',
+  description: 'Hire luxury and exotic vehicles in Kampala for weddings, airport transfers, executive and corporate travel. Daily, weekly and monthly rates from Mighty Rides.',
+  alternates: { canonical: '/hire' },
+}
+
 // ============================================================================
 // OCCASION DATA
 // ============================================================================
@@ -125,6 +131,7 @@ function RentalCard({ vehicle, currency }: { vehicle: {
           </Link>
         ) : (
           <button
+            type="button"
             disabled
             className="w-full bg-gray-700 text-gray-400 font-bold py-4 rounded-xl uppercase tracking-wide cursor-not-allowed text-sm"
           >

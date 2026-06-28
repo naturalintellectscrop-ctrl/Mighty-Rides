@@ -19,12 +19,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: "Vehicle Not Found" };
   }
 
+  const photos: string[] = vehicle.photos ? JSON.parse(vehicle.photos) : [];
+
   return {
     title: `${vehicle.name} — Mighty Rides Kampala`,
     description: vehicle.description || `${vehicle.year} ${vehicle.make} ${vehicle.model} for sale in Kampala, Uganda.`,
+    alternates: { canonical: `/cars/${slug}` },
     openGraph: {
       title: `${vehicle.name} for Sale | Mighty Rides`,
       description: vehicle.description || undefined,
+      images: photos.length ? [photos[0]] : undefined,
       type: "website",
     },
   };
