@@ -1,9 +1,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
-import { 
+import { db } from '@/lib/db'
+import { formatUGX, formatUSD } from '@/lib/utils'
+import {
   MapPin, Calendar, Car, ArrowRight, Star,
-  Search, CreditCard, BadgeCheck, Key, Headphones, Shield, 
+  Search, CreditCard, BadgeCheck, Key, Headphones, Shield,
   CalendarCheck, Crown
 } from 'lucide-react'
 
@@ -74,7 +76,7 @@ function Hero() {
                 <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   type="text"
-                  placeholder="Nairobi Terminal 1"
+                  placeholder="Kampala / Entebbe Airport"
                   className="w-full bg-[#0A0A0A] border border-gray-700 rounded-xl py-4 pl-12 pr-4 text-white focus:border-[#C8952A] outline-none transition-colors"
                 />
               </div>
@@ -166,42 +168,79 @@ function TrustBar() {
 // FLEET SECTION
 // ============================================================================
 
-const fleetVehicles = [
-  {
-    name: 'S-Class',
-    price: 250,
-    status: 'Available',
-    specs: ['V8 TWIN-TURBO', 'SEDAN'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB9DBBJnF0w-eoQw4PbGp-dk9Jowv3vPn3zPKij0b88-0GEncjpQk4CGqabWpxLG2q8KaigZcOWg7_tpUggCZ-W1Squ-r0SzBNiZELkDWSL2EKjdd6mrQGlqD9BFe_nv2y-lAphzT719gnt34QqxBDQ5fM3O6Z2t2ZJCavUScJJYFpsa9_mpF8YRnG61Fd-Q8MuC_h-HuBNVps13g2jdSD-iT8DjSIrhbuZOOzzBFDxPjZvWdQ2ZKyBkLyL0PSEA2iOxZRkWHEs58w',
-    link: '/hire',
-  },
-  {
-    name: 'Autobiography',
-    price: 320,
-    status: 'Available',
-    specs: ['ALL-WHEEL DRIVE', 'SUV'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA4wXwTKi2Vj_VHzp9OGyzoy860iFbVN729l2ger7XgeD4F7MMUZQbATeu74iBImqmJ3SUFjMbnorBGXgohMMXKqhavSnf9YN9p_klZDQUSWG9JJoiEU2wHV-UDQ0iXP1IWRFK3EWOYSDmsQMtbZahr3eY0cZfESXFIvG1r5lBlYJsCkXpSqT7wX46PKWB3WcMC4pYnnblVdIDeKZsscqWZ3UDUYY0b97K7P4FZVuOoEmSmAERSfLaXUUvAKfkEz5MoC5B4s3_RTWE',
-    link: '/hire',
-  },
-  {
-    name: 'Pista',
-    price: 550,
-    status: 'Limited',
-    specs: ['V12 ENGINE', 'SPORT'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB1gSseonaRvE1xcUo0io8BSQOaCH2Tkh_qQR44CUm1ijpl2ZH-80j1K9YFQjsQxcpy88HwoYz-ophV1Bz4X3Yi0pcbL-2NbylYsNPZxhVaT-sxtQX1jSPGZ9sEg5iWN21f4miSDmSw6QJPjxLsnf7y2f5qsotTI4xsJ9u3P9HOlTcD5TCVuiNSJWdIoaPFnVj2_c7eMVWKgr8NllcKY0VWhj99Olibr0Wb8Q_eiZZwXOk0N-9a2FlCddFfzT4LB5qg952FNtOWoJw',
-    link: '/hire',
-  },
-  {
-    name: 'Vintage 911',
-    price: 400,
-    status: 'Heritage',
-    specs: ['AIR-COOLED', 'CLASSIC'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDPRHuEYQ3CwTR85AsMhFqM04HjXKvWh0jFlRrdOyhAnlVRwqYU8bNiJC_UGFzBnTwWprXrqfIGCAD5goU2oe9sYoxICwirMN8-q5zabsJBibq4NzY9JcfOw62RpEU-RXt8sJdAii9UCB0-Z_wIa163JP8OnACjK17_0BmgkTvEbGCZgMckTwj1ChPPvLMITtvDu-IuiWGNAoeOUpH4CiflVI2H4nLVG28kVj_lK91R_vFI9QxowB-BrdpjpULpE1nK5Ru_yaDgLnM',
-    link: '/hire',
-  },
-]
+// Display shape derived from a real DB vehicle (computed server-side).
+interface FleetCard {
+  name: string
+  href: string
+  image: string | null
+  status: string
+  priceText: string
+  usdText: string
+  chips: string[]
+}
 
-function FleetSection() {
+const STATUS_LABELS: Record<string, string> = {
+  AVAILABLE: 'Available',
+  RESERVED: 'Reserved',
+  RENTED_OUT: 'Rented Out',
+  IN_SERVICE: 'In Service',
+  SOLD: 'Sold',
+}
+
+/**
+ * Fetch up to 4 published vehicles (featured first) for the homepage fleet.
+ * Real inventory — replaces the static demo cards from the design mockup.
+ */
+async function getFeaturedVehicles(rate: number): Promise<FleetCard[]> {
+  const vehicles = await db.vehicle.findMany({
+    where: { published: true },
+    orderBy: [{ featured: 'desc' }, { created_at: 'desc' }],
+    take: 4,
+    select: {
+      name: true, slug: true, type: true, status: true, year: true,
+      sale_price_ugx: true, daily_rate_ugx: true, photos: true, specs: true,
+    },
+  })
+
+  return vehicles.map((v) => {
+    let image: string | null = null
+    try {
+      const photos = v.photos ? JSON.parse(v.photos) : []
+      if (Array.isArray(photos) && typeof photos[0] === 'string') image = photos[0]
+    } catch { /* malformed photos JSON — fall back to placeholder */ }
+
+    let specs: Record<string, unknown> = {}
+    try { specs = v.specs ? JSON.parse(v.specs) : {} } catch { /* ignore */ }
+
+    const isHire = (v.type === 'HIRE' || v.type === 'BOTH') && !!v.daily_rate_ugx
+    let priceText = 'On request'
+    let usdText = ''
+    if (isHire && v.daily_rate_ugx) {
+      priceText = `${formatUGX(v.daily_rate_ugx)} /day`
+      usdText = `${formatUSD(v.daily_rate_ugx, rate)} /day`
+    } else if (v.sale_price_ugx) {
+      priceText = formatUGX(v.sale_price_ugx)
+      usdText = formatUSD(v.sale_price_ugx, rate)
+    }
+
+    const chips = [specs.engine, specs.drive || specs.transmission]
+      .filter((s): s is string => typeof s === 'string' && s.length > 0)
+      .map((s) => s.toUpperCase())
+    if (chips.length === 0) chips.push(String(v.year), v.type)
+
+    return {
+      name: v.name,
+      href: v.type === 'SALE' ? `/cars/${v.slug}` : `/hire/${v.slug}`,
+      image,
+      status: STATUS_LABELS[v.status] || v.status,
+      priceText,
+      usdText,
+      chips,
+    }
+  })
+}
+
+function FleetSection({ vehicles }: { vehicles: FleetCard[] }) {
   return (
     <section className="w-full py-20 md:py-28 lg:py-36 bg-[#0A0A0A]">
       <div className="px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28">
@@ -225,39 +264,55 @@ function FleetSection() {
         </div>
 
         {/* Vehicle Grid */}
+        {vehicles.length === 0 ? (
+          <p className="text-gray-400 text-center py-12">
+            Our fleet is being updated. Please check back shortly or{' '}
+            <Link href="/contact" className="text-[#C8952A] hover:underline">contact our concierge</Link>.
+          </p>
+        ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-          {fleetVehicles.map((vehicle) => (
+          {vehicles.map((vehicle) => (
             <div
-              key={vehicle.name}
-              className="group bg-[#1A1A1A] rounded-2xl overflow-hidden border border-gray-800 hover:border-[#C8952A] transition-colors"
+              key={vehicle.href}
+              className="group bg-[#1A1A1A] rounded-2xl overflow-hidden border border-gray-800 hover:border-[#C8952A] transition-colors flex flex-col"
             >
               {/* Vehicle Image */}
-              <div className="h-64 md:h-72 overflow-hidden relative">
-                <Image
-                  src={vehicle.image}
-                  alt={vehicle.name}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
-                />
+              <div className="h-64 md:h-72 overflow-hidden relative bg-[#0A0A0A]">
+                {vehicle.image ? (
+                  <Image
+                    src={vehicle.image}
+                    alt={vehicle.name}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <Car className="w-10 h-10 text-gray-600" />
+                  </div>
+                )}
                 <span className="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-[#C8952A] uppercase">
                   {vehicle.status}
                 </span>
               </div>
 
               {/* Vehicle Details */}
-              <div className="p-6 md:p-8">
-                <div className="flex justify-between items-start mb-4">
+              <div className="p-6 md:p-8 flex-1 flex flex-col">
+                <div className="flex justify-between items-start gap-3 mb-4">
                   <h3 className="text-xl md:text-2xl font-bold text-white">
                     {vehicle.name}
                   </h3>
-                  <p className="text-[#C8952A] font-semibold text-lg">
-                    ${vehicle.price}
-                    <span className="text-gray-400 font-normal text-sm">/day</span>
-                  </p>
+                  <div className="text-right shrink-0">
+                    <p className="text-[#C8952A] font-semibold text-sm md:text-base whitespace-nowrap">
+                      {vehicle.priceText}
+                    </p>
+                    {vehicle.usdText && (
+                      <p className="text-gray-500 text-xs whitespace-nowrap">{vehicle.usdText}</p>
+                    )}
+                  </div>
                 </div>
-                <div className="flex gap-3 mb-6">
-                  {vehicle.specs.map((spec) => (
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {vehicle.chips.map((spec) => (
                     <span
                       key={spec}
                       className="bg-[#2A2A2A] px-3 py-1.5 rounded text-xs text-gray-300"
@@ -266,9 +321,9 @@ function FleetSection() {
                     </span>
                   ))}
                 </div>
-                <Link 
-                  href={vehicle.link} 
-                  className="w-full border border-[#C8952A] text-[#C8952A] py-4 rounded-xl hover:bg-[#C8952A] hover:text-black transition-colors font-semibold text-sm text-center block uppercase tracking-wide"
+                <Link
+                  href={vehicle.href}
+                  className="mt-auto w-full border border-[#C8952A] text-[#C8952A] py-4 rounded-xl hover:bg-[#C8952A] hover:text-black transition-colors font-semibold text-sm text-center block uppercase tracking-wide"
                 >
                   Reserve Now
                 </Link>
@@ -276,6 +331,7 @@ function FleetSection() {
             </div>
           ))}
         </div>
+        )}
 
         {/* Mobile View All Link */}
         <div className="mt-10 md:hidden text-center">
@@ -354,10 +410,10 @@ function Testimonials() {
           {/* Attribution */}
           <div>
             <div className="text-[#C8952A] font-semibold uppercase tracking-widest text-sm md:text-base">
-              James K. Mwangi
+              David Mukasa
             </div>
             <div className="text-gray-400 text-sm md:text-base mt-2">
-              CEO, Heritage Holdings
+              Managing Director, Nile Capital Partners — Kampala
             </div>
           </div>
         </div>
@@ -416,13 +472,25 @@ function FinalCTA() {
 // MAIN PAGE
 // ============================================================================
 
-export default function HomePage() {
+async function getExchangeRate(): Promise<number> {
+  try {
+    const setting = await db.setting.findUnique({ where: { key: 'ugx_usd_rate' } })
+    return setting ? parseFloat(setting.value) : 3700
+  } catch {
+    return 3700
+  }
+}
+
+export default async function HomePage() {
+  const rate = await getExchangeRate()
+  const vehicles = await getFeaturedVehicles(rate)
+
   return (
     <main className="min-h-screen bg-[#0A0A0A]">
       <Navbar />
       <Hero />
       <TrustBar />
-      <FleetSection />
+      <FleetSection vehicles={vehicles} />
       <HowItWorks />
       <Testimonials />
       <FinalCTA />
