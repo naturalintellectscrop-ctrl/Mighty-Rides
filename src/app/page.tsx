@@ -18,7 +18,7 @@ export const dynamic = 'force-dynamic'
 
 function Hero() {
   return (
-    <section className="relative z-20 min-h-screen md:h-screen w-full flex items-center overflow-visible pb-32 md:pb-0">
+    <section className="relative min-h-screen w-full flex items-center overflow-hidden py-32 md:py-28">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -38,17 +38,17 @@ function Hero() {
         <p className="text-sm md:text-base lg:text-lg text-[#C8952A] uppercase tracking-widest mb-6 md:mb-8 font-semibold">
           East Africa&apos;s Premier Fleet
         </p>
-        
+
         {/* Main Heading */}
         <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-6 md:mb-8 leading-tight">
           Experience Excellence<br />In Motion
         </h1>
-        
+
         {/* Subheading */}
         <p className="text-lg md:text-xl lg:text-2xl text-gray-300 mb-10 md:mb-12 max-w-2xl leading-relaxed">
           Curating East Africa&apos;s most prestigious fleet. From executive arrivals to high-performance escapes, we redefine luxury mobility with quiet confidence and meticulous detail.
         </p>
-        
+
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
           <Link
@@ -64,12 +64,11 @@ function Hero() {
             Hire a Vehicle
           </Link>
         </div>
-      </div>
 
-      {/* Booking Widget - Desktop */}
-      <div className="hidden md:block absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 z-20">
-        <div className="bg-[#1A1A1A]/90 backdrop-blur-md p-6 md:p-8 lg:p-10 rounded-2xl border border-gray-700 shadow-2xl">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {/* Booking Widget - Desktop (in normal flow, below the CTAs) */}
+        <div className="hidden md:block mt-12 lg:mt-16 max-w-5xl">
+          <div className="bg-[#1A1A1A]/90 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-gray-700 shadow-2xl">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {/* Pick-up Location */}
             <div className="flex flex-col gap-3">
               <label className="text-xs text-[#C8952A] uppercase tracking-wider font-semibold">
@@ -107,7 +106,7 @@ function Hero() {
               </label>
               <div className="relative">
                 <Car className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <select className="w-full bg-[#0A0A0A] border border-gray-700 rounded-xl py-4 pl-12 pr-4 text-white focus:border-[#C8952A] outline-none appearance-none transition-colors">
+                <select aria-label="Vehicle type" className="w-full bg-[#0A0A0A] border border-gray-700 rounded-xl py-4 pl-12 pr-4 text-white focus:border-[#C8952A] outline-none appearance-none transition-colors">
                   <option>Prestige Sedans</option>
                   <option>Performance SUVs</option>
                   <option>Classic Heritage</option>
@@ -125,14 +124,15 @@ function Hero() {
         </div>
       </div>
 
-      {/* Mobile Booking CTA */}
-      <div className="md:hidden absolute bottom-6 left-6 right-6 z-20">
-        <Link
-          href="/hire"
-          className="block w-full bg-[#C8952A] text-black py-5 rounded-xl font-semibold text-center uppercase tracking-wide"
-        >
-          Find Your Ride
-        </Link>
+        {/* Mobile Booking CTA (in flow) */}
+        <div className="md:hidden mt-8">
+          <Link
+            href="/hire"
+            className="block w-full bg-[#C8952A] text-black py-5 rounded-xl font-semibold text-center uppercase tracking-wide"
+          >
+            Find Your Ride
+          </Link>
+        </div>
       </div>
     </section>
   )
@@ -151,7 +151,7 @@ const trustItems = [
 
 function TrustBar() {
   return (
-    <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 pt-32 md:pt-56 pb-16 md:pb-24 bg-[#0A0A0A]">
+    <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 bg-[#0A0A0A]">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 lg:gap-16 text-center">
         {trustItems.map((item) => (
           <div key={item.title} className="group">
