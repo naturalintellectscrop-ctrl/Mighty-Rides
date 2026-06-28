@@ -157,16 +157,21 @@ async function getVehicles(occasion?: string) {
     where.occasions = { contains: occasion }
   }
 
-  const vehicles = await db.vehicle.findMany({
-    where,
-    orderBy: [
-      { status: 'asc' },
-      { created_at: 'desc' }
-    ],
-    take: 24
-  })
-
-  return vehicles
+  try {
+    return await db.vehicle.findMany({
+      where,
+      orderBy: [
+        { status: 'asc' },
+        { created_at: 'desc' }
+      ],
+      take: 24
+    })
+  } catch (error) {
+    // Degrade gracefully (empty state) instead of throwing the error boundary
+    // if the database is momentarily unreachable.
+    console.error('[HIRE] Failed to load vehicles:', error)
+    return []
+  }
 }
 
 export default async function HirePage({ searchParams }: HirePageProps) {

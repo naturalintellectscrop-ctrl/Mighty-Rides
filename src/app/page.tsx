@@ -6,7 +6,7 @@ import { formatUGX, formatUSD } from '@/lib/utils'
 import {
   MapPin, Calendar, Car, ArrowRight, Star,
   Search, CreditCard, BadgeCheck, Key, Headphones, Shield,
-  CalendarCheck, Crown
+  CalendarCheck, Crown, Globe, Wrench, Building, Settings
 } from 'lucide-react'
 
 // Live-data page: render per-request so the build never depends on the DB.
@@ -195,15 +195,22 @@ const STATUS_LABELS: Record<string, string> = {
  * Real inventory — replaces the static demo cards from the design mockup.
  */
 async function getFeaturedVehicles(rate: number): Promise<FleetCard[]> {
-  const vehicles = await db.vehicle.findMany({
-    where: { published: true },
-    orderBy: [{ featured: 'desc' }, { created_at: 'desc' }],
-    take: 4,
-    select: {
-      name: true, slug: true, type: true, status: true, year: true,
-      sale_price_ugx: true, daily_rate_ugx: true, photos: true, specs: true,
-    },
-  })
+  let vehicles
+  try {
+    vehicles = await db.vehicle.findMany({
+      where: { published: true },
+      orderBy: [{ featured: 'desc' }, { created_at: 'desc' }],
+      take: 4,
+      select: {
+        name: true, slug: true, type: true, status: true, year: true,
+        sale_price_ugx: true, daily_rate_ugx: true, photos: true, specs: true,
+      },
+    })
+  } catch (error) {
+    // Degrade to the empty-state instead of throwing the error boundary.
+    console.error('[HOME] Failed to load featured vehicles:', error)
+    return []
+  }
 
   return vehicles.map((v) => {
     let image: string | null = null
@@ -345,6 +352,55 @@ function FleetSection({ vehicles }: { vehicles: FleetCard[] }) {
             VIEW ALL MODELS
             <ArrowRight className="w-5 h-5" />
           </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ============================================================================
+// SERVICE CATEGORIES SECTION
+// ============================================================================
+
+const serviceCategories = [
+  { icon: Car, title: 'Luxury Car Sales', description: 'Premium pre-owned vehicles with verified history and full documentation.', href: '/cars' },
+  { icon: Key, title: 'Luxury Car Rental', description: 'Exotic and luxury vehicles for weddings, airport transfers and executive travel.', href: '/hire' },
+  { icon: Globe, title: 'Vehicle Sourcing', description: "Can't find what you want? We source any vehicle, locally or internationally.", href: '/sourcing' },
+  { icon: Wrench, title: 'Spare Parts & Customization', description: 'Genuine spare parts, body kits and bespoke customization for your vehicle.', href: '/services' },
+  { icon: Building, title: 'Corporate Mobility', description: 'Fleet solutions and long-term contracts tailored for organizations.', href: '/corporate' },
+  { icon: Settings, title: 'Maintenance & Support', description: 'Professional maintenance, servicing and dedicated after-sale support.', href: '/services' },
+]
+
+function ServiceCategories() {
+  return (
+    <section className="w-full py-20 md:py-28 lg:py-36 bg-[#0A0A0A]" aria-labelledby="services-heading">
+      <div className="px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28">
+        <div className="text-center mb-12 md:mb-16">
+          <span className="text-sm md:text-base text-[#C8952A] uppercase tracking-widest mb-3 block font-semibold">
+            What We Offer
+          </span>
+          <h2 id="services-heading" className="text-3xl md:text-5xl font-bold text-white">Our Services</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {serviceCategories.map((s) => (
+            <Link
+              key={s.title}
+              href={s.href}
+              aria-label={s.title}
+              className="group bg-[#1A1A1A] border border-gray-800 rounded-2xl p-8 hover:border-[#C8952A] transition-colors flex flex-col"
+            >
+              <div className="w-14 h-14 rounded-full bg-[#C8952A]/10 flex items-center justify-center mb-5 group-hover:bg-[#C8952A]/20 transition-colors">
+                <s.icon className="w-7 h-7 text-[#C8952A]" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">{s.title}</h3>
+              <p className="text-gray-400 text-sm md:text-base mb-5 flex-1">{s.description}</p>
+              <span className="inline-flex items-center gap-2 text-[#C8952A] font-semibold text-sm uppercase tracking-wide">
+                Learn More
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </Link>
+          ))}
         </div>
       </div>
     </section>
@@ -494,6 +550,7 @@ export default async function HomePage() {
       <Hero />
       <TrustBar />
       <FleetSection vehicles={vehicles} />
+      <ServiceCategories />
       <HowItWorks />
       <Testimonials />
       <FinalCTA />

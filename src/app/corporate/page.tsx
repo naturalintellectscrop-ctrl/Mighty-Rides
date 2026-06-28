@@ -1,4 +1,4 @@
-import { db } from '@/lib/db'
+import { safeSettings } from '@/lib/safe-db'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -59,7 +59,7 @@ const services = [
 ]
 
 export default async function CorporatePage() {
-  const settings = await db.setting.findMany()
+  const settings = await safeSettings()
   const settingsMap: Record<string, string> = {}
   for (const s of settings) settingsMap[s.key] = s.value
 

@@ -1,4 +1,4 @@
-import { db } from '@/lib/db'
+import { safeSettings } from '@/lib/safe-db'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import Image from 'next/image'
 import { ArrowRight, Shield, Clock, User, Eye, CheckCircle, Crown } from 'lucide-react'
@@ -16,7 +16,7 @@ export const metadata = {
 }
 
 export default async function ConciergePage() {
-  const settings = await db.setting.findMany()
+  const settings = await safeSettings()
   const settingsMap: Record<string, string> = {}
   for (const s of settings) settingsMap[s.key] = s.value
 

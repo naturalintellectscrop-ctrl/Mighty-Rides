@@ -5,9 +5,12 @@ import { Navbar, Footer } from '@/components/shared'
 export const dynamic = 'force-dynamic'
 
 export default async function TermsPage() {
-  const setting = await db.setting.findUnique({
-    where: { key: 'tc_summary_text' }
-  })
+  let setting: { value: string } | null = null
+  try {
+    setting = await db.setting.findUnique({ where: { key: 'tc_summary_text' } })
+  } catch (error) {
+    console.error('[TERMS] DB unavailable, using fallback:', error)
+  }
 
   const content = setting?.value || `
 # Mighty Rides Rental Terms and Conditions

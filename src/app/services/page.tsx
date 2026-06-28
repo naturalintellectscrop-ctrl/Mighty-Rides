@@ -2,7 +2,7 @@ import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Wrench, Paintbrush, Cog, Car, Shield, Clock, CheckCircle } from 'lucide-react'
-import { db } from '@/lib/db'
+import { safeSettings } from '@/lib/safe-db'
 
 // Live-data page: render per-request so the build never depends on the DB.
 export const dynamic = 'force-dynamic'
@@ -57,7 +57,7 @@ const brands = [
 ]
 
 async function getSettings() {
-  const settings = await db.setting.findMany()
+  const settings = await safeSettings()
   const map: Record<string, string> = {}
   for (const s of settings) map[s.key] = s.value
   return map

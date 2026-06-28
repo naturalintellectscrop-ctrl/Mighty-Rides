@@ -1,4 +1,5 @@
 import { db } from '@/lib/db'
+import { safeSettings } from '@/lib/safe-db'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import { CurrencyToggle } from '@/components/vehicles'
 import Image from 'next/image'
@@ -33,7 +34,7 @@ async function getPrestigeVehicles() {
 }
 
 async function getSettings() {
-  const settings = await db.setting.findMany()
+  const settings = await safeSettings()
   const map: Record<string, string> = {}
   for (const s of settings) map[s.key] = s.value
   return map

@@ -5,9 +5,12 @@ import { Navbar, Footer } from '@/components/shared'
 export const dynamic = 'force-dynamic'
 
 export default async function PrivacyPage() {
-  const setting = await db.setting.findUnique({
-    where: { key: 'privacy_policy_text' }
-  })
+  let setting: { value: string } | null = null
+  try {
+    setting = await db.setting.findUnique({ where: { key: 'privacy_policy_text' } })
+  } catch (error) {
+    console.error('[PRIVACY] DB unavailable, using fallback:', error)
+  }
 
   const content = setting?.value || `
 # Mighty Rides Privacy Policy

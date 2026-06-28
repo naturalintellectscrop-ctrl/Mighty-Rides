@@ -243,6 +243,10 @@ export function Footer() {
             <Link href="/privacy" className="hover:text-gray-300 transition-colors">
               Privacy Policy
             </Link>
+            <span className="w-1 h-1 bg-gray-700 rounded-full hidden sm:block" />
+            <Link href="/cancellation" className="hover:text-gray-300 transition-colors">
+              Cancellation Policy
+            </Link>
           </div>
         </div>
       </div>

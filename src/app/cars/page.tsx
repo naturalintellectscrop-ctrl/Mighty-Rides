@@ -42,29 +42,36 @@ async function getVehicles(params: Awaited<CarsPageProps['searchParams']>) {
     where.year = parseInt(year)
   }
 
-  const vehicles = await db.vehicle.findMany({
-    where,
-    orderBy: [
-      { featured: 'desc' },
-      { created_at: 'desc' }
-    ],
-    take: 24
-  })
-
-  return vehicles
+  try {
+    return await db.vehicle.findMany({
+      where,
+      orderBy: [
+        { featured: 'desc' },
+        { created_at: 'desc' }
+      ],
+      take: 24
+    })
+  } catch (error) {
+    console.error('[CARS] Failed to load vehicles:', error)
+    return []
+  }
 }
 
 async function getMakes() {
-  const vehicles = await db.vehicle.findMany({
-    where: {
-      published: true,
-      OR: [{ type: 'SALE' }, { type: 'BOTH' }]
-    },
-    select: { make: true }
-  })
-  
-  const makes = [...new Set(vehicles.map(v => v.make).filter(Boolean))]
-  return makes.sort()
+  try {
+    const vehicles = await db.vehicle.findMany({
+      where: {
+        published: true,
+        OR: [{ type: 'SALE' }, { type: 'BOTH' }]
+      },
+      select: { make: true }
+    })
+    const makes = [...new Set(vehicles.map(v => v.make).filter(Boolean))]
+    return makes.sort()
+  } catch (error) {
+    console.error('[CARS] Failed to load makes:', error)
+    return []
+  }
 }
 
 // Vehicle Card Component matching design spec

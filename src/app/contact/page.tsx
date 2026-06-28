@@ -1,4 +1,4 @@
-import { db } from '@/lib/db'
+import { safeSettings } from '@/lib/safe-db'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import { Mail, Phone, MapPin, Clock, MessageSquare, Clock3 } from 'lucide-react'
 import ContactForm from './ContactForm'
@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic'
 // ============================================================================
 
 async function getSettings() {
-  const settings = await db.setting.findMany()
+  const settings = await safeSettings()
   const map: Record<string, string> = {}
   for (const s of settings) map[s.key] = s.value
   return map
