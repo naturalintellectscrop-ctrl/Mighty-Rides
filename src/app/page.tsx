@@ -9,6 +9,9 @@ import {
   CalendarCheck, Crown
 } from 'lucide-react'
 
+// Live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 // ============================================================================
 // HERO SECTION
 // ============================================================================

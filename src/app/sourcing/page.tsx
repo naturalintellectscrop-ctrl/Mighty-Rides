@@ -2,6 +2,9 @@ import { db } from '@/lib/db'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import { ArrowRight, Search, Globe, Car } from 'lucide-react'
 
+// Live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 // ============================================================================
 // SOURCING PAGE
 // ============================================================================

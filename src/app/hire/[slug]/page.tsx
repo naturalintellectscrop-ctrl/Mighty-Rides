@@ -7,6 +7,9 @@ import { BookingForm } from '@/components/booking'
 import { formatDualPrice } from '@/lib/utils'
 import { ArrowRight, Check, MessageCircle, MapPin, Clock, AlertCircle } from 'lucide-react'
 
+// Live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 // ============================================================================
 // RENTAL DETAIL PAGE
 // ============================================================================

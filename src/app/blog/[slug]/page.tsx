@@ -6,6 +6,9 @@ import Image from 'next/image'
 import { ArrowRight, Calendar, User, Share2, Facebook, Twitter, Linkedin, Link as LinkIcon, ArrowLeft, ChevronRight, Tag } from 'lucide-react'
 import DOMPurify from 'isomorphic-dompurify'
 
+// Live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 // ============================================================================
 // BLOG POST PAGE
 // ============================================================================

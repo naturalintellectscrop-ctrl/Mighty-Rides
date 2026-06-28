@@ -4,6 +4,9 @@ import Link from 'next/link'
 import { ArrowRight, Wrench, Paintbrush, Cog, Car, Shield, Clock, CheckCircle } from 'lucide-react'
 import { db } from '@/lib/db'
 
+// Live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 // ============================================================================
 // SERVICES PAGE - Premium Design
 // ============================================================================

@@ -3,6 +3,9 @@ import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import Image from 'next/image'
 import { ArrowRight, Shield, Clock, User, Eye, CheckCircle, Crown } from 'lucide-react'
 
+// Live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 // ============================================================================
 // CONCIERGE PAGE - Premium Design
 // ============================================================================

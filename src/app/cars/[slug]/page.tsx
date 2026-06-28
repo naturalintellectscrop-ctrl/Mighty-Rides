@@ -7,6 +7,9 @@ import { VehicleCard } from '@/components/vehicles'
 import { formatDualPrice } from '@/lib/utils'
 import { ArrowRight, Calendar, Fuel, Gauge, Users, Cog, Palette, Check, Phone, MessageCircle, Shield, Clock, Crown, List, Building, BadgeCheck } from 'lucide-react'
 
+// Live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 // ============================================================================
 // GALLERY COMPONENT
 // ============================================================================

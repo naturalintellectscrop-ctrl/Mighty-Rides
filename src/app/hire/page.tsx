@@ -4,6 +4,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Car, Heart, Plane, Users, Calendar, Building } from 'lucide-react'
 
+// Live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 // ============================================================================
 // OCCASION DATA
 // ============================================================================

@@ -5,6 +5,9 @@ import Image from 'next/image'
 import { ArrowRight, Tag, Calendar } from 'lucide-react'
 import { Suspense } from 'react'
 
+// Live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 // ============================================================================
 // TYPES
 // ============================================================================

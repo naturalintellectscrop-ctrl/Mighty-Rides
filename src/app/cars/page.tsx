@@ -5,6 +5,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, ChevronDown, Settings, Fuel } from 'lucide-react'
 
+// Live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 // ============================================================================
 // CARS/INVENTORY PAGE - Matching Design Specification
 // ============================================================================
