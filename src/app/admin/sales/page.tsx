@@ -5,6 +5,9 @@ import { db } from '@/lib/db'
 import { AdminLayout } from '@/components/admin/AdminLayout'
 import { DollarSign, Download, TrendingUp, Calendar } from 'lucide-react'
 
+// Auth/live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 // ============================================================================
 // ADMIN SALES LOG
 // ============================================================================

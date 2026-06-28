@@ -1,6 +1,9 @@
 import { db } from '@/lib/db'
 import { Navbar, Footer } from '@/components/shared'
 
+// Auth/live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 export default async function PrivacyPage() {
   const setting = await db.setting.findUnique({
     where: { key: 'privacy_policy_text' }

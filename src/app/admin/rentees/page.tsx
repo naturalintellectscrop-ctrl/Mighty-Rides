@@ -6,6 +6,9 @@ import { AdminLayout } from '@/components/admin/AdminLayout'
 import { formatEAT } from '@/lib/utils'
 import { Eye, Mail, Phone, Ban, Check, AlertCircle } from 'lucide-react'
 
+// Auth/live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 async function getRentees() {
   const users = await db.user.findMany({
     where: { role: 'RENTEE' },

@@ -6,6 +6,9 @@ import { AdminLayout } from '@/components/admin/AdminLayout'
 import { MapPin, Clock, Phone, CheckCircle, Calendar } from 'lucide-react'
 import { formatEAT, isTodayEAT, isTomorrowEAT } from '@/lib/timezone'
 
+// Auth/live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 // ============================================================================
 // ADMIN PICKUPS QUEUE
 // ============================================================================

@@ -7,6 +7,9 @@ import { formatEAT, formatDualPrice } from '@/lib/utils'
 import Link from 'next/link'
 import { ArrowRight, Download, Calendar } from 'lucide-react'
 
+// Auth/live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 async function getRentalHistory(userId: string) {
   const bookings = await db.booking.findMany({
     where: {

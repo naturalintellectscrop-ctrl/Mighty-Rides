@@ -6,6 +6,9 @@ import { AdminLayout } from '@/components/admin/AdminLayout'
 import Link from 'next/link'
 import { ArrowRight, Search, Clock, CheckCircle, XCircle, AlertCircle } from 'lucide-react'
 
+// Auth/live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 // ============================================================================
 // ADMIN SOURCING PIPELINE
 // ============================================================================

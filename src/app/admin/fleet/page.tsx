@@ -5,6 +5,9 @@ import { db } from '@/lib/db'
 import { AdminLayout } from '@/components/admin/AdminLayout'
 import FleetClient from './fleet-client'
 
+// Auth/live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 async function getVehicles() {
   const vehicles = await db.vehicle.findMany({
     orderBy: { created_at: 'desc' },

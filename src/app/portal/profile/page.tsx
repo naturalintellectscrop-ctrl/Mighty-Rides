@@ -5,6 +5,9 @@ import { db } from '@/lib/db'
 import { PortalLayout } from '@/components/portal/PortalLayout'
 import ProfileForm from '@/components/portal/ProfileForm'
 
+// Auth/live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions)
   if (!session?.user?.id || session.user.role === 'ADMIN') {

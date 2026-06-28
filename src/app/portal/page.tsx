@@ -8,6 +8,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Calendar, MapPin, Clock, Phone, MessageCircle } from 'lucide-react'
 
+// Auth/live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 async function getActiveRentals(userId: string) {
   const bookings = await db.booking.findMany({
     where: {

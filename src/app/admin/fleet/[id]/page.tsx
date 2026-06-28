@@ -5,6 +5,9 @@ import { db } from '@/lib/db'
 import { AdminLayout } from '@/components/admin/AdminLayout'
 import VehicleForm, { type VehicleFormData } from '@/components/admin/VehicleForm'
 
+// Auth/live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 function parsePhotos(raw: string | null): string[] {
   if (!raw) return []
   try {

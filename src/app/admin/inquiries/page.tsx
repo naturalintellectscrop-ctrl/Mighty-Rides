@@ -6,6 +6,9 @@ import { AdminLayout } from '@/components/admin/AdminLayout'
 import { formatEAT } from '@/lib/utils'
 import { Eye, Mail, Phone, MessageCircle } from 'lucide-react'
 
+// Auth/live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 async function getInquiries() {
   const inquiries = await db.inquiry.findMany({
     include: {

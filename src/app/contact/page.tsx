@@ -3,6 +3,9 @@ import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import { Mail, Phone, MapPin, Clock, MessageSquare, Clock3 } from 'lucide-react'
 import ContactForm from './ContactForm'
 
+// Auth/live-data page: render per-request so the build never depends on the DB.
+export const dynamic = 'force-dynamic'
+
 // ============================================================================
 // CONTACT PAGE
 // ============================================================================
