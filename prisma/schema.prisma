@@ -358,3 +358,12 @@ model TradeInRequest {
 
   @@map("trade_in_requests")
 }
+
+model NewsletterSubscriber {
+  id         String   @id @default(cuid())
+  email      String   @unique
+  source     String   @default("footer")
+  created_at DateTime @default(now())
+
+  @@map("newsletter_subscribers")
+}

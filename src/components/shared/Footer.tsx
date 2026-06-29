@@ -14,6 +14,7 @@ const quickLinks = [
   { href: '/services', label: 'Services' },
   { href: '/about', label: 'About Us' },
   { href: '/contact', label: 'Contact' },
+  { href: '/faq', label: 'FAQ' },
   { href: '/blog', label: 'Blog' },
 ]
 
@@ -50,13 +51,30 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
+  const [subscribing, setSubscribing] = useState(false)
+  const [subError, setSubError] = useState('')
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (email) {
-      // TODO: Implement newsletter subscription
+    if (!email) return
+    setSubscribing(true)
+    setSubError('')
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data.error || 'Subscription failed. Please try again.')
+      }
       setSubscribed(true)
       setEmail('')
+    } catch (err) {
+      setSubError(err instanceof Error ? err.message : 'Subscription failed. Please try again.')
+    } finally {
+      setSubscribing(false)
     }
   }
 
@@ -107,12 +125,14 @@ export function Footer() {
                   />
                   <button
                     type="submit"
-                    className="bg-[#C8952A] hover:bg-[#D4A644] text-black font-bold px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg transition-colors text-xs sm:text-sm"
+                    disabled={subscribing}
+                    className="bg-[#C8952A] hover:bg-[#D4A644] text-black font-bold px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg transition-colors text-xs sm:text-sm disabled:opacity-60"
                   >
-                    GO
+                    {subscribing ? '…' : 'GO'}
                   </button>
                 </form>
               )}
+              {subError && <p className="text-red-400 text-[10px] sm:text-xs mt-2">{subError}</p>}
             </div>
             
             {/* Social Links */}
