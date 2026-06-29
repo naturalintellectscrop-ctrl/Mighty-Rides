@@ -423,7 +423,7 @@ function HowItWorks() {
   return (
     <section className="w-full py-20 md:py-28 lg:py-36 bg-[#F8F6F2]">
       <div className="px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 text-center">
-        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#121414] mb-16 md:mb-20">
+        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#0A0A0A] mb-16 md:mb-20">
           The Seamless Journey
         </h2>
 
@@ -436,8 +436,8 @@ function HowItWorks() {
               <div className="w-20 h-20 md:w-24 md:h-24 bg-white border border-[#C8952A]/30 rounded-full flex items-center justify-center mb-6 md:mb-8 shadow-sm hover:scale-105 transition-transform">
                 <step.icon className="text-[#C8952A] w-8 h-8 md:w-10 md:h-10" />
               </div>
-              <h3 className="font-semibold text-[#121414] text-lg md:text-xl mb-2 md:mb-3">{step.title}</h3>
-              <p className="text-gray-600 text-sm md:text-base px-4">{step.description}</p>
+              <h3 className="font-semibold text-[#1A1A1A] text-lg md:text-xl mb-2 md:mb-3">{step.title}</h3>
+              <p className="text-gray-700 text-sm md:text-base px-4">{step.description}</p>
             </div>
           ))}
         </div>

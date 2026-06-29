@@ -33,12 +33,12 @@ export function Navbar() {
   const { data: session } = useSession()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  // Close mobile menu on route change
+  // Close the mobile menu when the route changes. Depend ONLY on pathname —
+  // depending on mobileMenuOpen here would re-close the menu the instant it
+  // opened (the previous bug), making the hamburger appear to do nothing.
   useEffect(() => {
-    if (mobileMenuOpen) {
-      queueMicrotask(() => setMobileMenuOpen(false))
-    }
-  }, [pathname, mobileMenuOpen])
+    setMobileMenuOpen(false)
+  }, [pathname])
   
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
