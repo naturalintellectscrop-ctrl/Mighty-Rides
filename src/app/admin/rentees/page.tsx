@@ -34,7 +34,7 @@ export default async function RenteesPage() {
         <p className="text-brand-silver mb-8">Registered rental customers</p>
 
         {/* Stats */}
-        <div className="grid grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
             { label: 'Total Rentees', value: rentees.length },
             { label: 'Verified', value: rentees.filter(r => r.id_verified).length },
