@@ -131,11 +131,21 @@ export function Navbar() {
           : "opacity-0 invisible pointer-events-none"
       )}>
         {/* Backdrop */}
-        <div 
+        <div
           className="absolute inset-0 bg-[#121414]/95 backdrop-blur-xl"
           onClick={() => setMobileMenuOpen(false)}
         />
-        
+
+        {/* Explicit close button (in addition to the header toggle) */}
+        <button
+          type="button"
+          onClick={() => setMobileMenuOpen(false)}
+          className="absolute top-5 right-5 z-10 text-white p-2 rounded-full hover:bg-white/10 transition-colors"
+          aria-label="Close menu"
+        >
+          <X className="w-7 h-7" />
+        </button>
+
         {/* Menu Content */}
         <nav className="relative px-4 md:px-8 py-8 pt-24 max-h-[calc(100vh-80px)] overflow-y-auto">
           <div className="space-y-1">

@@ -59,6 +59,8 @@ export default async function EditVehiclePage({ params }: { params: Promise<{ id
     description: v.description || '',
     photos: parsePhotos(v.photos),
     specs: parseSpecs(v.specs),
+    // occasions is stored as a JSON string array — parsePhotos parses that shape.
+    occasions: parsePhotos(v.occasions),
   }
 
   return (

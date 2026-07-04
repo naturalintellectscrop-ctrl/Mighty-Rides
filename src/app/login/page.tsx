@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, Suspense } from 'react'
-import { signIn } from 'next-auth/react'
+import { signIn, getSession } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -45,7 +45,15 @@ function LoginContent() {
             setErrorMessage('Invalid email or password. Please try again.')
         }
       } else {
-        router.push(callbackUrl)
+        // Route by role: admins land on the admin dashboard, everyone else on
+        // the customer portal. Honour an explicit callbackUrl if one was set
+        // (e.g. an admin who was redirected here from a protected /admin page).
+        const session = await getSession()
+        const dest =
+          callbackUrl === '/portal'
+            ? session?.user?.role === 'ADMIN' ? '/admin' : '/portal'
+            : callbackUrl
+        router.push(dest)
         router.refresh()
       }
     } catch (err) {

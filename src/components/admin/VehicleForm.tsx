@@ -21,6 +21,7 @@ export interface VehicleFormData {
   description: string
   photos: string[]
   specs: Record<string, string>
+  occasions: string[]
 }
 
 const SPEC_FIELDS = [
@@ -29,6 +30,17 @@ const SPEC_FIELDS = [
   { key: 'fuel', label: 'Fuel Type' },
   { key: 'seats', label: 'Seats' },
   { key: 'mileage', label: 'Mileage' },
+]
+
+// Occasions a hire vehicle can be offered for — these values must match the
+// occasion IDs used by the /hire filter.
+const OCCASIONS = [
+  { value: 'WEDDING', label: 'Wedding' },
+  { value: 'AIRPORT', label: 'Airport Transfer' },
+  { value: 'EXECUTIVE', label: 'Executive' },
+  { value: 'LONG_TERM', label: 'Long-term' },
+  { value: 'PERSONAL', label: 'Personal / Self-drive' },
+  { value: 'CORPORATE', label: 'Corporate' },
 ]
 
 export default function VehicleForm({
@@ -50,6 +62,13 @@ export default function VehicleForm({
     setData(prev => ({ ...prev, [field]: value }))
   const setSpec = (key: string, value: string) =>
     setData(prev => ({ ...prev, specs: { ...prev.specs, [key]: value } }))
+  const toggleOccasion = (value: string) =>
+    setData(prev => ({
+      ...prev,
+      occasions: prev.occasions.includes(value)
+        ? prev.occasions.filter(o => o !== value)
+        : [...prev.occasions, value],
+    }))
 
   const handlePhotoUpload = async (file: File | undefined) => {
     if (!file) return
@@ -107,6 +126,7 @@ export default function VehicleForm({
         description: data.description || null,
         photos: mode === 'create' ? photos : JSON.stringify(photos),
         specs: mode === 'create' ? data.specs : JSON.stringify(data.specs),
+        occasions: mode === 'create' ? data.occasions : JSON.stringify(data.occasions),
       }
       const res = await fetch(
         mode === 'create' ? '/api/admin/fleet' : `/api/admin/fleet/${data.id}`,
@@ -203,6 +223,37 @@ export default function VehicleForm({
               <input value={data.specs[f.key] || ''} onChange={e => setSpec(f.key, e.target.value)} />
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Occasions / Events (controls which vehicles show for each /hire event filter) */}
+      <section className="card space-y-3">
+        <div>
+          <h2 className="font-display text-lg font-bold text-brand-white">Events &amp; Occasions</h2>
+          <p className="text-brand-silver text-sm mt-1">
+            Select the occasions this vehicle should appear under on the Hire page&apos;s event filter
+            (Wedding, Airport, Executive, etc.). Applies to vehicles listed for hire.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {OCCASIONS.map(o => {
+            const active = data.occasions.includes(o.value)
+            return (
+              <button
+                key={o.value}
+                type="button"
+                onClick={() => toggleOccasion(o.value)}
+                aria-pressed={active ? 'true' : 'false'}
+                className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
+                  active
+                    ? 'bg-brand-gold text-brand-black border-brand-gold'
+                    : 'bg-transparent text-brand-silver border-brand-border hover:border-brand-gold'
+                }`}
+              >
+                {o.label}
+              </button>
+            )
+          })}
         </div>
       </section>
 

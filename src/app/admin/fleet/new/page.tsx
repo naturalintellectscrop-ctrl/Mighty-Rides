@@ -7,7 +7,7 @@ import VehicleForm, { type VehicleFormData } from '@/components/admin/VehicleFor
 const EMPTY: VehicleFormData = {
   name: '', make: '', model: '', year: '', type: 'SALE', status: 'AVAILABLE',
   plate_number: '', sale_price_ugx: '', daily_rate_ugx: '', weekly_rate_ugx: '',
-  monthly_rate_ugx: '', description: '', photos: [], specs: {},
+  monthly_rate_ugx: '', description: '', photos: [], specs: {}, occasions: [],
 }
 
 export default async function NewVehiclePage() {
