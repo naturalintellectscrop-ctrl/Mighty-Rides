@@ -515,3 +515,70 @@ label {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ============================================================================
+   ADMIN LIGHT THEME
+   The public site keeps the dark luxury theme; the admin dashboard uses a
+   light, low-eye-strain theme (gold accent retained) for long working days.
+   Scoped to .admin-light: re-maps the @theme brand variables the ~500 admin
+   brand-* utilities reference, and overrides the manual .brand-* classes by
+   specificity. No admin component markup needs to change.
+   ============================================================================ */
+.admin-light {
+  --color-brand-black: #F8F9FA;
+  --color-brand-midnight: #F8F9FA;
+  --color-brand-charcoal: #FFFFFF;
+  --color-brand-slate: #E5E7EB;
+  --color-brand-surface: #EEF1F4;
+  --color-brand-surface-2: #E5E7EB;
+  --color-brand-white: #111827;
+  --color-brand-silver: #4B5563;
+  --color-brand-muted: #6B7280;
+  --color-brand-border: #E5E7EB;
+  background-color: #F8F9FA;
+  color: #111827;
+}
+
+/* Override the manual hardcoded .brand-* utility classes (specificity 0,2,0) */
+.admin-light .bg-brand-black,
+.admin-light .bg-brand-midnight { background-color: #F8F9FA; }
+.admin-light .bg-brand-charcoal { background-color: #FFFFFF; }
+.admin-light .bg-brand-slate { background-color: #E5E7EB; }
+.admin-light .bg-brand-surface { background-color: #EEF1F4; }
+.admin-light .text-brand-white { color: #111827; }
+.admin-light .text-brand-silver { color: #4B5563; }
+.admin-light .text-brand-muted { color: #6B7280; }
+.admin-light .border-brand-border { border-color: #E5E7EB; }
+
+/* Sidebar: white, distinct from the light-grey main area */
+.admin-light aside {
+  background-color: #FFFFFF;
+  border-color: #E5E7EB;
+}
+
+/* Cards: white with a light border + soft shadow (not the dark card style) */
+.admin-light .card {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.admin-light .card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Form controls on light backgrounds */
+.admin-light input:not([type="checkbox"]):not([type="radio"]),
+.admin-light textarea,
+.admin-light select {
+  background: #FFFFFF;
+  border-color: #D1D5DB;
+  color: #111827;
+}
+.admin-light input::placeholder,
+.admin-light textarea::placeholder { color: #9CA3AF; }
+
+/* The lone arbitrary dark input + low-contrast greys used in a few admin views */
+.admin-light .bg-\[\#0A0A0A\] { background-color: #FFFFFF; }
+.admin-light .text-gray-400,
+.admin-light .text-gray-500 { color: #6B7280; }
