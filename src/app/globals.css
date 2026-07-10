@@ -92,10 +92,11 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
-  background: #0A0A0A;
+  /* Warm charcoal base instead of pure black — dark, but not flat. */
+  background: #141312;
   color: #e3e2e2;
   font-family: var(--font-body);
-  line-height: 1.6;
+  line-height: 1.65;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -126,7 +127,7 @@ main, section {
 
   p {
     color: #B0B0B0;
-    line-height: 1.7;
+    line-height: 1.75;
   }
 }
 
@@ -517,6 +518,107 @@ label {
 }
 
 /* ============================================================================
+   SECTION SURFACE SYSTEM — LUXURY SHOWROOM RHYTHM
+   The public site alternates dark, light and warm-neutral bands so the page
+   breathes like a showroom instead of reading as uniformly dark. Apply one of
+   these classes to a <section>; scoped typography keeps text readable on each
+   surface WITHOUT beating Tailwind text-* utilities (all selectors use :where()
+   so their specificity stays 0 and any explicit utility still wins).
+   Palette: warm white #F8F8F6 · warm neutral #EFEDE7 · warm charcoal #141312.
+   ============================================================================ */
+
+.section-dark    { background-color: #141312; color: #E7E5E1; }
+.section-charcoal{ background-color: #1B1A18; color: #E7E5E1; }
+.section-light   { background-color: #F8F8F6; color: #22201D; }
+.section-neutral { background-color: #EFEDE7; color: #22201D; }
+
+/* Headings + body copy on LIGHT surfaces: charcoal ink, warm grey body. */
+.section-light   :where(h1, h2, h3, h4, h5, h6),
+.section-neutral :where(h1, h2, h3, h4, h5, h6) { color: #1A1815; }
+.section-light   :where(p),
+.section-neutral :where(p) { color: #5C574F; }
+
+/* Headings + body on DARK surfaces (in case base @layer changes). */
+.section-dark    :where(h1, h2, h3, h4, h5, h6),
+.section-charcoal:where(h1, h2, h3, h4, h5, h6) { color: #FFFFFF; }
+.section-dark    :where(p),
+.section-charcoal:where(p) { color: #B7B2AA; }
+
+/* Generous vertical rhythm helper for editorial / informational bands. */
+.section-y      { padding-top: 80px;  padding-bottom: 80px; }
+@media (min-width: 768px)  { .section-y { padding-top: 120px; padding-bottom: 120px; } }
+@media (min-width: 1280px) { .section-y { padding-top: 160px; padding-bottom: 160px; } }
+
+/* ----------------------------------------------------------------------------
+   LIGHT CARD — white surface, subtle elevation, gold-lift on hover.
+   Depth comes from shadow + hairline border, not from a dark fill.
+   ---------------------------------------------------------------------------- */
+.card-light {
+  background: #FFFFFF;
+  border: 1px solid #ECEAE3;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(26, 24, 21, 0.04), 0 10px 30px rgba(26, 24, 21, 0.06);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.4s ease;
+}
+.card-light:hover {
+  transform: translateY(-6px);
+  border-color: rgba(200, 149, 42, 0.45);
+  box-shadow: 0 6px 12px rgba(26, 24, 21, 0.05), 0 22px 50px rgba(26, 24, 21, 0.13);
+}
+
+/* Text tones for content inside a light card. */
+.card-light :where(h1, h2, h3, h4, h5, h6) { color: #1A1815; }
+.card-light :where(p) { color: #5C574F; }
+
+/* ----------------------------------------------------------------------------
+   LIGHT FORM FIELDS — for forms placed on light/neutral surfaces.
+   The default dark input styling stays for dark sections.
+   ---------------------------------------------------------------------------- */
+.section-light  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.section-light  textarea,
+.section-light  select,
+.section-neutral input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.section-neutral textarea,
+.section-neutral select,
+.card-light     input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.card-light     textarea,
+.card-light     select {
+  background: #FFFFFF;
+  border: 1px solid #DAD6CD;
+  color: #1A1815;
+}
+.section-light  input::placeholder, .section-light  textarea::placeholder,
+.section-neutral input::placeholder, .section-neutral textarea::placeholder,
+.card-light     input::placeholder, .card-light     textarea::placeholder {
+  color: #9C978D;
+}
+.section-light  label, .section-neutral label, .card-light label {
+  color: #6B6459;
+}
+
+/* ----------------------------------------------------------------------------
+   REVEAL ANIMATION — restrained, scroll-driven, zero-JS.
+   Uses native scroll-timeline where supported; where it isn't, elements simply
+   render at rest (opacity 1) — content is never hidden. Honors reduced-motion.
+   ---------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: revealUp linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 22%;
+    }
+  }
+}
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================================
    ADMIN LIGHT THEME
    The public site keeps the dark luxury theme; the admin dashboard uses a
    light, low-eye-strain theme (gold accent retained) for long working days.
@@ -582,3 +684,23 @@ label {
 .admin-light .bg-\[\#0A0A0A\] { background-color: #FFFFFF; }
 .admin-light .text-gray-400,
 .admin-light .text-gray-500 { color: #6B7280; }
+
+/* ============================================================================
+   EDITORIAL SCROLL REVEAL
+   Content is visible by default (SEO / no-JS safe). Where scroll-driven
+   animation is supported and the visitor allows motion, editorial blocks
+   fade and rise as they enter the viewport. No JavaScript.
+   ============================================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 4% cover 20%;
+    }
+    @keyframes reveal-rise {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: none; }
+    }
+  }
+}

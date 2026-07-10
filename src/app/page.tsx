@@ -6,133 +6,85 @@ import { formatUGX, formatUSD } from '@/lib/utils'
 import { LocalBusinessJsonLd } from '@/components/analytics/JsonLd'
 import {
   MapPin, Calendar, Car, ArrowRight, Star,
-  Search, CreditCard, BadgeCheck, Key, Headphones, Shield,
-  CalendarCheck, Crown, Globe, Wrench, Building, Settings
+  Search, CreditCard, BadgeCheck, Key, Globe, Wrench, Building, Settings, Check,
 } from 'lucide-react'
 
 // Live-data page: render per-request so the build never depends on the DB.
 export const dynamic = 'force-dynamic'
 
+const PAD = 'px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28'
+
+// Photography (placeholders — swap for real Mighty Rides photography).
+const HERO_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuCdTMemLRrVabyjdaNkQ3eKs7D2lhbijccitbB8uaR_GGIxo4-ES3iZD7yzxoBzZzV59N9za37N_kt6xdwTzXsayy-Dvie16JEbeKplzGs1IoaQdQqgiL-OMXFkCoBBAr5irWZlMNmD0uHEtZ0NjOWzyzXGfFiU0C4snXoGBwMHqIihLRB4lcWqvKd7LXjuVVsDpCozDfkqCvL6t5tK9uzVT_NLmo_Lmv3LC_YN_A6Ey0zv93fyd6D_-0UFQNy6x6a7lc-oE9Z3WXU'
+const CTA_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDDAik8snEDPDURyMU2fIsYO5mCJ7Bm0HrmXtayEjjcwp-bmZtP9bUQ0FL5Tli094AGPxpj686I_vEr7JxmPg8wWgfsH55lYhuG3Zf316EJsTDpQ3D28e2eE__bmtYDP1hKjFZPOARqgYRmXu6GaMt--PujbpdSQIM9JDETU_bm5ZNZNUQ0fFlNXMvZ79IoPsOtt5RlSi6ylDsOqWWwfTlOaNeOuFtXsFEmb9fRg4ApexTDgnZvsXpqGYVDP60oVXbuyNE-zxXl-A8'
+const BAND_IMG = 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=1900&q=80'
+const CRAFT_IMG = 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1400&q=80'
+
 // ============================================================================
-// HERO SECTION
+// HERO — cinematic full-bleed
 // ============================================================================
 
 function Hero() {
   return (
     <section className="relative min-h-screen w-full flex items-center overflow-hidden py-32 md:py-28">
-      {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdTMemLRrVabyjdaNkQ3eKs7D2lhbijccitbB8uaR_GGIxo4-ES3iZD7yzxoBzZzV59N9za37N_kt6xdwTzXsayy-Dvie16JEbeKplzGs1IoaQdQqgiL-OMXFkCoBBAr5irWZlMNmD0uHEtZ0NjOWzyzXGfFiU0C4snXoGBwMHqIihLRB4lcWqvKd7LXjuVVsDpCozDfkqCvL6t5tK9uzVT_NLmo_Lmv3LC_YN_A6Ey0zv93fyd6D_-0UFQNy6x6a7lc-oE9Z3WXU"
-          alt="Luxury car in premium showroom"
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
-        />
+        <Image src={HERO_IMG} alt="A luxury vehicle in a Mighty Rides showroom" fill className="object-cover" priority sizes="100vw" />
         <div className="absolute inset-0 hero-gradient" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 pt-20">
-        {/* Eyebrow */}
-        <p className="text-sm md:text-base lg:text-lg text-[#C8952A] uppercase tracking-widest mb-6 md:mb-8 font-semibold">
-          East Africa&apos;s Premier Fleet
-        </p>
-
-        {/* Main Heading */}
-        <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-6 md:mb-8 leading-tight">
-          Experience Excellence<br />In Motion
+      <div className={`relative z-10 w-full ${PAD} pt-20`}>
+        <p className="text-xs md:text-sm text-[#C8952A] uppercase tracking-[0.3em] mb-7 font-semibold">Kampala · Est. 2018</p>
+        <h1 className="text-5xl md:text-7xl xl:text-8xl font-bold text-white mb-8 leading-[0.98] tracking-tight">
+          Excellence,<br />in motion.
         </h1>
-
-        {/* Subheading */}
-        <p className="text-lg md:text-xl lg:text-2xl text-gray-300 mb-10 md:mb-12 max-w-2xl leading-relaxed">
-          Curating East Africa&apos;s most prestigious fleet. From executive arrivals to high-performance escapes, we redefine luxury mobility with quiet confidence and meticulous detail.
+        <p className="text-lg md:text-xl text-gray-300/90 mb-11 max-w-xl leading-relaxed">
+          East Africa&apos;s most considered fleet — curated for those who value presence, discretion, and the quiet assurance of an exceptional drive.
         </p>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
-          <Link
-            href="/cars"
-            className="bg-[#C8952A] text-black px-10 md:px-12 py-4 md:py-5 rounded-xl font-semibold text-center hover:bg-[#D4A644] transition-colors uppercase tracking-wide text-sm md:text-base"
-          >
-            Explore Inventory
-          </Link>
-          <Link
-            href="/hire"
-            className="border-2 border-[#C8952A] text-[#C8952A] px-10 md:px-12 py-4 md:py-5 rounded-xl font-semibold text-center hover:bg-[#C8952A]/10 transition-colors uppercase tracking-wide text-sm md:text-base"
-          >
-            Hire a Vehicle
-          </Link>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Link href="/hire" className="bg-[#C8952A] text-black px-11 py-4 md:py-5 rounded-xl font-semibold text-center hover:bg-[#D4A644] transition-colors uppercase tracking-wide text-sm">Hire a Vehicle</Link>
+          <Link href="/cars" className="border border-white/30 text-white px-11 py-4 md:py-5 rounded-xl font-semibold text-center hover:border-[#C8952A] hover:text-[#C8952A] transition-colors uppercase tracking-wide text-sm">Explore Inventory</Link>
         </div>
 
-        {/* Booking Widget - Desktop (in normal flow, below the CTAs) */}
-        <div className="hidden md:block mt-12 lg:mt-16 max-w-5xl">
-          <div className="bg-[#1A1A1A]/90 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-gray-700 shadow-2xl">
+        {/* Booking widget — desktop, in flow */}
+        <div className="hidden md:block mt-14 lg:mt-16 max-w-5xl">
+          <div className="bg-[#1A1A1A]/85 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 shadow-2xl">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {/* Pick-up Location */}
-            <div className="flex flex-col gap-3">
-              <label className="text-xs text-[#C8952A] uppercase tracking-wider font-semibold">
-                Pick-up Location
-              </label>
-              <div className="relative">
-                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Kampala / Entebbe Airport"
-                  className="w-full bg-[#0A0A0A] border border-gray-700 rounded-xl py-4 pl-12 pr-4 text-white focus:border-[#C8952A] outline-none transition-colors"
-                />
+              <div className="flex flex-col gap-3">
+                <label className="text-[11px] text-[#C8952A] uppercase tracking-[0.2em] font-semibold">Pick-up Location</label>
+                <div className="relative">
+                  <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <input type="text" placeholder="Kampala / Entebbe Airport" className="w-full bg-[#0A0A0A] border border-gray-700 rounded-xl py-4 pl-12 pr-4 text-white focus:border-[#C8952A] outline-none transition-colors" />
+                </div>
               </div>
-            </div>
-            
-            {/* Dates */}
-            <div className="flex flex-col gap-3">
-              <label className="text-xs text-[#C8952A] uppercase tracking-wider font-semibold">
-                Dates
-              </label>
-              <div className="relative">
-                <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Jan 15 - Jan 20"
-                  className="w-full bg-[#0A0A0A] border border-gray-700 rounded-xl py-4 pl-12 pr-4 text-white focus:border-[#C8952A] outline-none transition-colors"
-                />
+              <div className="flex flex-col gap-3">
+                <label className="text-[11px] text-[#C8952A] uppercase tracking-[0.2em] font-semibold">Dates</label>
+                <div className="relative">
+                  <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <input type="text" placeholder="Add your dates" className="w-full bg-[#0A0A0A] border border-gray-700 rounded-xl py-4 pl-12 pr-4 text-white focus:border-[#C8952A] outline-none transition-colors" />
+                </div>
               </div>
-            </div>
-            
-            {/* Vehicle Type */}
-            <div className="flex flex-col gap-3">
-              <label className="text-xs text-[#C8952A] uppercase tracking-wider font-semibold">
-                Vehicle Type
-              </label>
-              <div className="relative">
-                <Car className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <select aria-label="Vehicle type" className="w-full bg-[#0A0A0A] border border-gray-700 rounded-xl py-4 pl-12 pr-4 text-white focus:border-[#C8952A] outline-none appearance-none transition-colors">
-                  <option>Prestige Sedans</option>
-                  <option>Performance SUVs</option>
-                  <option>Classic Heritage</option>
-                </select>
+              <div className="flex flex-col gap-3">
+                <label className="text-[11px] text-[#C8952A] uppercase tracking-[0.2em] font-semibold">Occasion</label>
+                <div className="relative">
+                  <Car className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <select aria-label="Occasion" className="w-full bg-[#0A0A0A] border border-gray-700 rounded-xl py-4 pl-12 pr-4 text-white focus:border-[#C8952A] outline-none appearance-none transition-colors">
+                    <option>Wedding</option>
+                    <option>Airport Transfer</option>
+                    <option>Executive Travel</option>
+                    <option>Corporate</option>
+                  </select>
+                </div>
               </div>
-            </div>
-            
-            {/* Find Button */}
-            <div className="flex items-end">
-              <Link href="/hire" className="w-full bg-[#C8952A] text-black py-4 rounded-xl font-semibold text-center hover:bg-[#D4A644] transition-colors uppercase tracking-wide">
-                Find Excellence
-              </Link>
+              <div className="flex items-end">
+                <Link href="/hire" className="w-full bg-[#C8952A] text-black py-4 rounded-xl font-semibold text-center hover:bg-[#D4A644] transition-colors uppercase tracking-wide">Find a Vehicle</Link>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-        {/* Mobile Booking CTA (in flow) */}
         <div className="md:hidden mt-8">
-          <Link
-            href="/hire"
-            className="block w-full bg-[#C8952A] text-black py-5 rounded-xl font-semibold text-center uppercase tracking-wide"
-          >
-            Find Your Ride
-          </Link>
+          <Link href="/hire" className="block w-full bg-[#C8952A] text-black py-5 rounded-xl font-semibold text-center uppercase tracking-wide">Find Your Ride</Link>
         </div>
       </div>
     </section>
@@ -140,27 +92,34 @@ function Hero() {
 }
 
 // ============================================================================
-// TRUST BAR SECTION
+// EDITORIAL STATEMENT — typography-first, with an inline assurance row
 // ============================================================================
 
-const trustItems = [
-  { icon: Headphones, title: '24/7 Support', subtitle: 'Dedicated Concierge' },
-  { icon: Shield, title: 'Verified Fleet', subtitle: 'Pristine Condition' },
-  { icon: CalendarCheck, title: 'Easy Booking', subtitle: 'Instant Confirmation' },
-  { icon: Crown, title: 'Premium Service', subtitle: 'White Glove Care' },
+const assurances = [
+  { k: 'Concierge', v: 'On call, around the clock' },
+  { k: 'Verified', v: 'Every vehicle inspected' },
+  { k: 'Instant', v: 'Confirmed bookings' },
+  { k: 'White-glove', v: 'Delivery & handover' },
 ]
 
-function TrustBar() {
+function EditorialIntro() {
   return (
-    <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 bg-[#0A0A0A]">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 lg:gap-16 text-center">
-        {trustItems.map((item) => (
-          <div key={item.title} className="group">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-[#1A1A1A] mx-auto rounded-full flex items-center justify-center mb-4 md:mb-6 group-hover:bg-[#C8952A]/20 transition-colors">
-              <item.icon className="text-[#C8952A] w-7 h-7 md:w-8 md:h-8" />
-            </div>
-            <h3 className="text-white font-semibold text-base md:text-lg mb-1 md:mb-2">{item.title}</h3>
-            <p className="text-gray-400 text-sm md:text-base">{item.subtitle}</p>
+    <section className={`w-full bg-[#0A0A0A] ${PAD} py-24 md:py-36 border-t border-white/5`}>
+      <div className="max-w-4xl reveal">
+        <p className="text-xs text-[#C8952A] uppercase tracking-[0.3em] mb-8 font-semibold">More than transportation</p>
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.04] tracking-tight">
+          A car is a statement.<br />We help you make it well.
+        </h2>
+        <p className="text-lg md:text-2xl text-gray-400 max-w-2xl leading-relaxed mt-8">
+          Every vehicle we offer is chosen for confidence and presence — and delivered with the kind of care that turns a rental into an occasion. Quiet, exacting, entirely at your service.
+        </p>
+      </div>
+
+      <div className="mt-16 md:mt-20 border-t border-white/10 pt-10 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-8 reveal">
+        {assurances.map((a) => (
+          <div key={a.k}>
+            <p className="text-[#C8952A] text-xs uppercase tracking-[0.2em] mb-2 font-semibold">{a.k}</p>
+            <p className="text-white text-sm md:text-base">{a.v}</p>
           </div>
         ))}
       </div>
@@ -169,10 +128,9 @@ function TrustBar() {
 }
 
 // ============================================================================
-// FLEET SECTION
+// THE COLLECTION — real inventory, image-led (lead vehicle + supporting row)
 // ============================================================================
 
-// Display shape derived from a real DB vehicle (computed server-side).
 interface FleetCard {
   name: string
   href: string
@@ -184,17 +142,9 @@ interface FleetCard {
 }
 
 const STATUS_LABELS: Record<string, string> = {
-  AVAILABLE: 'Available',
-  RESERVED: 'Reserved',
-  RENTED_OUT: 'Rented Out',
-  IN_SERVICE: 'In Service',
-  SOLD: 'Sold',
+  AVAILABLE: 'Available', RESERVED: 'Reserved', RENTED_OUT: 'Rented Out', IN_SERVICE: 'In Service', SOLD: 'Sold',
 }
 
-/**
- * Fetch up to 4 published vehicles (featured first) for the homepage fleet.
- * Real inventory — replaces the static demo cards from the design mockup.
- */
 async function getFeaturedVehicles(rate: number): Promise<FleetCard[]> {
   let vehicles
   try {
@@ -208,7 +158,6 @@ async function getFeaturedVehicles(rate: number): Promise<FleetCard[]> {
       },
     })
   } catch (error) {
-    // Degrade to the empty-state instead of throwing the error boundary.
     console.error('[HOME] Failed to load featured vehicles:', error)
     return []
   }
@@ -218,7 +167,7 @@ async function getFeaturedVehicles(rate: number): Promise<FleetCard[]> {
     try {
       const photos = v.photos ? JSON.parse(v.photos) : []
       if (Array.isArray(photos) && typeof photos[0] === 'string') image = photos[0]
-    } catch { /* malformed photos JSON — fall back to placeholder */ }
+    } catch { /* malformed photos JSON */ }
 
     let specs: Record<string, unknown> = {}
     try { specs = v.specs ? JSON.parse(v.specs) : {} } catch { /* ignore */ }
@@ -242,117 +191,107 @@ async function getFeaturedVehicles(rate: number): Promise<FleetCard[]> {
     return {
       name: v.name,
       href: v.type === 'SALE' ? `/cars/${v.slug}` : `/hire/${v.slug}`,
-      image,
-      status: STATUS_LABELS[v.status] || v.status,
-      priceText,
-      usdText,
-      chips,
+      image, status: STATUS_LABELS[v.status] || v.status, priceText, usdText, chips,
     }
   })
 }
 
-function FleetSection({ vehicles }: { vehicles: FleetCard[] }) {
+function Collection({ vehicles }: { vehicles: FleetCard[] }) {
+  const lead = vehicles[0]
+  const rest = vehicles.slice(1)
+
   return (
-    <section className="w-full py-20 md:py-28 lg:py-36 bg-[#0A0A0A]">
-      <div className="px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 gap-6">
-          <div>
-            <span className="text-sm md:text-base text-[#C8952A] uppercase tracking-widest mb-3 block font-semibold">
-              Curated Selection
-            </span>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white">
-              The Fleet
-            </h2>
-          </div>
-          <Link
-            href="/cars"
-            className="hidden md:flex items-center gap-3 text-[#C8952A] font-semibold text-lg hover:underline"
-          >
-            VIEW ALL MODELS
-            <ArrowRight className="w-5 h-5" />
-          </Link>
+    <section className={`w-full section-light ${PAD} py-20 md:py-32`}>
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 md:mb-20 reveal">
+        <div>
+          <p className="text-xs text-[#8A6410] uppercase tracking-[0.3em] mb-4 font-semibold">The Collection</p>
+          <h2 className="text-4xl md:text-6xl font-bold text-[#1A1815] tracking-tight">Currently in the stable</h2>
         </div>
+        <Link href="/cars" className="hidden md:inline-flex items-center gap-3 text-[#8A6410] font-semibold group whitespace-nowrap">
+          View all models <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+        </Link>
+      </div>
 
-        {/* Vehicle Grid */}
-        {vehicles.length === 0 ? (
-          <p className="text-gray-400 text-center py-12">
-            Our fleet is being updated. Please check back shortly or{' '}
-            <Link href="/contact" className="text-[#C8952A] hover:underline">contact our concierge</Link>.
+      {!lead ? (
+        <div className="max-w-2xl reveal">
+          <p className="text-2xl md:text-3xl text-[#1A1815] font-display leading-snug">The collection is being refreshed.</p>
+          <p className="text-[#5C574F] mt-4 text-lg">New arrivals are added regularly. Tell us what you have in mind and we&apos;ll bring the right vehicle to you.{' '}
+            <Link href="/contact" className="text-[#8A6410] font-semibold hover:underline">Speak to our concierge →</Link>
           </p>
-        ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-          {vehicles.map((vehicle) => (
-            <div
-              key={vehicle.href}
-              className="group bg-[#1A1A1A] rounded-2xl overflow-hidden border border-gray-800 hover:border-[#C8952A] transition-colors flex flex-col"
-            >
-              {/* Vehicle Image */}
-              <div className="h-64 md:h-72 overflow-hidden relative bg-[#0A0A0A]">
-                {vehicle.image ? (
-                  <Image
-                    src={vehicle.image}
-                    alt={vehicle.name}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <Car className="w-10 h-10 text-gray-600" />
-                  </div>
-                )}
-                <span className="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-[#C8952A] uppercase">
-                  {vehicle.status}
-                </span>
-              </div>
-
-              {/* Vehicle Details */}
-              <div className="p-6 md:p-8 flex-1 flex flex-col">
-                <div className="flex justify-between items-start gap-3 mb-4">
-                  <h3 className="text-xl md:text-2xl font-bold text-white">
-                    {vehicle.name}
-                  </h3>
-                  <div className="text-right shrink-0">
-                    <p className="text-[#C8952A] font-semibold text-sm md:text-base whitespace-nowrap">
-                      {vehicle.priceText}
-                    </p>
-                    {vehicle.usdText && (
-                      <p className="text-gray-500 text-xs whitespace-nowrap">{vehicle.usdText}</p>
-                    )}
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {vehicle.chips.map((spec) => (
-                    <span
-                      key={spec}
-                      className="bg-[#2A2A2A] px-3 py-1.5 rounded text-xs text-gray-300"
-                    >
-                      {spec}
-                    </span>
-                  ))}
-                </div>
-                <Link
-                  href={vehicle.href}
-                  className="mt-auto w-full border border-[#C8952A] text-[#C8952A] py-4 rounded-xl hover:bg-[#C8952A] hover:text-black transition-colors font-semibold text-sm text-center block uppercase tracking-wide"
-                >
-                  Reserve Now
-                </Link>
-              </div>
-            </div>
-          ))}
         </div>
-        )}
-
-        {/* Mobile View All Link */}
-        <div className="mt-10 md:hidden text-center">
-          <Link
-            href="/cars"
-            className="inline-flex items-center gap-3 text-[#C8952A] font-semibold text-lg"
-          >
-            VIEW ALL MODELS
-            <ArrowRight className="w-5 h-5" />
+      ) : (
+        <>
+          {/* Lead vehicle — split showcase */}
+          <Link href={lead.href} className="group grid lg:grid-cols-2 gap-8 lg:gap-16 items-center reveal">
+            <div className="relative aspect-[16/11] overflow-hidden rounded-2xl bg-[#EFEDE7] shadow-[0_18px_44px_rgba(26,24,21,0.13)]">
+              {lead.image
+                ? <Image src={lead.image} alt={lead.name} fill className="object-cover transition-transform duration-[900ms] group-hover:scale-105" sizes="(max-width:1024px) 100vw, 50vw" />
+                : <div className="w-full h-full flex items-center justify-center"><Car className="w-12 h-12 text-[#C9C4BA]" /></div>}
+              <span className="absolute top-5 left-5 bg-black/70 backdrop-blur-md px-4 py-1.5 rounded-full text-[11px] font-bold text-[#C8952A] uppercase tracking-wider">{lead.status}</span>
+            </div>
+            <div>
+              <p className="text-xs text-[#8A6410] uppercase tracking-[0.3em] mb-4 font-semibold">Featured</p>
+              <h3 className="text-3xl md:text-5xl font-bold text-[#1A1815] leading-tight mb-5">{lead.name}</h3>
+              <div className="flex flex-wrap gap-2 mb-6">
+                {lead.chips.map((c) => <span key={c} className="text-[11px] tracking-wide text-[#5C574F] border border-[#DAD6CD] rounded-full px-3 py-1">{c}</span>)}
+              </div>
+              <div className="flex items-baseline gap-3 mb-8">
+                <span className="text-2xl md:text-3xl text-[#8A6410] font-semibold">{lead.priceText}</span>
+                {lead.usdText && <span className="text-[#8A857C] text-sm">{lead.usdText}</span>}
+              </div>
+              <span className="inline-flex items-center gap-3 text-[#1A1815] font-semibold uppercase tracking-wide text-sm border-b border-[#8A6410] pb-1 group-hover:gap-4 transition-all">
+                Explore this vehicle <ArrowRight className="w-4 h-4 text-[#8A6410]" />
+              </span>
+            </div>
           </Link>
+
+          {/* Supporting row — image-led, minimal chrome */}
+          {rest.length > 0 && (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 mt-16 md:mt-24">
+              {rest.map((v) => (
+                <Link key={v.href} href={v.href} className="group reveal">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-[#EFEDE7] shadow-[0_10px_30px_rgba(26,24,21,0.09)]">
+                    {v.image
+                      ? <Image src={v.image} alt={v.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width:640px) 100vw, 33vw" />
+                      : <div className="w-full h-full flex items-center justify-center"><Car className="w-9 h-9 text-[#C9C4BA]" /></div>}
+                    <span className="absolute top-4 left-4 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-[#C8952A] uppercase tracking-wider">{v.status}</span>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-3 mt-5">
+                    <h3 className="text-lg md:text-xl font-bold text-[#1A1815] group-hover:text-[#8A6410] transition-colors">{v.name}</h3>
+                    <span className="text-[#8A6410] text-sm font-semibold whitespace-nowrap shrink-0">{v.priceText}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </>
+      )}
+
+      <div className="mt-14 md:hidden">
+        <Link href="/cars" className="inline-flex items-center gap-3 text-[#8A6410] font-semibold">View all models <ArrowRight className="w-5 h-5" /></Link>
+      </div>
+    </section>
+  )
+}
+
+// ============================================================================
+// LIFESTYLE BAND — full-bleed, edge to edge
+// ============================================================================
+
+function LifestyleBand() {
+  return (
+    <section className="relative w-full h-[62vh] md:h-[82vh] overflow-hidden">
+      <Image src={BAND_IMG} alt="A luxury vehicle on the open road at dusk" fill className="object-cover" sizes="100vw" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/20 to-[#0A0A0A]/40" />
+      <div className={`relative z-10 h-full flex items-end ${PAD} pb-16 md:pb-24`}>
+        <div className="reveal">
+          <p className="text-xs text-[#C8952A] uppercase tracking-[0.3em] mb-5 font-semibold">The Experience</p>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white max-w-3xl leading-[1.02] tracking-tight">
+            Arrive with intent.
+          </h2>
+          <p className="text-lg md:text-xl text-gray-200/90 max-w-xl mt-6 leading-relaxed">
+            Delivered to your door, keys in hand, in showroom condition. All you bring is the occasion.
+          </p>
         </div>
       </div>
     </section>
@@ -360,46 +299,39 @@ function FleetSection({ vehicles }: { vehicles: FleetCard[] }) {
 }
 
 // ============================================================================
-// SERVICE CATEGORIES SECTION
+// SERVICES — editorial list (not cards)
 // ============================================================================
 
-const serviceCategories = [
-  { icon: Car, title: 'Luxury Car Sales', description: 'Premium pre-owned vehicles with verified history and full documentation.', href: '/cars' },
-  { icon: Key, title: 'Luxury Car Rental', description: 'Exotic and luxury vehicles for weddings, airport transfers and executive travel.', href: '/hire' },
-  { icon: Globe, title: 'Vehicle Sourcing', description: "Can't find what you want? We source any vehicle, locally or internationally.", href: '/sourcing' },
-  { icon: Wrench, title: 'Spare Parts & Customization', description: 'Genuine spare parts, body kits and bespoke customization for your vehicle.', href: '/services' },
-  { icon: Building, title: 'Corporate Mobility', description: 'Fleet solutions and long-term contracts tailored for organizations.', href: '/corporate' },
-  { icon: Settings, title: 'Maintenance & Support', description: 'Professional maintenance, servicing and dedicated after-sale support.', href: '/services' },
+const services = [
+  { icon: Key, title: 'Luxury Car Hire', line: 'Weddings, arrivals and executive travel.', href: '/hire' },
+  { icon: Car, title: 'Luxury Car Sales', line: 'Premium vehicles, verified and documented.', href: '/cars' },
+  { icon: Globe, title: 'Vehicle Sourcing', line: 'We find any vehicle, locally or abroad.', href: '/sourcing' },
+  { icon: Building, title: 'Corporate Mobility', line: 'Fleet solutions for organisations.', href: '/corporate' },
+  { icon: Wrench, title: 'Parts & Customisation', line: 'Genuine parts, body kits, bespoke work.', href: '/services' },
+  { icon: Settings, title: 'Maintenance & Support', line: 'Servicing and dedicated after-sale care.', href: '/services' },
 ]
 
-function ServiceCategories() {
+function Services() {
   return (
-    <section className="w-full py-20 md:py-28 lg:py-36 bg-[#0A0A0A]" aria-labelledby="services-heading">
-      <div className="px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28">
-        <div className="text-center mb-12 md:mb-16">
-          <span className="text-sm md:text-base text-[#C8952A] uppercase tracking-widest mb-3 block font-semibold">
-            What We Offer
-          </span>
-          <h2 id="services-heading" className="text-3xl md:text-5xl font-bold text-white">Our Services</h2>
+    <section className={`w-full section-neutral ${PAD} py-20 md:py-32`} aria-labelledby="services-heading">
+      <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-24">
+        <div className="reveal lg:sticky lg:top-28 lg:self-start">
+          <p className="text-xs text-[#8A6410] uppercase tracking-[0.3em] mb-6 font-semibold">What we do</p>
+          <h2 id="services-heading" className="text-4xl md:text-6xl font-bold text-[#1A1815] leading-[1.05] tracking-tight">Six disciplines,<br />one standard.</h2>
+          <p className="text-lg text-[#5C574F] mt-7 max-w-md leading-relaxed">
+            From a single wedding entrance to a managed corporate fleet — held to the same exacting measure, whichever door you enter through.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {serviceCategories.map((s) => (
-            <Link
-              key={s.title}
-              href={s.href}
-              aria-label={s.title}
-              className="group bg-[#1A1A1A] border border-gray-800 rounded-2xl p-8 hover:border-[#C8952A] transition-colors flex flex-col"
-            >
-              <div className="w-14 h-14 rounded-full bg-[#C8952A]/10 flex items-center justify-center mb-5 group-hover:bg-[#C8952A]/20 transition-colors">
-                <s.icon className="w-7 h-7 text-[#C8952A]" />
+        <div className="reveal">
+          {services.map((s) => (
+            <Link key={s.title} href={s.href} aria-label={s.title} className="group flex items-center gap-6 py-7 border-b border-[#DDD8CE] first:border-t">
+              <s.icon className="w-6 h-6 text-[#8A6410] shrink-0" />
+              <div className="flex-1 min-w-0">
+                <h3 className="text-xl md:text-2xl font-bold text-[#1A1815] group-hover:text-[#8A6410] transition-colors">{s.title}</h3>
+                <p className="text-[#5C574F] text-sm md:text-base mt-1">{s.line}</p>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">{s.title}</h3>
-              <p className="text-gray-400 text-sm md:text-base mb-5 flex-1">{s.description}</p>
-              <span className="inline-flex items-center gap-2 text-[#C8952A] font-semibold text-sm uppercase tracking-wide">
-                Learn More
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </span>
+              <ArrowRight className="w-5 h-5 text-[#A9A399] group-hover:text-[#8A6410] group-hover:translate-x-1 transition-all shrink-0" />
             </Link>
           ))}
         </div>
@@ -409,73 +341,74 @@ function ServiceCategories() {
 }
 
 // ============================================================================
-// HOW IT WORKS SECTION
+// THE SEAMLESS JOURNEY — a real four-step sequence (light interlude)
 // ============================================================================
 
 const steps = [
-  { number: '01', icon: Search, title: 'Select Car', description: 'Browse our curated collection of elite performance vehicles.' },
-  { number: '02', icon: CreditCard, title: 'Book & Pay', description: 'Secure your dates with our luxury concierge payment system.' },
-  { number: '03', icon: BadgeCheck, title: 'Verify ID', description: 'Quick digital verification for an effortless hand-over experience.' },
-  { number: '04', icon: Key, title: 'Drive', description: 'The road is yours. Excellence in every mile of the journey.' },
+  { icon: Search, title: 'Select', description: 'Browse the collection and choose the vehicle for your moment.' },
+  { icon: CreditCard, title: 'Reserve', description: 'Confirm your dates and secure the booking online.' },
+  { icon: BadgeCheck, title: 'Verify', description: 'A quick digital ID check for an effortless handover.' },
+  { icon: Key, title: 'Drive', description: 'Collected or delivered — the road, and the day, are yours.' },
 ]
 
-function HowItWorks() {
+function Journey() {
   return (
-    <section className="w-full py-20 md:py-28 lg:py-36 bg-[#F8F6F2]">
-      <div className="px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 text-center">
-        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#0A0A0A] mb-16 md:mb-20">
-          The Seamless Journey
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 relative">
-          {/* Line decoration */}
-          <div className="hidden md:block absolute top-12 left-0 w-full h-[1px] bg-[#C8952A]/20 z-0" />
-
-          {steps.map((step) => (
-            <div key={step.number} className="relative z-10 flex flex-col items-center">
-              <div className="w-20 h-20 md:w-24 md:h-24 bg-white border border-[#C8952A]/30 rounded-full flex items-center justify-center mb-6 md:mb-8 shadow-sm hover:scale-105 transition-transform">
-                <step.icon className="text-[#C8952A] w-8 h-8 md:w-10 md:h-10" />
-              </div>
-              <h3 className="font-semibold text-[#1A1A1A] text-lg md:text-xl mb-2 md:mb-3">{step.title}</h3>
-              <p className="text-gray-700 text-sm md:text-base px-4">{step.description}</p>
+    <section className={`w-full bg-[#F3F0E9] ${PAD} py-24 md:py-36`}>
+      <div className="max-w-3xl reveal">
+        <p className="text-xs text-[#A9781E] uppercase tracking-[0.3em] mb-6 font-semibold">How it works</p>
+        <h2 className="text-4xl md:text-6xl font-bold text-[#0A0A0A] leading-[1.05] tracking-tight mb-16 md:mb-24">The seamless journey</h2>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-y-12 md:gap-10">
+        {steps.map((step, i) => (
+          <div key={step.title} className="reveal">
+            <div className="flex items-baseline gap-4 mb-5">
+              <span className="text-[#C8952A] font-display text-2xl font-bold tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+              <div className="h-px flex-1 bg-[#0A0A0A]/10" />
             </div>
-          ))}
-        </div>
+            <step.icon className="w-8 h-8 text-[#A9781E] mb-4" />
+            <h3 className="text-xl md:text-2xl font-bold text-[#0A0A0A] mb-2">{step.title}</h3>
+            <p className="text-[#4A453C] text-sm md:text-base leading-relaxed pr-4">{step.description}</p>
+          </div>
+        ))}
       </div>
     </section>
   )
 }
 
 // ============================================================================
-// TESTIMONIALS SECTION
+// CRAFTSMANSHIP — split image + copy, trust-building
 // ============================================================================
 
-function Testimonials() {
+const confidence = [
+  'Meticulously inspected before every handover.',
+  'Transparent pricing, in both UGX and USD.',
+  'One point of contact, from enquiry to return.',
+]
+
+function Craftsmanship() {
   return (
-    <section className="w-full py-20 md:py-28 lg:py-36 bg-[#0A0A0A]">
-      <div className="px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28">
-        <div className="max-w-4xl mx-auto text-center border-y border-gray-800 py-16 md:py-24">
-          {/* Star Rating */}
-          <div className="flex justify-center gap-2 mb-8 md:mb-10">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-5 h-5 md:w-6 md:h-6 text-[#C8952A] fill-[#C8952A]" />
+    <section className={`w-full bg-[#0A0A0A] ${PAD} py-20 md:py-32`}>
+      <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="relative aspect-[4/5] md:aspect-[4/4.4] overflow-hidden rounded-2xl bg-[#141210] reveal">
+          <Image src={CRAFT_IMG} alt="Close attention to a luxury vehicle's detail" fill className="object-cover" sizes="(max-width:1024px) 100vw, 50vw" />
+        </div>
+        <div className="reveal">
+          <p className="text-xs text-[#C8952A] uppercase tracking-[0.3em] mb-6 font-semibold">Why Mighty Rides</p>
+          <h2 className="text-4xl md:text-6xl font-bold text-white leading-[1.05] tracking-tight">A standard,<br />not a service.</h2>
+          <p className="text-lg text-gray-400 mt-7 max-w-lg leading-relaxed">
+            Since 2018, Kampala&apos;s executives, families and organisations have trusted us with their most important journeys. That trust is earned the same way each time — in the details.
+          </p>
+          <ul className="mt-9 space-y-4">
+            {confidence.map((c) => (
+              <li key={c} className="flex items-start gap-4">
+                <span className="mt-1 w-5 h-5 rounded-full bg-[#C8952A]/15 flex items-center justify-center shrink-0"><Check className="w-3 h-3 text-[#C8952A]" /></span>
+                <span className="text-gray-200 text-base md:text-lg">{c}</span>
+              </li>
             ))}
-          </div>
-
-          {/* Quote */}
-          <blockquote className="text-xl md:text-2xl lg:text-3xl text-white leading-snug mb-8 md:mb-10 italic">
-            &ldquo;The level of service provided by Mighty Rides is unparalleled in the region. The vehicle was in showroom condition and the delivery was handled with such professionalism that it redefined what I expect from luxury rental.&rdquo;
-          </blockquote>
-
-          {/* Attribution */}
-          <div>
-            <div className="text-[#C8952A] font-semibold uppercase tracking-widest text-sm md:text-base">
-              David Mukasa
-            </div>
-            <div className="text-gray-400 text-sm md:text-base mt-2">
-              Managing Director, Nile Capital Partners — Kampala
-            </div>
-          </div>
+          </ul>
+          <Link href="/about" className="inline-flex items-center gap-3 mt-10 text-[#C8952A] font-semibold uppercase tracking-wide text-sm border-b border-[#C8952A] pb-1 hover:gap-4 transition-all">
+            Our story <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </section>
@@ -483,45 +416,49 @@ function Testimonials() {
 }
 
 // ============================================================================
-// FINAL CTA SECTION
+// TESTIMONIAL — single editorial quote
+// ============================================================================
+
+function Testimonial() {
+  return (
+    <section className={`w-full section-neutral ${PAD} py-20 md:py-32`}>
+      <div className="max-w-4xl mx-auto text-center reveal">
+        <div className="flex justify-center gap-2 mb-10" aria-label="Five star rating">
+          {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 text-[#C8952A] fill-[#C8952A]" />)}
+        </div>
+        <blockquote className="text-2xl md:text-4xl text-[#1A1815] leading-snug font-display">
+          &ldquo;Unparalleled in the region. The vehicle was in showroom condition and the delivery was handled with such professionalism that it redefined what I expect from luxury rental.&rdquo;
+        </blockquote>
+        <div className="mt-10">
+          <div className="text-[#8A6410] font-semibold uppercase tracking-[0.2em] text-sm">David Mukasa</div>
+          <div className="text-[#6B6459] text-sm mt-2">Managing Director, Nile Capital Partners — Kampala</div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ============================================================================
+// FINAL CTA — full-bleed
 // ============================================================================
 
 function FinalCTA() {
   return (
-    <section className="relative w-full py-20 md:py-28 lg:py-36 overflow-hidden">
-      {/* Background Image */}
+    <section className="relative w-full py-24 md:py-40 overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <Image
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDAik8snEDPDURyMU2fIsYO5mCJ7Bm0HrmXtayEjjcwp-bmZtP9bUQ0FL5Tli094AGPxpj686I_vEr7JxmPg8wWgfsH55lYhuG3Zf316EJsTDpQ3D28e2eE__bmtYDP1hKjFZPOARqgYRmXu6GaMt--PujbpdSQIM9JDETU_bm5ZNZNUQ0fFlNXMvZ79IoPsOtt5RlSi6ylDsOqWWwfTlOaNeOuFtXsFEmb9fRg4ApexTDgnZvsXpqGYVDP60oVXbuyNE-zxXl-A8"
-          alt="Luxury car dashboard"
-          fill
-          className="object-cover opacity-30"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent" />
+        <Image src={CTA_IMG} alt="A luxury vehicle interior at night" fill className="object-cover opacity-30" sizes="100vw" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/85 to-transparent" />
       </div>
-
-      {/* Content */}
-      <div className="relative z-10 w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28">
-        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 md:mb-8">
-          Drive Your Dream Today
+      <div className={`relative z-10 w-full ${PAD} reveal`}>
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-7 leading-[1.02] tracking-tight max-w-3xl">
+          Your next journey<br />deserves this.
         </h2>
-        <p className="text-lg md:text-xl lg:text-2xl text-gray-300 mb-10 md:mb-12 max-w-2xl">
-          From corporate engagements to personal milestones, select the vehicle that represents your standard of excellence.
+        <p className="text-lg md:text-xl text-gray-300 mb-11 max-w-xl leading-relaxed">
+          Whether a milestone, a meeting, or a moment that matters — begin with the vehicle that carries it well.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
-          <Link
-            href="/cars"
-            className="bg-[#C8952A] text-black px-10 md:px-12 py-4 md:py-5 rounded-xl font-semibold text-center hover:bg-[#D4A644] transition-colors uppercase tracking-wide text-sm md:text-base"
-          >
-            Explore Inventory
-          </Link>
-          <Link
-            href="/contact"
-            className="border-2 border-[#C8952A] text-[#C8952A] px-10 md:px-12 py-4 md:py-5 rounded-xl font-semibold text-center hover:bg-[#C8952A]/10 transition-colors uppercase tracking-wide text-sm md:text-base"
-          >
-            Speak to Concierge
-          </Link>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Link href="/hire" className="bg-[#C8952A] text-black px-11 py-4 md:py-5 rounded-xl font-semibold text-center hover:bg-[#D4A644] transition-colors uppercase tracking-wide text-sm">Reserve a Vehicle</Link>
+          <Link href="/contact" className="border border-white/30 text-white px-11 py-4 md:py-5 rounded-xl font-semibold text-center hover:border-[#C8952A] hover:text-[#C8952A] transition-colors uppercase tracking-wide text-sm">Speak to Concierge</Link>
         </div>
       </div>
     </section>
@@ -529,7 +466,7 @@ function FinalCTA() {
 }
 
 // ============================================================================
-// MAIN PAGE
+// PAGE
 // ============================================================================
 
 async function getExchangeRate(): Promise<number> {
@@ -550,11 +487,13 @@ export default async function HomePage() {
       <LocalBusinessJsonLd />
       <Navbar />
       <Hero />
-      <TrustBar />
-      <FleetSection vehicles={vehicles} />
-      <ServiceCategories />
-      <HowItWorks />
-      <Testimonials />
+      <EditorialIntro />
+      <Collection vehicles={vehicles} />
+      <LifestyleBand />
+      <Services />
+      <Journey />
+      <Craftsmanship />
+      <Testimonial />
       <FinalCTA />
       <Footer />
       <WhatsAppButton message="Hi, I'm interested in your vehicles." />
