@@ -21,7 +21,7 @@ export default async function ConciergePage() {
   for (const s of settings) settingsMap[s.key] = s.value
 
   return (
-    <main className="min-h-screen bg-brand-black">
+    <main className="min-h-screen bg-[#141312]">
       <Navbar />
 
       {/* Hero Section */}
@@ -80,18 +80,18 @@ export default async function ConciergePage() {
       </section>
 
       {/* What Concierge Means */}
-      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 bg-brand-surface">
+      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 section-neutral">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="font-label text-label-sm text-brand-gold uppercase tracking-widest mb-2 block">
+          <div className="text-center mb-16 reveal">
+            <span className="font-label text-label-sm text-[#8A6410] uppercase tracking-widest mb-2 block">
               The Concierge Experience
             </span>
-            <h2 className="font-display text-[32px] md:text-[48px] font-bold text-brand-white">
+            <h2 className="font-display text-[32px] md:text-[48px] font-bold text-[#1A1815]">
               What To Expect
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 reveal">
             {[
               { 
                 icon: Eye, 
@@ -114,15 +114,15 @@ export default async function ConciergePage() {
                 description: 'Your inquiry and details remain strictly private. Discretion guaranteed.' 
               },
             ].map((item, index) => (
-              <div 
-                key={item.title} 
-                className="bg-brand-black rounded-xl border border-brand-border p-8 hover:border-brand-gold/50 transition-colors group"
+              <div
+                key={item.title}
+                className="card-light p-8 group"
               >
                 <div className="w-16 h-16 bg-brand-gold/10 border border-brand-gold/30 rounded-full flex items-center justify-center mb-6 group-hover:bg-brand-gold/20 transition-colors">
-                  <item.icon className="w-7 h-7 text-brand-gold" />
+                  <item.icon className="w-7 h-7 text-[#8A6410]" />
                 </div>
-                <h4 className="font-display text-xl font-bold text-brand-white mb-3">{item.title}</h4>
-                <p className="text-brand-silver text-sm leading-relaxed">{item.description}</p>
+                <h4 className="font-display text-xl font-bold text-[#1A1815] mb-3">{item.title}</h4>
+                <p className="text-[#5C574F] text-sm leading-relaxed">{item.description}</p>
               </div>
             ))}
           </div>
@@ -130,9 +130,9 @@ export default async function ConciergePage() {
       </section>
 
       {/* Process Steps */}
-      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 bg-brand-black">
+      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 section-dark">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 reveal">
             <span className="font-label text-label-sm text-brand-gold uppercase tracking-widest mb-2 block">
               Simple Process
             </span>
@@ -150,7 +150,7 @@ export default async function ConciergePage() {
             ].map((item, index) => (
               <div key={item.step} className="text-center relative">
                 {index < 3 && (
-                  <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-[1px] bg-brand-border" />
+                  <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-[1px] bg-white/10" />
                 )}
                 <div className="relative z-10">
                   <div className="w-16 h-16 bg-brand-surface border-2 border-brand-gold rounded-full flex items-center justify-center mx-auto mb-4">
@@ -166,28 +166,28 @@ export default async function ConciergePage() {
       </section>
 
       {/* Request Form */}
-      <section id="request" className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 bg-brand-surface">
+      <section id="request" className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 section-light">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
-              <span className="font-label text-label-sm text-brand-gold uppercase tracking-widest mb-2 block">
+            <div className="text-center mb-12 reveal">
+              <span className="font-label text-label-sm text-[#8A6410] uppercase tracking-widest mb-2 block">
                 Private Consultation
               </span>
-              <h2 className="font-display text-[32px] md:text-[48px] font-bold text-brand-white mb-4">
+              <h2 className="font-display text-[32px] md:text-[48px] font-bold text-[#1A1815] mb-4">
                 Request Concierge Service
               </h2>
-              <p className="text-brand-silver">
+              <p className="text-[#5C574F]">
                 Fill out the form below and a dedicated advisor will contact you within 4 hours.
               </p>
             </div>
 
-            <form action="/api/inquiries" method="POST" className="bg-brand-black rounded-xl border border-brand-border p-8 md:p-10 space-y-8">
+            <form action="/api/inquiries" method="POST" className="card-light p-8 md:p-10 space-y-8 reveal">
               <input type="hidden" name="type" value="CONCIERGE" />
               <input type="text" name="website" className="hidden" tabIndex={-1} autoComplete="off" />
 
               {/* Personal Details */}
               <div>
-                <h3 className="font-display text-lg font-bold text-brand-white mb-6 flex items-center gap-2">
+                <h3 className="font-display text-lg font-bold text-[#1A1815] mb-6 flex items-center gap-2">
                   <User className="w-5 h-5 text-brand-gold" />
                   Your Details
                 </h3>
@@ -201,7 +201,7 @@ export default async function ConciergePage() {
                       type="text"
                       name="name"
                       required
-                      className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                      className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                     />
                   </div>
                   <div>
@@ -212,7 +212,7 @@ export default async function ConciergePage() {
                       type="tel"
                       name="phone"
                       required
-                      className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                      className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                     />
                   </div>
                 </div>
@@ -225,14 +225,14 @@ export default async function ConciergePage() {
                     type="email"
                     name="email"
                     required
-                    className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                    className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                   />
                 </div>
               </div>
 
               {/* Vehicle Interest */}
               <div className="pt-6 border-t border-brand-border">
-                <h3 className="font-display text-lg font-bold text-brand-white mb-6 flex items-center gap-2">
+                <h3 className="font-display text-lg font-bold text-[#1A1815] mb-6 flex items-center gap-2">
                   <Eye className="w-5 h-5 text-brand-gold" />
                   Vehicle Interest
                 </h3>
@@ -246,7 +246,7 @@ export default async function ConciergePage() {
                       type="text"
                       name="vehicle_interest"
                       placeholder="e.g. Range Rover Vogue"
-                      className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                      className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                     />
                   </div>
                   <div>
@@ -255,7 +255,7 @@ export default async function ConciergePage() {
                     </label>
                     <select
                       name="budget"
-                      className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                      className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                     >
                       <option value="">Select budget</option>
                       <option value="200-400M">200M - 400M UGX</option>
@@ -271,7 +271,7 @@ export default async function ConciergePage() {
                   </label>
                   <select
                     name="timeline"
-                    className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                    className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                   >
                     <option value="">Select timeline</option>
                     <option value="This week">This week</option>
@@ -284,7 +284,7 @@ export default async function ConciergePage() {
 
               {/* Contact Preferences */}
               <div className="pt-6 border-t border-brand-border">
-                <h3 className="font-display text-lg font-bold text-brand-white mb-6 flex items-center gap-2">
+                <h3 className="font-display text-lg font-bold text-[#1A1815] mb-6 flex items-center gap-2">
                   <Clock className="w-5 h-5 text-brand-gold" />
                   Contact Preferences
                 </h3>
@@ -296,7 +296,7 @@ export default async function ConciergePage() {
                     </label>
                     <select
                       name="contact_preference"
-                      className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                      className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                     >
                       <option value="WhatsApp">WhatsApp</option>
                       <option value="Phone">Phone Call</option>
@@ -309,7 +309,7 @@ export default async function ConciergePage() {
                     </label>
                     <select
                       name="best_time"
-                      className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                      className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                     >
                       <option value="Morning">Morning (8am - 12pm)</option>
                       <option value="Afternoon">Afternoon (12pm - 5pm)</option>
@@ -326,7 +326,7 @@ export default async function ConciergePage() {
                     name="message"
                     rows={4}
                     placeholder="Tell us about your specific requirements..."
-                    className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold resize-none"
+                    className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A] resize-none"
                   />
                 </div>
               </div>
@@ -335,7 +335,7 @@ export default async function ConciergePage() {
                 Request Private Concierge <ArrowRight className="w-4 h-4" />
               </button>
 
-              <p className="text-xs text-brand-muted text-center flex items-center justify-center gap-2">
+              <p className="text-xs text-[#8A857C] text-center flex items-center justify-center gap-2">
                 <CheckCircle className="w-3 h-3" />
                 Your information is secure and confidential.
               </p>
@@ -345,12 +345,12 @@ export default async function ConciergePage() {
       </section>
 
       {/* CTA */}
-      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 bg-brand-black">
-        <div className="max-w-7xl mx-auto text-center">
+      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 section-dark border-t border-white/5">
+        <div className="max-w-7xl mx-auto text-center reveal">
           <h2 className="font-display text-[28px] md:text-[40px] font-bold text-brand-white mb-6">
             Looking for Something Specific?
           </h2>
-          <p className="text-brand-silver max-w-xl mx-auto mb-8">
+          <p className="text-[#B7B2AA] max-w-xl mx-auto mb-8">
             Our global network can source virtually any vehicle. 
             From vintage classics to the latest hypercars.
           </p>

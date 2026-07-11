@@ -70,15 +70,15 @@ function CategoryTabs({ activeCategory, counts }: { activeCategory: string; coun
           <Link
             key={cat.key}
             href={cat.key === 'ALL' ? '/blog' : `/blog?category=${cat.key}`}
-            className={`inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-medium border transition-all duration-300 ${
+            className={`inline-flex items-center gap-2 px-4 py-2 text-xs sm:text-sm font-medium border rounded-full transition-all duration-300 ${
               isActive
-                ? 'bg-brand-gold text-brand-black border-brand-gold'
-                : 'bg-transparent text-brand-silver border-brand-border hover:border-brand-gold/50 hover:text-brand-gold'
+                ? 'bg-[#C8952A] text-black border-[#C8952A]'
+                : 'bg-white text-[#5C574F] border-[#DAD6CD] hover:border-[#C8952A]/60 hover:text-[#8A6410]'
             }`}
           >
             {cat.label}
             {count > 0 && (
-              <span className={`text-[10px] px-1.5 py-0.5 rounded ${isActive ? 'bg-brand-black/20' : 'bg-brand-surface-2'}`}>
+              <span className={`text-[10px] px-1.5 py-0.5 rounded ${isActive ? 'bg-black/15' : 'bg-[#EFEDE7]'}`}>
                 {count}
               </span>
             )}
@@ -108,7 +108,7 @@ function BlogCard({ post, index }: { post: Awaited<ReturnType<typeof getBlogPost
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="card group overflow-hidden hover:-translate-y-1 sm:hover:-translate-y-2 transition-all duration-500 hover:shadow-xl hover:shadow-brand-gold/10"
+      className="card-light group !p-0"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
       {/* Cover Image */}
@@ -122,8 +122,8 @@ function BlogCard({ post, index }: { post: Awaited<ReturnType<typeof getBlogPost
             className="object-cover group-hover:scale-110 transition-transform duration-700"
           />
         ) : (
-          <div className="w-full h-full bg-brand-surface-2 flex items-center justify-center">
-            <Tag className="w-12 h-12 text-brand-muted" />
+          <div className="w-full h-full bg-[#EFEDE7] flex items-center justify-center">
+            <Tag className="w-12 h-12 text-[#C9C4BA]" />
           </div>
         )}
         
@@ -149,25 +149,25 @@ function BlogCard({ post, index }: { post: Awaited<ReturnType<typeof getBlogPost
       <div className="p-4 sm:p-6">
         {/* Date */}
         {formattedDate && (
-          <div className="flex items-center gap-2 text-[10px] sm:text-xs text-brand-muted mb-2 sm:mb-3">
+          <div className="flex items-center gap-2 text-[10px] sm:text-xs text-[#8A857C] mb-2 sm:mb-3">
             <Calendar className="w-3 h-3" />
             {formattedDate}
           </div>
         )}
-        
+
         {/* Title */}
-        <h3 className="font-display text-base sm:text-lg font-bold text-brand-white group-hover:text-brand-gold transition-colors line-clamp-2 mb-2">
+        <h3 className="font-display text-base sm:text-lg font-bold text-[#1A1815] group-hover:text-[#8A6410] transition-colors line-clamp-2 mb-2">
           {post.title}
         </h3>
-        
+
         {/* Excerpt */}
-        <p className="text-xs sm:text-sm text-brand-silver line-clamp-2 mb-3 sm:mb-4">
+        <p className="text-xs sm:text-sm text-[#5C574F] line-clamp-2 mb-3 sm:mb-4">
           {excerpt}
         </p>
-        
+
         {/* Read More */}
-        <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-brand-border">
-          <span className="text-brand-gold text-xs sm:text-sm font-medium flex items-center gap-1.5 group-hover:gap-2 transition-all">
+        <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-[#ECEAE3]">
+          <span className="text-[#8A6410] text-xs sm:text-sm font-medium flex items-center gap-1.5 group-hover:gap-2 transition-all">
             Read More
             <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
           </span>
@@ -190,13 +190,13 @@ async function PostsGrid({ category }: { category: string }) {
   if (posts.length === 0) {
     return (
       <div className="text-center py-16 sm:py-24">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-brand-surface-2 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
-          <Tag className="w-8 h-8 sm:w-10 sm:h-10 text-brand-muted" />
+        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#EFEDE7] rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+          <Tag className="w-8 h-8 sm:w-10 sm:h-10 text-[#C9C4BA]" />
         </div>
-        <h3 className="font-display text-xl sm:text-2xl font-bold text-brand-white mb-2">
+        <h3 className="font-display text-xl sm:text-2xl font-bold text-[#1A1815] mb-2">
           No Posts Found
         </h3>
-        <p className="text-brand-silver text-sm sm:text-base mb-6">
+        <p className="text-[#5C574F] text-sm sm:text-base mb-6">
           {category === 'ALL' 
             ? 'No blog posts have been published yet. Check back soon!'
             : `No posts in this category yet. Browse all posts instead.`}
@@ -228,18 +228,18 @@ function PostsGridSkeleton() {
     <>
       <div className="flex flex-wrap gap-2 mb-8">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="w-24 h-9 bg-brand-surface-2 rounded animate-pulse" />
+          <div key={i} className="w-24 h-9 bg-[#E7E4DC] rounded-full animate-pulse" />
         ))}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {[1, 2, 3, 4, 5, 6].map((i) => (
-          <div key={i} className="card overflow-hidden">
-            <div className="aspect-[16/10] bg-brand-surface-2 animate-pulse" />
+          <div key={i} className="card-light !p-0 overflow-hidden">
+            <div className="aspect-[16/10] bg-[#E7E4DC] animate-pulse" />
             <div className="p-6 space-y-3">
-              <div className="w-20 h-3 bg-brand-surface-2 rounded animate-pulse" />
-              <div className="w-3/4 h-5 bg-brand-surface-2 rounded animate-pulse" />
-              <div className="w-full h-4 bg-brand-surface-2 rounded animate-pulse" />
-              <div className="w-2/3 h-4 bg-brand-surface-2 rounded animate-pulse" />
+              <div className="w-20 h-3 bg-[#E7E4DC] rounded animate-pulse" />
+              <div className="w-3/4 h-5 bg-[#E7E4DC] rounded animate-pulse" />
+              <div className="w-full h-4 bg-[#E7E4DC] rounded animate-pulse" />
+              <div className="w-2/3 h-4 bg-[#E7E4DC] rounded animate-pulse" />
             </div>
           </div>
         ))}
@@ -274,11 +274,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const { category = 'ALL' } = await searchParams
 
   return (
-    <main className="min-h-screen bg-brand-black flex flex-col">
+    <main className="min-h-screen bg-[#141312] flex flex-col">
       <Navbar />
-      
+
       {/* Hero */}
-      <section className="pt-24 sm:pt-32 pb-8 sm:pb-16 bg-brand-surface relative overflow-hidden">
+      <section className="pt-24 sm:pt-32 pb-8 sm:pb-16 section-dark relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(200,149,42,0.08),transparent_70%)]" />
         <div className="container mx-auto px-4 sm:px-6 relative">
           <p className="eyebrow mb-2">OUR BLOG</p>
@@ -295,7 +295,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       </section>
 
       {/* Posts Grid */}
-      <section className="section bg-brand-black flex-1">
+      <section className="section section-light flex-1">
         <div className="container mx-auto px-4 sm:px-6">
           <Suspense fallback={<PostsGridSkeleton />}>
             <PostsGrid category={category} />
@@ -304,7 +304,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="py-12 sm:py-16 bg-brand-surface border-t border-brand-border">
+      <section className="py-12 sm:py-16 section-dark border-t border-white/5">
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <h2 className="font-display text-xl sm:text-2xl font-bold text-brand-white mb-2">
             Stay Updated

@@ -58,7 +58,7 @@ function RentalCard({ vehicle, currency }: { vehicle: {
     : 'bg-red-500 text-white'
 
   return (
-    <div className="bg-[#1A1A1A] rounded-2xl overflow-hidden border border-gray-800 transition-all duration-500 hover:border-[#C8952A] group shadow-lg">
+    <div className="card-light group">
       {/* Image Container */}
       <div className="relative h-56 overflow-hidden">
         {photos[0] ? (
@@ -70,8 +70,8 @@ function RentalCard({ vehicle, currency }: { vehicle: {
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
         ) : (
-          <div className="w-full h-full bg-[#2A2A2A] flex items-center justify-center">
-            <Car className="w-12 h-12 text-gray-600" />
+          <div className="w-full h-full bg-[#EFEDE7] flex items-center justify-center">
+            <Car className="w-12 h-12 text-[#C9C4BA]" />
           </div>
         )}
         
@@ -92,19 +92,19 @@ function RentalCard({ vehicle, currency }: { vehicle: {
 
       {/* Content */}
       <div className="p-6">
-        <h4 className="text-xl font-bold text-white mb-2">
+        <h4 className="text-xl font-bold text-[#1A1815] mb-2">
           {vehicle.name}
         </h4>
-        
+
         {/* Specs Tags */}
         <div className="flex gap-2 mb-4 flex-wrap">
           {specs.body_type && (
-            <span className="text-[10px] bg-[#2A2A2A] text-[#C8952A] px-2 py-1 rounded uppercase">
+            <span className="text-[10px] bg-[#F2F0EA] border border-[#ECEAE3] text-[#8A6410] px-2 py-1 rounded uppercase">
               {specs.body_type}
             </span>
           )}
           {specs.transmission && (
-            <span className="text-[10px] bg-[#2A2A2A] text-[#C8952A] px-2 py-1 rounded uppercase">
+            <span className="text-[10px] bg-[#F2F0EA] border border-[#ECEAE3] text-[#8A6410] px-2 py-1 rounded uppercase">
               {specs.transmission}
             </span>
           )}
@@ -113,10 +113,10 @@ function RentalCard({ vehicle, currency }: { vehicle: {
         {/* Price */}
         <div className="flex justify-between items-end mb-6">
           <div>
-            <p className="text-gray-400 text-xs uppercase mb-1">Daily Rate</p>
-            <p className="text-[#C8952A] text-xl font-bold">
+            <p className="text-[#8A857C] text-xs uppercase mb-1">Daily Rate</p>
+            <p className="text-[#8A6410] text-xl font-bold">
               {priceLabel}
-              <span className="text-gray-400 font-normal text-sm">/day</span>
+              <span className="text-[#8A857C] font-normal text-sm">/day</span>
             </p>
           </div>
         </div>
@@ -133,7 +133,7 @@ function RentalCard({ vehicle, currency }: { vehicle: {
           <button
             type="button"
             disabled
-            className="w-full bg-gray-700 text-gray-400 font-bold py-4 rounded-xl uppercase tracking-wide cursor-not-allowed text-sm"
+            className="w-full bg-[#E7E4DC] text-[#9C978D] font-bold py-4 rounded-xl uppercase tracking-wide cursor-not-allowed text-sm"
           >
             Unavailable
           </button>
@@ -190,7 +190,7 @@ export default async function HirePage({ searchParams }: HirePageProps) {
   const availableCount = vehicles.filter(v => v.status === 'AVAILABLE').length
 
   return (
-    <main className="min-h-screen bg-[#0A0A0A] pt-20">
+    <main className="min-h-screen bg-[#141312] pt-20">
       <Navbar />
 
       {/* Hero Section */}
@@ -223,25 +223,25 @@ export default async function HirePage({ searchParams }: HirePageProps) {
       </section>
 
       {/* Occasion Selector */}
-      <section className="py-16 md:py-24 px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28">
+      <section className="section-neutral py-16 md:py-24 px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28">
         <div className="">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Designed For Your Moments</h2>
+          <div className="text-center mb-12 reveal">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#1A1815] mb-2">Designed For Your Moments</h2>
             <div className="w-20 h-1 bg-[#C8952A] mx-auto" />
           </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-6">
+
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-6 reveal">
             {/* All Vehicles Tile */}
             <Link
               href="/hire"
-              className={`group flex flex-col items-center p-6 md:p-8 rounded-xl transition-all duration-300 ${
-                selectedOccasion === 'all' 
-                  ? 'bg-[#1A1A1A] border-2 border-[#C8952A]' 
-                  : 'bg-[#1A1A1A] border border-gray-800 hover:border-[#C8952A]/50'
+              className={`group flex flex-col items-center p-6 md:p-8 rounded-xl bg-white transition-all duration-300 shadow-[0_1px_2px_rgba(26,24,21,0.04),0_8px_22px_rgba(26,24,21,0.06)] hover:-translate-y-1 ${
+                selectedOccasion === 'all'
+                  ? 'border-2 border-[#C8952A]'
+                  : 'border border-[#ECEAE3] hover:border-[#C8952A]/50'
               }`}
             >
-              <Car className="text-[#C8952A] w-8 h-8 md:w-10 md:h-10 mb-3 group-hover:scale-110 transition-transform" />
-              <span className="text-sm text-white uppercase font-semibold">All</span>
+              <Car className="text-[#8A6410] w-8 h-8 md:w-10 md:h-10 mb-3 group-hover:scale-110 transition-transform" />
+              <span className="text-sm text-[#1A1815] uppercase font-semibold">All</span>
             </Link>
 
             {/* Occasion Tiles */}
@@ -249,14 +249,14 @@ export default async function HirePage({ searchParams }: HirePageProps) {
               <Link
                 key={occasion.id}
                 href={`/hire?occasion=${occasion.id}`}
-                className={`group flex flex-col items-center p-6 md:p-8 rounded-xl transition-all duration-300 ${
-                  selectedOccasion === occasion.id 
-                    ? 'bg-[#1A1A1A] border-2 border-[#C8952A]' 
-                    : 'bg-[#1A1A1A] border border-gray-800 hover:border-[#C8952A]/50'
+                className={`group flex flex-col items-center p-6 md:p-8 rounded-xl bg-white transition-all duration-300 shadow-[0_1px_2px_rgba(26,24,21,0.04),0_8px_22px_rgba(26,24,21,0.06)] hover:-translate-y-1 ${
+                  selectedOccasion === occasion.id
+                    ? 'border-2 border-[#C8952A]'
+                    : 'border border-[#ECEAE3] hover:border-[#C8952A]/50'
                 }`}
               >
-                <occasion.icon className="text-[#C8952A] w-8 h-8 md:w-10 md:h-10 mb-3 group-hover:scale-110 transition-transform" />
-                <span className="text-sm text-white uppercase font-semibold">{occasion.label}</span>
+                <occasion.icon className="text-[#8A6410] w-8 h-8 md:w-10 md:h-10 mb-3 group-hover:scale-110 transition-transform" />
+                <span className="text-sm text-[#1A1815] uppercase font-semibold">{occasion.label}</span>
               </Link>
             ))}
           </div>
@@ -264,29 +264,29 @@ export default async function HirePage({ searchParams }: HirePageProps) {
       </section>
 
       {/* Main Content: Filter + Fleet */}
-      <section className="px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-12">
+      <section className="section-light px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24">
         <div className="">
           {/* Results Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-            <p className="text-gray-400">
-              Showing <span className="text-white font-bold">{vehicles.length}</span> vehicles
-              {availableCount > 0 && <span className="text-[#C8952A]"> ({availableCount} available)</span>}
+            <p className="text-[#5C574F]">
+              Showing <span className="text-[#1A1815] font-bold">{vehicles.length}</span> vehicles
+              {availableCount > 0 && <span className="text-[#8A6410] font-semibold"> ({availableCount} available)</span>}
             </p>
-            
+
             {/* Currency Toggle */}
-            <div className="flex items-center gap-2 bg-[#1A1A1A] p-1 rounded-full border border-gray-700">
-              <Link 
+            <div className="flex items-center gap-2 bg-white p-1 rounded-full border border-[#DAD6CD]">
+              <Link
                 href={{ pathname: '/hire', query: { ...params, currency: 'UGX' } }}
                 className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
-                  currency === 'UGX' ? 'bg-[#C8952A] text-black' : 'text-gray-400 hover:text-white'
+                  currency === 'UGX' ? 'bg-[#C8952A] text-black' : 'text-[#5C574F] hover:text-[#1A1815]'
                 }`}
               >
                 UGX
               </Link>
-              <Link 
+              <Link
                 href={{ pathname: '/hire', query: { ...params, currency: 'USD' } }}
                 className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
-                  currency === 'USD' ? 'bg-[#C8952A] text-black' : 'text-gray-400 hover:text-white'
+                  currency === 'USD' ? 'bg-[#C8952A] text-black' : 'text-[#5C574F] hover:text-[#1A1815]'
                 }`}
               >
                 USD
@@ -295,15 +295,15 @@ export default async function HirePage({ searchParams }: HirePageProps) {
           </div>
 
           {vehicles.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 reveal">
               {vehicles.map(vehicle => (
                 <RentalCard key={vehicle.id} vehicle={vehicle} currency={currency} />
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 bg-[#1A1A1A] rounded-xl">
-              <Car className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-              <p className="text-gray-400 mb-4">
+            <div className="text-center py-20 bg-white border border-[#ECEAE3] rounded-xl shadow-[0_10px_30px_rgba(26,24,21,0.06)]">
+              <Car className="w-16 h-16 text-[#C9C4BA] mx-auto mb-4" />
+              <p className="text-[#5C574F] mb-4">
                 No vehicles available for this occasion right now.
               </p>
               <Link href="/hire" className="btn btn-primary">
@@ -315,17 +315,17 @@ export default async function HirePage({ searchParams }: HirePageProps) {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 md:py-24 bg-[#0A0A0A]">
+      <section className="py-16 md:py-24 section-dark">
         <div className="px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28">
           <div className="">
-            <div className="text-center mb-12">
+            <div className="text-center mb-12 reveal">
               <span className="text-sm text-[#C8952A] uppercase tracking-widest mb-4 block font-semibold">
                 How It Works
               </span>
               <h2 className="text-2xl md:text-3xl font-bold text-white">Simple 4-Step Process</h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 reveal">
               {[
                 { step: 1, title: 'Register', description: 'Create an account and verify your ID' },
                 { step: 2, title: 'Book & Pay Deposit', description: 'Select dates and pay 30% deposit online' },
@@ -337,10 +337,10 @@ export default async function HirePage({ searchParams }: HirePageProps) {
                     {item.step}
                   </div>
                   {index < 3 && (
-                    <div className="hidden md:block absolute top-7 left-1/2 w-full h-0.5 bg-gray-700" />
+                    <div className="hidden md:block absolute top-7 left-1/2 w-full h-0.5 bg-white/10" />
                   )}
                   <h4 className="text-lg font-bold text-white mb-2">{item.title}</h4>
-                  <p className="text-gray-400">{item.description}</p>
+                  <p className="text-[#B7B2AA]">{item.description}</p>
                 </div>
               ))}
             </div>

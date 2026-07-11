@@ -67,10 +67,10 @@ export default function ContactForm() {
         <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-green-500" />
         </div>
-        <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+        <h3 className="text-lg sm:text-xl font-bold text-[#1A1815] mb-2">
           Message Sent!
         </h3>
-        <p className="text-gray-400 text-sm sm:text-base mb-6">
+        <p className="text-[#5C574F] text-sm sm:text-base mb-6">
           Thank you for reaching out. We&apos;ll get back to you within 24 hours.
         </p>
         <button
@@ -102,7 +102,7 @@ export default function ContactForm() {
             required
             placeholder="John Doe"
             disabled={status === 'loading'}
-            className="w-full bg-[#0A0A0A] border border-gray-700 rounded-xl py-3 px-4 text-white placeholder-gray-500 focus:border-[#C8952A] outline-none transition-colors disabled:opacity-50"
+            className="w-full bg-white border border-[#DAD6CD] rounded-xl py-3 px-4 text-[#1A1815] placeholder-[#9C978D] focus:border-[#C8952A] outline-none transition-colors disabled:opacity-50"
           />
         </div>
         <div>
@@ -118,7 +118,7 @@ export default function ContactForm() {
             required
             placeholder="+256 XXX XXX XXX"
             disabled={status === 'loading'}
-            className="w-full bg-[#0A0A0A] border border-gray-700 rounded-xl py-3 px-4 text-white placeholder-gray-500 focus:border-[#C8952A] outline-none transition-colors disabled:opacity-50"
+            className="w-full bg-white border border-[#DAD6CD] rounded-xl py-3 px-4 text-[#1A1815] placeholder-[#9C978D] focus:border-[#C8952A] outline-none transition-colors disabled:opacity-50"
           />
         </div>
       </div>
@@ -136,7 +136,7 @@ export default function ContactForm() {
           required
           placeholder="your@email.com"
           disabled={status === 'loading'}
-          className="w-full bg-[#0A0A0A] border border-gray-700 rounded-xl py-3 px-4 text-white placeholder-gray-500 focus:border-[#C8952A] outline-none transition-colors disabled:opacity-50"
+          className="w-full bg-white border border-[#DAD6CD] rounded-xl py-3 px-4 text-[#1A1815] placeholder-[#9C978D] focus:border-[#C8952A] outline-none transition-colors disabled:opacity-50"
         />
       </div>
 
@@ -151,7 +151,7 @@ export default function ContactForm() {
           onChange={handleChange}
           required
           disabled={status === 'loading'}
-          className="w-full bg-[#0A0A0A] border border-gray-700 rounded-xl py-3 px-4 text-white focus:border-[#C8952A] outline-none appearance-none transition-colors disabled:opacity-50"
+          className="w-full bg-white border border-[#DAD6CD] rounded-xl py-3 px-4 text-[#1A1815] focus:border-[#C8952A] outline-none appearance-none transition-colors disabled:opacity-50"
         >
           <option value="">Select a subject</option>
           <option value="Vehicle Inquiry">Vehicle Inquiry</option>
@@ -178,7 +178,7 @@ export default function ContactForm() {
           rows={5}
           placeholder="How can we help you?"
           disabled={status === 'loading'}
-          className="w-full bg-[#0A0A0A] border border-gray-700 rounded-xl py-3 px-4 text-white placeholder-gray-500 focus:border-[#C8952A] outline-none transition-colors resize-none disabled:opacity-50"
+          className="w-full bg-white border border-[#DAD6CD] rounded-xl py-3 px-4 text-[#1A1815] placeholder-[#9C978D] focus:border-[#C8952A] outline-none transition-colors resize-none disabled:opacity-50"
         />
       </div>
 

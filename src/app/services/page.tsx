@@ -68,7 +68,7 @@ export default async function ServicesPage() {
   const whatsappNumber = settings.whatsapp_number || '256700000000'
   
   return (
-    <main className="min-h-screen bg-[#0A0A0A]">
+    <main className="min-h-screen bg-[#141312]">
       <Navbar />
 
       {/* Hero Section */}
@@ -122,21 +122,21 @@ export default async function ServicesPage() {
       </section>
 
       {/* Services Grid */}
-      <section id="services" className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 bg-[#1A1A1A]">
+      <section id="services" className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 section-neutral">
         <div className="">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 reveal">
             <div className="max-w-2xl">
-              <h2 className="text-[32px] md:text-[48px] font-bold text-white mb-4">
+              <h2 className="text-[32px] md:text-[48px] font-bold text-[#1A1815] mb-4">
                 Exceptional Tiers
               </h2>
-              <p className="text-gray-400">
-                Our service offerings are categorized to meet the exacting standards 
+              <p className="text-[#5C574F]">
+                Our service offerings are categorized to meet the exacting standards
                 of the luxury automotive sector.
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 reveal">
             {services.map((service) => (
               <div
                 key={service.id}
@@ -172,14 +172,14 @@ export default async function ServicesPage() {
       </section>
 
       {/* Brands Section */}
-      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 bg-[#1A1A1A] border-y border-gray-800">
+      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 section-dark border-y border-white/5">
         <div className="">
-          <p className="text-center text-gray-500 text-sm uppercase tracking-widest mb-6 font-semibold">
+          <p className="text-center text-[#9C978D] text-sm uppercase tracking-widest mb-6 font-semibold">
             Brands We Service
           </p>
           <div className="flex flex-wrap justify-center gap-4 md:gap-8">
             {brands.map((brand) => (
-              <span key={brand} className="text-gray-400 hover:text-[#C8952A] transition-colors">
+              <span key={brand} className="text-[#B7B2AA] hover:text-[#C8952A] transition-colors">
                 {brand}
               </span>
             ))}
@@ -188,45 +188,45 @@ export default async function ServicesPage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 bg-[#0A0A0A]">
+      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 section-light">
         <div className="">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <span className="text-xs text-[#C8952A] uppercase tracking-widest mb-4 block font-semibold">
+            <div className="reveal">
+              <span className="text-xs text-[#8A6410] uppercase tracking-widest mb-4 block font-semibold">
                 Why Choose Us
               </span>
-              <h2 className="text-[32px] md:text-[48px] font-bold text-white mb-8 leading-tight">
+              <h2 className="text-[32px] md:text-[48px] font-bold text-[#1A1815] mb-8 leading-tight">
                 Concours Service Portal
               </h2>
-              <p className="text-gray-400 text-lg mb-12 leading-relaxed">
-                Our concierge team is standing by to coordinate your vehicle&apos;s next 
+              <p className="text-[#5C574F] text-lg mb-12 leading-relaxed">
+                Our concierge team is standing by to coordinate your vehicle&apos;s next
                 performance session. A specialist will contact you within 2 business hours.
               </p>
 
               <div className="space-y-8">
                 <div className="flex items-start gap-6 group">
-                  <div className="w-14 h-14 flex items-center justify-center bg-[#1A1A1A] border border-gray-800 rounded-full text-[#C8952A] group-hover:scale-110 transition-transform flex-shrink-0">
+                  <div className="w-14 h-14 flex items-center justify-center bg-[#C8952A]/12 rounded-full text-[#8A6410] group-hover:scale-110 transition-transform flex-shrink-0">
                     <Shield className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-semibold text-white mb-2">
+                    <h4 className="text-lg font-semibold text-[#1A1815] mb-2">
                       Certified Technicians
                     </h4>
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-[#5C574F] text-sm">
                       Factory-trained experts for European and premium luxury brands.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-6 group">
-                  <div className="w-14 h-14 flex items-center justify-center bg-[#1A1A1A] border border-gray-800 rounded-full text-[#C8952A] group-hover:scale-110 transition-transform flex-shrink-0">
+                  <div className="w-14 h-14 flex items-center justify-center bg-[#C8952A]/12 rounded-full text-[#8A6410] group-hover:scale-110 transition-transform flex-shrink-0">
                     <Clock className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-semibold text-white mb-2">
+                    <h4 className="text-lg font-semibold text-[#1A1815] mb-2">
                       Priority Scheduling
                     </h4>
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-[#5C574F] text-sm">
                       Fast-track services reserved for members and elite clientele.
                     </p>
                   </div>
@@ -235,8 +235,8 @@ export default async function ServicesPage() {
             </div>
 
             {/* Service Request Form */}
-            <div id="inquiry" className="bg-[#1A1A1A] rounded-xl border border-gray-800 p-8 md:p-10">
-              <h3 className="text-2xl font-bold text-white mb-8">
+            <div id="inquiry" className="card-light p-8 md:p-10 reveal">
+              <h3 className="text-2xl font-bold text-[#1A1815] mb-8">
                 Request Service
               </h3>
 
@@ -254,7 +254,7 @@ export default async function ServicesPage() {
                       name="name"
                       required
                       placeholder="Enter name"
-                      className="mt-2 w-full bg-[#0A0A0A] border border-gray-800 rounded-xl py-4 px-4 text-white focus:border-[#C8952A] outline-none transition-colors"
+                      className="mt-2 w-full bg-white border border-[#DAD6CD] rounded-xl py-4 px-4 text-[#1A1815] focus:border-[#C8952A] outline-none transition-colors"
                     />
                   </div>
                   <div>
@@ -266,7 +266,7 @@ export default async function ServicesPage() {
                       name="email"
                       required
                       placeholder="email@example.com"
-                      className="mt-2 w-full bg-[#0A0A0A] border border-gray-800 rounded-xl py-4 px-4 text-white focus:border-[#C8952A] outline-none transition-colors"
+                      className="mt-2 w-full bg-white border border-[#DAD6CD] rounded-xl py-4 px-4 text-[#1A1815] focus:border-[#C8952A] outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -281,7 +281,7 @@ export default async function ServicesPage() {
                       name="phone"
                       required
                       placeholder="+256 700 000000"
-                      className="mt-2 w-full bg-[#0A0A0A] border border-gray-800 rounded-xl py-4 px-4 text-white focus:border-[#C8952A] outline-none transition-colors"
+                      className="mt-2 w-full bg-white border border-[#DAD6CD] rounded-xl py-4 px-4 text-[#1A1815] focus:border-[#C8952A] outline-none transition-colors"
                     />
                   </div>
                   <div>
@@ -290,7 +290,7 @@ export default async function ServicesPage() {
                     </label>
                     <select
                       name="vehicle_model"
-                      className="mt-2 w-full bg-[#0A0A0A] border border-gray-800 rounded-xl py-4 px-4 text-white focus:border-[#C8952A] outline-none transition-colors"
+                      className="mt-2 w-full bg-white border border-[#DAD6CD] rounded-xl py-4 px-4 text-[#1A1815] focus:border-[#C8952A] outline-none transition-colors"
                     >
                       <option>Range Rover SV</option>
                       <option>Porsche 911 GT3</option>
@@ -308,7 +308,7 @@ export default async function ServicesPage() {
                   <select
                     name="service_type"
                     required
-                    className="mt-2 w-full bg-[#0A0A0A] border border-gray-800 rounded-xl py-4 px-4 text-white focus:border-[#C8952A] outline-none transition-colors"
+                    className="mt-2 w-full bg-white border border-[#DAD6CD] rounded-xl py-4 px-4 text-[#1A1815] focus:border-[#C8952A] outline-none transition-colors"
                   >
                     <option value="">Select service</option>
                     <option value="Spare Parts">Spare Parts Inquiry</option>
@@ -326,7 +326,7 @@ export default async function ServicesPage() {
                     name="message"
                     rows={4}
                     placeholder="Special requirements..."
-                    className="mt-2 w-full bg-[#0A0A0A] border border-gray-800 rounded-xl py-4 px-4 text-white focus:border-[#C8952A] outline-none transition-colors resize-none"
+                    className="mt-2 w-full bg-white border border-[#DAD6CD] rounded-xl py-4 px-4 text-[#1A1815] focus:border-[#C8952A] outline-none transition-colors resize-none"
                   />
                 </div>
 
@@ -345,12 +345,12 @@ export default async function ServicesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 bg-[#1A1A1A]">
-        <div className=" text-center">
+      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 section-dark">
+        <div className=" text-center reveal">
           <h2 className="text-[28px] md:text-[40px] font-bold text-white mb-6">
             Need Something Not Listed?
           </h2>
-          <p className="text-gray-400 max-w-xl mx-auto mb-8">
+          <p className="text-[#B7B2AA] max-w-xl mx-auto mb-8">
             Our team can handle virtually any automotive requirement. 
             Contact us to discuss your specific needs.
           </p>

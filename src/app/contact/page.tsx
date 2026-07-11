@@ -36,11 +36,11 @@ export default async function ContactPage() {
   const address = settings.address || 'Mirembe Business Centre, Plot 18, Lugogo Bypass, Kampala, Uganda'
 
   return (
-    <main className="min-h-screen bg-[#0A0A0A] flex flex-col">
+    <main className="min-h-screen bg-[#141312] flex flex-col">
       <Navbar />
-      
+
       {/* Hero */}
-      <section className="pt-24 sm:pt-32 pb-8 sm:pb-16 bg-[#1A1A1A] relative overflow-hidden">
+      <section className="pt-24 sm:pt-32 pb-8 sm:pb-16 section-dark relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(200,149,42,0.08),transparent_70%)]" />
         <div className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 relative">
           <div className="">
@@ -50,7 +50,7 @@ export default async function ContactPage() {
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">
               Get in Touch
             </h1>
-            <p className="text-gray-400 mt-3 sm:mt-4 max-w-2xl text-sm sm:text-base">
+            <p className="text-[#B7B2AA] mt-3 sm:mt-4 max-w-2xl text-sm sm:text-base">
               Have questions? We&apos;re here to help. Reach out through any of the channels below or visit our showroom.
             </p>
             
@@ -61,13 +61,13 @@ export default async function ContactPage() {
       </section>
 
       {/* Contact Methods */}
-      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 bg-[#0A0A0A] flex-1">
+      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 section-light flex-1">
         <div className="">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
             {/* Contact Info */}
-            <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-6 sm:space-y-8 reveal">
               <div>
-                <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">
+                <h2 className="text-xl sm:text-2xl font-bold text-[#1A1815] mb-4 sm:mb-6">
                   Contact Information
                 </h2>
                 
@@ -77,17 +77,17 @@ export default async function ContactPage() {
                     href={`https://wa.me/${whatsapp}?text=${encodeURIComponent('Hi, I would like to get in touch.')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-[#1A1A1A] border border-gray-800 rounded-xl p-4 sm:p-6 flex items-start gap-3 sm:gap-4 hover:border-green-500/50 transition-all duration-300 group"
+                    className="bg-white border border-[#ECEAE3] shadow-[0_1px_2px_rgba(26,24,21,0.04)] rounded-xl p-4 sm:p-6 flex items-start gap-3 sm:gap-4 hover:border-green-500/50 transition-all duration-300 group"
                   >
                     <div className="p-2.5 sm:p-3 bg-green-500/10 rounded-lg group-hover:bg-green-500/20 transition-colors flex-shrink-0">
                       <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-green-500" />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-green-400 transition-colors">
+                      <h3 className="text-base sm:text-lg font-bold text-[#1A1815] group-hover:text-green-600 transition-colors">
                         WhatsApp (Fastest)
                       </h3>
-                      <p className="text-gray-400 text-sm mt-0.5 sm:mt-1">+{whatsapp}</p>
-                      <p className="text-gray-500 text-xs mt-1 sm:mt-2 flex items-center gap-1">
+                      <p className="text-[#5C574F] text-sm mt-0.5 sm:mt-1">+{whatsapp}</p>
+                      <p className="text-[#8A857C] text-xs mt-1 sm:mt-2 flex items-center gap-1">
                         <Clock3 className="w-3 h-3" />
                         Usually responds within minutes
                       </p>
@@ -97,63 +97,63 @@ export default async function ContactPage() {
                   {/* Phone */}
                   <a
                     href={`tel:${phone.replace(/\s/g, '')}`}
-                    className="bg-[#1A1A1A] border border-gray-800 rounded-xl p-4 sm:p-6 flex items-start gap-3 sm:gap-4 hover:border-[#C8952A]/50 transition-all duration-300 group"
+                    className="bg-white border border-[#ECEAE3] shadow-[0_1px_2px_rgba(26,24,21,0.04)] rounded-xl p-4 sm:p-6 flex items-start gap-3 sm:gap-4 hover:border-[#C8952A]/50 transition-all duration-300 group"
                   >
                     <div className="p-2.5 sm:p-3 bg-[#C8952A]/10 rounded-lg group-hover:bg-[#C8952A]/20 transition-colors flex-shrink-0">
                       <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-[#C8952A]" />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[#C8952A] transition-colors">
+                      <h3 className="text-base sm:text-lg font-bold text-[#1A1815] group-hover:text-[#8A6410] transition-colors">
                         Phone
                       </h3>
-                      <p className="text-gray-400 text-sm mt-0.5 sm:mt-1">{phone}</p>
-                      <p className="text-gray-500 text-xs mt-1 sm:mt-2">Call during business hours</p>
+                      <p className="text-[#5C574F] text-sm mt-0.5 sm:mt-1">{phone}</p>
+                      <p className="text-[#8A857C] text-xs mt-1 sm:mt-2">Call during business hours</p>
                     </div>
                   </a>
 
                   {/* Email */}
                   <a
                     href={`mailto:${email}`}
-                    className="bg-[#1A1A1A] border border-gray-800 rounded-xl p-4 sm:p-6 flex items-start gap-3 sm:gap-4 hover:border-[#C8952A]/50 transition-all duration-300 group"
+                    className="bg-white border border-[#ECEAE3] shadow-[0_1px_2px_rgba(26,24,21,0.04)] rounded-xl p-4 sm:p-6 flex items-start gap-3 sm:gap-4 hover:border-[#C8952A]/50 transition-all duration-300 group"
                   >
                     <div className="p-2.5 sm:p-3 bg-[#C8952A]/10 rounded-lg group-hover:bg-[#C8952A]/20 transition-colors flex-shrink-0">
                       <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-[#C8952A]" />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[#C8952A] transition-colors">
+                      <h3 className="text-base sm:text-lg font-bold text-[#1A1815] group-hover:text-[#8A6410] transition-colors">
                         Email
                       </h3>
-                      <p className="text-gray-400 text-sm mt-0.5 sm:mt-1">{email}</p>
-                      <p className="text-gray-500 text-xs mt-1 sm:mt-2">We respond within 24 hours</p>
+                      <p className="text-[#5C574F] text-sm mt-0.5 sm:mt-1">{email}</p>
+                      <p className="text-[#8A857C] text-xs mt-1 sm:mt-2">We respond within 24 hours</p>
                     </div>
                   </a>
 
                   {/* Location */}
-                  <div className="bg-[#1A1A1A] border border-gray-800 rounded-xl p-4 sm:p-6 flex items-start gap-3 sm:gap-4">
+                  <div className="bg-white border border-[#ECEAE3] shadow-[0_1px_2px_rgba(26,24,21,0.04)] rounded-xl p-4 sm:p-6 flex items-start gap-3 sm:gap-4">
                     <div className="p-2.5 sm:p-3 bg-[#C8952A]/10 rounded-lg flex-shrink-0">
                       <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-[#C8952A]" />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="text-base sm:text-lg font-bold text-white">
+                      <h3 className="text-base sm:text-lg font-bold text-[#1A1815]">
                         Visit Our Showroom
                       </h3>
-                      <p className="text-gray-400 text-sm mt-0.5 sm:mt-1 whitespace-pre-line">
+                      <p className="text-[#5C574F] text-sm mt-0.5 sm:mt-1 whitespace-pre-line">
                         {address}
                       </p>
                     </div>
                   </div>
 
                   {/* Hours */}
-                  <div className="bg-[#1A1A1A] border border-gray-800 rounded-xl p-4 sm:p-6 flex items-start gap-3 sm:gap-4">
+                  <div className="bg-white border border-[#ECEAE3] shadow-[0_1px_2px_rgba(26,24,21,0.04)] rounded-xl p-4 sm:p-6 flex items-start gap-3 sm:gap-4">
                     <div className="p-2.5 sm:p-3 bg-[#C8952A]/10 rounded-lg flex-shrink-0">
                       <Clock className="w-5 h-5 sm:w-6 sm:h-6 text-[#C8952A]" />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="text-base sm:text-lg font-bold text-white">
+                      <h3 className="text-base sm:text-lg font-bold text-[#1A1815]">
                         Opening Hours
                       </h3>
-                      <p className="text-gray-400 text-sm mt-0.5 sm:mt-1">{officeHours}</p>
-                      <p className="text-gray-500 text-xs mt-1 sm:mt-2">Closed Sundays & Public Holidays</p>
+                      <p className="text-[#5C574F] text-sm mt-0.5 sm:mt-1">{officeHours}</p>
+                      <p className="text-[#8A857C] text-xs mt-1 sm:mt-2">Closed Sundays & Public Holidays</p>
                     </div>
                   </div>
                 </div>
@@ -161,9 +161,9 @@ export default async function ContactPage() {
             </div>
 
             {/* Contact Form */}
-            <div>
-              <div className="bg-[#1A1A1A] border border-gray-800 rounded-xl p-6 sm:p-8">
-                <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">
+            <div className="reveal">
+              <div className="bg-white border border-[#ECEAE3] rounded-xl p-6 sm:p-8 shadow-[0_10px_30px_rgba(26,24,21,0.07)]">
+                <h2 className="text-lg sm:text-xl font-bold text-[#1A1815] mb-4 sm:mb-6">
                   Send Us a Message
                 </h2>
                 <ContactForm />
@@ -174,7 +174,7 @@ export default async function ContactPage() {
       </section>
 
       {/* Map */}
-      <section className="py-8 sm:py-12 bg-[#1A1A1A] border-t border-gray-800">
+      <section className="py-8 sm:py-12 section-dark border-t border-white/5">
         <div className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28">
           <div className="">
             <div className="rounded-lg sm:rounded-xl overflow-hidden h-72 sm:h-96 bg-[#2A2A2A] border border-gray-800">
@@ -189,7 +189,7 @@ export default async function ContactPage() {
                 title="Mighty Rides Showroom Location"
               />
             </div>
-            <p className="text-center text-gray-500 text-xs sm:text-sm mt-3 sm:mt-4">
+            <p className="text-center text-[#9C978D] text-xs sm:text-sm mt-3 sm:mt-4">
               Find us at Mirembe Business Centre, Plot 18 Lugogo Bypass, Kampala
             </p>
           </div>

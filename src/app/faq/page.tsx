@@ -49,37 +49,37 @@ export default function FaqPage() {
   const allItems = categories.flatMap((c) => c.items)
 
   return (
-    <main className="min-h-screen bg-[#0A0A0A]">
+    <main className="min-h-screen bg-[#141312]">
       <FAQJsonLd items={allItems.map((i) => ({ question: i.q, answer: i.a }))} />
       <Navbar />
 
       {/* Hero */}
-      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 pt-32 md:pt-40 pb-12 md:pb-16 bg-[#1A1A1A]">
+      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 pt-32 md:pt-40 pb-12 md:pb-16 section-dark">
         <p className="text-sm md:text-base text-[#C8952A] uppercase tracking-widest mb-3 font-semibold">Support</p>
         <h1 className="text-3xl md:text-5xl font-bold text-white">Frequently Asked Questions</h1>
-        <p className="text-gray-400 mt-4 max-w-2xl">
+        <p className="text-[#B7B2AA] mt-4 max-w-2xl">
           Everything you need to know about renting and buying with Mighty Rides. Can’t find your answer?{' '}
           <Link href="/contact" className="text-[#C8952A] hover:underline">Contact us</Link>.
         </p>
       </section>
 
       {/* FAQ Content */}
-      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24">
+      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 section-light">
         <div className="max-w-3xl mx-auto space-y-12">
           {categories.map((category) => (
-            <div key={category.title}>
-              <h2 className="text-xl md:text-2xl font-bold text-white mb-6">{category.title}</h2>
+            <div key={category.title} className="reveal">
+              <h2 className="text-xl md:text-2xl font-bold text-[#1A1815] mb-6">{category.title}</h2>
               <div className="space-y-3">
                 {category.items.map((item) => (
                   <details
                     key={item.q}
-                    className="group bg-[#1A1A1A] border border-gray-800 rounded-xl overflow-hidden open:border-[#C8952A]/50"
+                    className="group bg-white border border-[#ECEAE3] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(26,24,21,0.04)] open:border-[#C8952A]/50 open:shadow-[0_10px_28px_rgba(26,24,21,0.08)] transition-shadow"
                   >
-                    <summary className="flex items-center justify-between gap-4 cursor-pointer list-none p-5 md:p-6 text-white font-semibold">
+                    <summary className="flex items-center justify-between gap-4 cursor-pointer list-none p-5 md:p-6 text-[#1A1815] font-semibold">
                       <span>{item.q}</span>
-                      <ChevronDown className="w-5 h-5 text-[#C8952A] shrink-0 transition-transform group-open:rotate-180" />
+                      <ChevronDown className="w-5 h-5 text-[#8A6410] shrink-0 transition-transform group-open:rotate-180" />
                     </summary>
-                    <div className="px-5 md:px-6 pb-5 md:pb-6 text-gray-400 leading-relaxed">
+                    <div className="px-5 md:px-6 pb-5 md:pb-6 text-[#5C574F] leading-relaxed">
                       {item.a}
                     </div>
                   </details>
@@ -89,14 +89,14 @@ export default function FaqPage() {
           ))}
 
           {/* Still need help */}
-          <div className="bg-[#1A1A1A] border border-gray-800 rounded-2xl p-8 text-center">
-            <h3 className="text-xl font-bold text-white mb-2">Still have a question?</h3>
-            <p className="text-gray-400 mb-6">Our team is happy to help with anything not covered here.</p>
+          <div className="bg-white border border-[#ECEAE3] rounded-2xl p-8 text-center shadow-[0_10px_30px_rgba(26,24,21,0.07)] reveal">
+            <h3 className="text-xl font-bold text-[#1A1815] mb-2">Still have a question?</h3>
+            <p className="text-[#5C574F] mb-6">Our team is happy to help with anything not covered here.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contact" className="bg-[#C8952A] text-black px-8 py-3 rounded-xl font-semibold hover:bg-[#D4A644] transition-colors uppercase tracking-wide text-sm">
                 Contact Us
               </Link>
-              <Link href="/hire" className="border-2 border-[#C8952A] text-[#C8952A] px-8 py-3 rounded-xl font-semibold hover:bg-[#C8952A]/10 transition-colors uppercase tracking-wide text-sm">
+              <Link href="/hire" className="border-2 border-[#8A6410]/40 text-[#8A6410] px-8 py-3 rounded-xl font-semibold hover:bg-[#C8952A] hover:border-[#C8952A] hover:text-black transition-colors uppercase tracking-wide text-sm">
                 Browse Fleet
               </Link>
             </div>

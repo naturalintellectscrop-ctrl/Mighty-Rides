@@ -64,7 +64,7 @@ export default async function CorporatePage() {
   for (const s of settings) settingsMap[s.key] = s.value
 
   return (
-    <main className="min-h-screen bg-brand-black">
+    <main className="min-h-screen bg-[#141312]">
       <Navbar />
 
       {/* Hero Section */}
@@ -123,18 +123,18 @@ export default async function CorporatePage() {
       </section>
 
       {/* Client Types */}
-      <section className="w-full px-4 md:px-6 lg:px-0 py-16 bg-brand-surface border-y border-brand-border">
+      <section className="w-full px-4 md:px-6 lg:px-0 py-16 section-neutral">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
-            <span className="font-label text-label-sm text-brand-gold uppercase tracking-widest">
+            <span className="font-label text-label-sm text-[#8A6410] uppercase tracking-widest">
               Trusted By
             </span>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 reveal">
             {clientTypes.map((client) => (
-              <div key={client.name} className="text-center p-4 bg-brand-black rounded-lg border border-brand-border hover:border-brand-gold/30 transition-colors">
-                <p className="text-brand-white font-medium">{client.name}</p>
-                <p className="text-xs text-brand-silver mt-1">{client.description}</p>
+              <div key={client.name} className="text-center p-4 bg-white rounded-lg border border-[#ECEAE3] shadow-[0_1px_2px_rgba(26,24,21,0.04)] hover:border-brand-gold/40 transition-colors">
+                <p className="text-[#1A1815] font-medium">{client.name}</p>
+                <p className="text-xs text-[#5C574F] mt-1">{client.description}</p>
               </div>
             ))}
           </div>
@@ -142,28 +142,28 @@ export default async function CorporatePage() {
       </section>
 
       {/* Services Grid */}
-      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 bg-brand-black">
+      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 section-light">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="font-label text-label-sm text-brand-gold uppercase tracking-widest mb-2 block">
+          <div className="text-center mb-16 reveal">
+            <span className="font-label text-label-sm text-[#8A6410] uppercase tracking-widest mb-2 block">
               Our Services
             </span>
-            <h2 className="font-display text-[32px] md:text-[48px] font-bold text-brand-white">
+            <h2 className="font-display text-[32px] md:text-[48px] font-bold text-[#1A1815]">
               Corporate Mobility Solutions
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
             {services.map((service) => (
-              <div 
-                key={service.title} 
-                className="bg-brand-surface rounded-xl border border-brand-border p-8 hover:border-brand-gold/50 transition-colors group"
+              <div
+                key={service.title}
+                className="card-light p-8 group"
               >
                 <div className="w-14 h-14 bg-brand-gold/10 border border-brand-gold/30 rounded-full flex items-center justify-center mb-6 group-hover:bg-brand-gold/20 transition-colors">
-                  <service.icon className="w-6 h-6 text-brand-gold" />
+                  <service.icon className="w-6 h-6 text-[#8A6410]" />
                 </div>
-                <h4 className="font-display text-xl font-bold text-brand-white mb-3">{service.title}</h4>
-                <p className="text-brand-silver text-sm leading-relaxed">{service.description}</p>
+                <h4 className="font-display text-xl font-bold text-[#1A1815] mb-3">{service.title}</h4>
+                <p className="text-[#5C574F] text-sm leading-relaxed">{service.description}</p>
               </div>
             ))}
           </div>
@@ -171,17 +171,17 @@ export default async function CorporatePage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 bg-brand-surface">
+      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 section-neutral">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <span className="font-label text-label-sm text-brand-gold uppercase tracking-widest mb-4 block">
+            <div className="reveal">
+              <span className="font-label text-label-sm text-[#8A6410] uppercase tracking-widest mb-4 block">
                 Why Mighty Rides
               </span>
-              <h2 className="font-display text-[32px] md:text-[48px] font-bold text-brand-white mb-8 leading-tight">
+              <h2 className="font-display text-[32px] md:text-[48px] font-bold text-[#1A1815] mb-8 leading-tight">
                 Your Trusted Mobility Partner
               </h2>
-              <p className="text-brand-silver text-lg mb-8 leading-relaxed">
+              <p className="text-[#5C574F] text-lg mb-8 leading-relaxed">
                 We understand the unique requirements of corporate mobility. Our dedicated 
                 account managers ensure seamless operations, from daily transfers to 
                 large-scale event coordination.
@@ -197,16 +197,16 @@ export default async function CorporatePage() {
                   'Real-time vehicle tracking on request',
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-brand-gold flex-shrink-0" />
-                    <span className="text-brand-white">{item}</span>
+                    <CheckCircle className="w-5 h-5 text-[#8A6410] flex-shrink-0" />
+                    <span className="text-[#3F3A33]">{item}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Inquiry Form */}
-            <div id="inquiry" className="bg-brand-black rounded-xl border border-brand-border p-8 md:p-10">
-              <h3 className="font-display text-2xl font-bold text-brand-white mb-8">
+            <div id="inquiry" className="card-light p-8 md:p-10 reveal">
+              <h3 className="font-display text-2xl font-bold text-[#1A1815] mb-8">
                 Submit Corporate Enquiry
               </h3>
 
@@ -224,7 +224,7 @@ export default async function CorporatePage() {
                       name="company_name"
                       required
                       placeholder="Company name"
-                      className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                      className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                     />
                   </div>
                   <div>
@@ -233,7 +233,7 @@ export default async function CorporatePage() {
                     </label>
                     <select
                       name="industry"
-                      className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                      className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                     >
                       <option value="">Select type</option>
                       <option value="NGO">NGO</option>
@@ -256,7 +256,7 @@ export default async function CorporatePage() {
                       type="text"
                       name="name"
                       required
-                      className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                      className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                     />
                   </div>
                   <div>
@@ -267,7 +267,7 @@ export default async function CorporatePage() {
                       type="tel"
                       name="phone"
                       required
-                      className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                      className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                     />
                   </div>
                 </div>
@@ -280,7 +280,7 @@ export default async function CorporatePage() {
                     type="email"
                     name="email"
                     required
-                    className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                    className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                   />
                 </div>
 
@@ -293,7 +293,7 @@ export default async function CorporatePage() {
                     rows={4}
                     required
                     placeholder="Please describe your mobility needs in detail..."
-                    className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold resize-none"
+                    className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A] resize-none"
                   />
                 </div>
 
@@ -304,7 +304,7 @@ export default async function CorporatePage() {
                     </label>
                     <select
                       name="fleet_size"
-                      className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                      className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                     >
                       <option value="">Select</option>
                       <option value="1-3">1-3 vehicles</option>
@@ -318,7 +318,7 @@ export default async function CorporatePage() {
                     </label>
                     <select
                       name="duration"
-                      className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                      className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                     >
                       <option value="">Select</option>
                       <option value="Days">Days</option>
@@ -333,7 +333,7 @@ export default async function CorporatePage() {
                     </label>
                     <select
                       name="urgency"
-                      className="mt-2 bg-brand-surface-lowest border border-brand-border focus:border-brand-gold"
+                      className="mt-2 bg-white border border-[#DAD6CD] focus:border-[#C8952A]"
                     >
                       <option value="">Select</option>
                       <option value="Urgent">Urgent (48hrs)</option>
@@ -348,7 +348,7 @@ export default async function CorporatePage() {
                   Submit Corporate Enquiry <ArrowRight className="w-4 h-4" />
                 </button>
 
-                <p className="text-xs text-brand-muted text-center flex items-center justify-center gap-2">
+                <p className="text-xs text-[#8A857C] text-center flex items-center justify-center gap-2">
                   <Clock className="w-3 h-3" />
                   We typically respond within 4 business hours.
                 </p>
@@ -359,12 +359,12 @@ export default async function CorporatePage() {
       </section>
 
       {/* CTA */}
-      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 bg-brand-black">
-        <div className="max-w-7xl mx-auto text-center">
+      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 section-dark border-t border-white/5">
+        <div className="max-w-7xl mx-auto text-center reveal">
           <h2 className="font-display text-[28px] md:text-[40px] font-bold text-brand-white mb-6">
             Ready to Discuss Your Mobility Needs?
           </h2>
-          <p className="text-brand-silver max-w-xl mx-auto mb-8">
+          <p className="text-[#B7B2AA] max-w-xl mx-auto mb-8">
             Our corporate team is ready to design a custom solution for your organization. 
             Schedule a consultation today.
           </p>

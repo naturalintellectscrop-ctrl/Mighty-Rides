@@ -53,23 +53,23 @@ export default async function CancellationPage() {
   }
 
   return (
-    <main className="min-h-screen bg-brand-black">
+    <main className="min-h-screen bg-[#141312]">
       <Navbar />
 
-      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 bg-brand-surface">
+      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 section-dark">
         <div className="max-w-7xl mx-auto">
-          <p className="eyebrow mb-2">LEGAL</p>
+          <p className="eyebrow mb-2 text-[#C8952A]">LEGAL</p>
           <h1 className="font-display text-3xl md:text-4xl font-bold text-brand-white">
             Cancellation &amp; Return Policy
           </h1>
         </div>
       </section>
 
-      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 bg-brand-black">
+      <section className="w-full px-4 md:px-6 lg:px-0 py-16 md:py-24 section-light">
         <div className="max-w-7xl mx-auto">
-          <div className="max-w-3xl mx-auto">
-            <div className="prose prose-invert prose-sm">
-              <div className="text-brand-silver whitespace-pre-line leading-relaxed">
+          <div className="max-w-3xl mx-auto reveal">
+            <div className="prose prose-sm">
+              <div className="text-[#44403A] whitespace-pre-line leading-relaxed">
                 {content}
               </div>
             </div>

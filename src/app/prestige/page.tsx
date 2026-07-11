@@ -48,7 +48,7 @@ export default async function PrestigePage() {
   const whatsappNumber = settings.whatsapp_number || '256700000000'
 
   return (
-    <main className="min-h-screen bg-[#0A0A0A]">
+    <main className="min-h-screen bg-[#141312]">
       <Navbar />
 
       {/* Hero Section */}
@@ -103,9 +103,9 @@ export default async function PrestigePage() {
       </section>
 
       {/* Trust Signals */}
-      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 bg-[#1A1A1A] border-y border-gray-800">
+      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 section-neutral">
         <div className="">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 reveal">
             {[
               { icon: Shield, title: 'Verified Provenance', subtitle: 'Complete history' },
               { icon: Award, title: 'Certified Quality', subtitle: '175-point inspection' },
@@ -116,8 +116,8 @@ export default async function PrestigePage() {
                 <div className="w-16 h-16 bg-[#C8952A]/10 border border-[#C8952A]/30 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-[#C8952A]/20 transition-colors">
                   <item.icon className="w-7 h-7 text-[#C8952A]" />
                 </div>
-                <h3 className="text-white font-semibold text-base mb-1">{item.title}</h3>
-                <p className="text-sm text-gray-400">{item.subtitle}</p>
+                <h3 className="text-[#1A1815] font-semibold text-base mb-1">{item.title}</h3>
+                <p className="text-sm text-[#5C574F]">{item.subtitle}</p>
               </div>
             ))}
           </div>
@@ -125,14 +125,14 @@ export default async function PrestigePage() {
       </section>
 
       {/* Featured Vehicles */}
-      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 bg-[#0A0A0A]">
+      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 section-light">
         <div className="">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4 reveal">
             <div>
-              <span className="text-sm text-[#C8952A] uppercase tracking-widest mb-2 block font-semibold">
+              <span className="text-sm text-[#8A6410] uppercase tracking-widest mb-2 block font-semibold">
                 Exclusive Inventory
               </span>
-              <h2 className="text-3xl md:text-5xl font-bold text-white">
+              <h2 className="text-3xl md:text-5xl font-bold text-[#1A1815]">
                 Featured Vehicles
               </h2>
             </div>
@@ -140,16 +140,16 @@ export default async function PrestigePage() {
           </div>
 
           {vehicles.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
               {vehicles.map((vehicle) => {
                 const photos = vehicle.photos ? JSON.parse(vehicle.photos) : []
                 return (
                   <Link
                     key={vehicle.id}
                     href={`/cars/${vehicle.slug}`}
-                    className="group bg-[#1A1A1A] rounded-2xl overflow-hidden border border-gray-800 hover:border-[#C8952A] transition-colors"
+                    className="card-light group"
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden bg-[#2A2A2A]">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-[#EFEDE7]">
                       {photos[0] ? (
                         <Image
                           src={photos[0]}
@@ -159,7 +159,7 @@ export default async function PrestigePage() {
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <Car className="w-12 h-12 text-gray-500" />
+                          <Car className="w-12 h-12 text-[#C9C4BA]" />
                         </div>
                       )}
                       {vehicle.featured && (
@@ -171,14 +171,14 @@ export default async function PrestigePage() {
                       )}
                     </div>
                     <div className="p-6">
-                      <h3 className="text-xl font-bold text-white group-hover:text-[#C8952A] transition-colors">
+                      <h3 className="text-xl font-bold text-[#1A1815] group-hover:text-[#8A6410] transition-colors">
                         {vehicle.name}
                       </h3>
-                      <p className="text-gray-400 text-sm mt-1">
+                      <p className="text-[#5C574F] text-sm mt-1">
                         {vehicle.year} • {vehicle.make} {vehicle.model}
                       </p>
                       {vehicle.sale_price_ugx && (
-                        <p className="text-[#C8952A] font-semibold text-lg mt-3">
+                        <p className="text-[#8A6410] font-semibold text-lg mt-3">
                           {vehicle.sale_price_ugx.toLocaleString()} UGX
                         </p>
                       )}
@@ -188,15 +188,15 @@ export default async function PrestigePage() {
               })}
             </div>
           ) : (
-            <div className="text-center py-20">
-              <Crown className="w-16 h-16 text-[#C8952A]/30 mx-auto mb-6" />
-              <p className="text-gray-400 text-lg mb-4">
+            <div className="text-center py-20 reveal">
+              <Crown className="w-16 h-16 text-[#C8952A]/50 mx-auto mb-6" />
+              <p className="text-[#5C574F] text-lg mb-4">
                 Our prestige collection is currently being curated.
               </p>
-              <p className="text-gray-500 mb-8">
+              <p className="text-[#8A857C] mb-8">
                 Contact us for private acquisitions and bespoke sourcing.
               </p>
-              <Link href="/concierge" className="border-2 border-[#C8952A] text-[#C8952A] px-8 py-4 rounded-xl font-semibold inline-flex items-center gap-2 hover:bg-[#C8952A]/10 transition-colors">
+              <Link href="/concierge" className="border-2 border-[#8A6410]/40 text-[#8A6410] px-8 py-4 rounded-xl font-semibold inline-flex items-center gap-2 hover:bg-[#C8952A] hover:border-[#C8952A] hover:text-black transition-colors">
                 Request Private Consultation <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -205,9 +205,9 @@ export default async function PrestigePage() {
       </section>
 
       {/* How It Works */}
-      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 bg-[#1A1A1A]">
+      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 section-dark">
         <div className="">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 reveal">
             <span className="text-sm text-[#C8952A] uppercase tracking-widest mb-2 block font-semibold">
               The Process
             </span>
@@ -225,7 +225,7 @@ export default async function PrestigePage() {
             ].map((item, index) => (
               <div key={item.step} className="text-center relative">
                 {index < 3 && (
-                  <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-[1px] bg-gray-800" />
+                  <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-[1px] bg-white/10" />
                 )}
                 <div className="relative z-10">
                   <div className="w-16 h-16 bg-[#0A0A0A] border-2 border-[#C8952A] rounded-full flex items-center justify-center mx-auto mb-4">
@@ -241,12 +241,12 @@ export default async function PrestigePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 bg-[#0A0A0A]">
-        <div className=" text-center">
+      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 section-dark border-t border-white/5">
+        <div className=" text-center reveal">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
             Looking for Something Specific?
           </h2>
-          <p className="text-gray-400 max-w-xl mx-auto mb-8 text-lg">
+          <p className="text-[#B7B2AA] max-w-xl mx-auto mb-8 text-lg">
             Our global network can source virtually any vehicle. 
             From vintage classics to the latest hypercars.
           </p>

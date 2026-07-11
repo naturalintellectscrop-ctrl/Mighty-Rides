@@ -120,7 +120,7 @@ function InventoryCard({ vehicle, currency }: {
   return (
     <Link
       href={`/cars/${vehicle.slug}`}
-      className="group bg-[#1A1A1A] border border-gray-800 rounded-2xl overflow-hidden transition-all duration-500 hover:border-[#C8952A] hover:shadow-lg hover:shadow-[#C8952A]/10"
+      className="card-light group"
     >
       {/* Image Container - 16:10 aspect ratio per design */}
       <div className="relative aspect-[16/10] overflow-hidden">
@@ -133,8 +133,8 @@ function InventoryCard({ vehicle, currency }: {
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
         ) : (
-          <div className="w-full h-full bg-[#2A2A2A] flex items-center justify-center">
-            <span className="text-gray-600 text-4xl">🚗</span>
+          <div className="w-full h-full bg-[#EFEDE7] flex items-center justify-center">
+            <span className="text-[#C9C4BA] text-4xl">🚗</span>
           </div>
         )}
         
@@ -147,33 +147,33 @@ function InventoryCard({ vehicle, currency }: {
       {/* Content */}
       <div className="p-6 md:p-8">
         {/* Vehicle Name */}
-        <h3 className="text-xl md:text-2xl font-bold text-white mb-3">
+        <h3 className="text-xl md:text-2xl font-bold text-[#1A1815] mb-3">
           {vehicle.year} {vehicle.name}
         </h3>
-        
+
         {/* Specs Row */}
-        <div className="flex items-center gap-4 mb-6 text-gray-400 text-sm">
+        <div className="flex items-center gap-4 mb-6 text-[#5C574F] text-sm">
           {specs.transmission && (
             <span className="flex items-center gap-2">
-              <Settings className="w-4 h-4 text-gray-500" />
+              <Settings className="w-4 h-4 text-[#8A857C]" />
               {specs.transmission}
             </span>
           )}
-          <span className="text-gray-600">•</span>
+          <span className="text-[#C9C4BA]">•</span>
           {specs.fuel && (
             <span className="flex items-center gap-2">
-              <Fuel className="w-4 h-4 text-gray-500" />
+              <Fuel className="w-4 h-4 text-[#8A857C]" />
               {specs.fuel}
             </span>
           )}
         </div>
-        
+
         {/* Price and Arrow */}
         <div className="flex items-center justify-between">
-          <span className="text-xl md:text-2xl font-bold text-[#C8952A]">
+          <span className="text-xl md:text-2xl font-bold text-[#8A6410]">
             {displayPrice}
           </span>
-          <div className="w-12 h-12 rounded-full border-2 border-[#C8952A] text-[#C8952A] flex items-center justify-center transition-all group-hover:bg-[#C8952A] group-hover:text-black">
+          <div className="w-12 h-12 rounded-full border-2 border-[#8A6410]/40 text-[#8A6410] flex items-center justify-center transition-all group-hover:bg-[#C8952A] group-hover:border-[#C8952A] group-hover:text-black">
             <ArrowRight className="w-5 h-5" />
           </div>
         </div>
@@ -189,11 +189,11 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
   const makes = await getMakes()
 
   return (
-    <main className="min-h-screen bg-[#0A0A0A] pt-20">
+    <main className="min-h-screen bg-[#141312] pt-20">
       <Navbar />
-      
+
       {/* Small Hero Section */}
-      <section className="relative w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 overflow-hidden border-b border-gray-800 z-10">
+      <section className="relative w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 overflow-hidden section-dark border-b border-white/5 z-10">
         <div className="relative z-10">
           <div className="max-w-3xl">
             <span className="text-sm text-[#C8952A] uppercase tracking-widest mb-4 block font-semibold">
@@ -213,7 +213,7 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
       </section>
 
       {/* Sticky Filter Bar */}
-      <section className="sticky top-20 z-30 bg-[#0A0A0A]/95 backdrop-blur-lg border-b border-gray-800">
+      <section className="sticky top-20 z-30 bg-[#F8F8F6]/95 backdrop-blur-lg border-b border-[#ECEAE3] shadow-[0_1px_12px_rgba(26,24,21,0.06)]">
         <div className="px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-4 md:py-6">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-4 md:gap-6">
             {/* Filter Dropdowns */}
@@ -225,14 +225,14 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
                   aria-label="Filter by make"
                   form="filter-form"
                   defaultValue={params.make || 'all'}
-                  className="appearance-none w-full bg-[#1A1A1A] border border-gray-700 rounded-xl px-3 md:px-4 py-3 text-white focus:outline-none focus:border-[#C8952A] transition-colors cursor-pointer min-h-[48px]"
+                  className="appearance-none w-full bg-white border border-[#DAD6CD] rounded-xl px-3 md:px-4 py-3 text-[#1A1815] focus:outline-none focus:border-[#C8952A] transition-colors cursor-pointer min-h-[48px]"
                 >
                   <option value="all">Make: All</option>
                   {makes.map(make => (
                     <option key={make} value={make}>{make}</option>
                   ))}
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 w-5 h-5" />
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[#8A857C] w-5 h-5" />
               </div>
               
               {/* Body Type Dropdown */}
@@ -242,7 +242,7 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
                   aria-label="Filter by body type"
                   form="filter-form"
                   defaultValue={params.body || 'all'}
-                  className="appearance-none w-full bg-[#1A1A1A] border border-gray-700 rounded-xl px-3 md:px-4 py-3 text-white focus:outline-none focus:border-[#C8952A] transition-colors cursor-pointer min-h-[48px]"
+                  className="appearance-none w-full bg-white border border-[#DAD6CD] rounded-xl px-3 md:px-4 py-3 text-[#1A1815] focus:outline-none focus:border-[#C8952A] transition-colors cursor-pointer min-h-[48px]"
                 >
                   <option value="all">Body: All</option>
                   <option value="suv">SUV</option>
@@ -250,7 +250,7 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
                   <option value="coupe">Coupe</option>
                   <option value="convertible">Convertible</option>
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 w-5 h-5" />
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[#8A857C] w-5 h-5" />
               </div>
               
               {/* Price Range Dropdown */}
@@ -260,14 +260,14 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
                   aria-label="Filter by price range"
                   form="filter-form"
                   defaultValue={params.price || 'all'}
-                  className="appearance-none w-full bg-[#1A1A1A] border border-gray-700 rounded-xl px-3 md:px-4 py-3 text-white focus:outline-none focus:border-[#C8952A] transition-colors cursor-pointer min-h-[48px]"
+                  className="appearance-none w-full bg-white border border-[#DAD6CD] rounded-xl px-3 md:px-4 py-3 text-[#1A1815] focus:outline-none focus:border-[#C8952A] transition-colors cursor-pointer min-h-[48px]"
                 >
                   <option value="all">Price Range</option>
                   <option value="50k-100k">$50k - $100k</option>
                   <option value="100k-250k">$100k - $250k</option>
                   <option value="250k+">$250k+</option>
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 w-5 h-5" />
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[#8A857C] w-5 h-5" />
               </div>
               
               {/* Year Dropdown */}
@@ -277,31 +277,31 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
                   aria-label="Filter by year"
                   form="filter-form"
                   defaultValue={params.year || 'all'}
-                  className="appearance-none w-full bg-[#1A1A1A] border border-gray-700 rounded-xl px-3 md:px-4 py-3 text-white focus:outline-none focus:border-[#C8952A] transition-colors cursor-pointer min-h-[48px]"
+                  className="appearance-none w-full bg-white border border-[#DAD6CD] rounded-xl px-3 md:px-4 py-3 text-[#1A1815] focus:outline-none focus:border-[#C8952A] transition-colors cursor-pointer min-h-[48px]"
                 >
                   <option value="all">Year: All</option>
                   {Array.from({ length: 5 }, (_, i) => 2024 - i).map(year => (
                     <option key={year} value={year}>{year}</option>
                   ))}
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 w-5 h-5" />
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[#8A857C] w-5 h-5" />
               </div>
             </div>
             
             {/* Currency Toggle */}
-            <div className="flex items-center space-x-2 bg-[#1A1A1A] p-1 rounded-full border border-gray-700">
-              <Link 
+            <div className="flex items-center space-x-2 bg-white p-1 rounded-full border border-[#DAD6CD]">
+              <Link
                 href={{ pathname: '/cars', query: { ...params, currency: 'UGX' } }}
                 className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 min-h-[40px] flex items-center justify-center ${
-                  currency === 'UGX' ? 'bg-[#C8952A] text-black' : 'text-gray-400 hover:text-white'
+                  currency === 'UGX' ? 'bg-[#C8952A] text-black' : 'text-[#5C574F] hover:text-[#1A1815]'
                 }`}
               >
                 UGX
               </Link>
-              <Link 
+              <Link
                 href={{ pathname: '/cars', query: { ...params, currency: 'USD' } }}
                 className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 min-h-[40px] flex items-center justify-center ${
-                  currency === 'USD' ? 'bg-[#C8952A] text-black' : 'text-gray-400 hover:text-white'
+                  currency === 'USD' ? 'bg-[#C8952A] text-black' : 'text-[#5C574F] hover:text-[#1A1815]'
                 }`}
               >
                 USD
@@ -315,57 +315,57 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
       </section>
 
       {/* Vehicle Grid */}
-      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 relative z-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 relative z-0 section-light">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
           {vehicles.map(vehicle => (
             <InventoryCard key={vehicle.id} vehicle={vehicle} currency={currency} />
           ))}
         </div>
-        
+
         {/* Empty State */}
         {vehicles.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-lg text-gray-400 mb-6">
+            <p className="text-lg text-[#5C574F] mb-6">
               No vehicles match your filters.
             </p>
             <div className="flex justify-center gap-4">
               <Link href="/cars" className="btn btn-primary">
                 View All Vehicles
               </Link>
-              <Link href="/sourcing" className="text-[#C8952A] font-semibold flex items-center gap-2">
+              <Link href="/sourcing" className="text-[#8A6410] font-semibold flex items-center gap-2">
                 Request Sourcing <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
         )}
-        
+
         {/* Pagination */}
         {vehicles.length > 0 && (
           <div className="mt-16 flex justify-center items-center space-x-4">
-            <button type="button" aria-label="Previous page" className="w-12 h-12 border border-gray-700 flex items-center justify-center text-gray-400 hover:text-[#C8952A] hover:border-[#C8952A] transition-all rounded-lg">
+            <button type="button" aria-label="Previous page" className="w-12 h-12 border border-[#DAD6CD] flex items-center justify-center text-[#5C574F] hover:text-[#8A6410] hover:border-[#C8952A] transition-all rounded-lg">
               <ArrowRight className="w-5 h-5 rotate-180" />
             </button>
             <div className="flex space-x-2">
               <button type="button" aria-current="page" className="w-12 h-12 bg-[#C8952A] text-black font-semibold text-sm rounded-lg">01</button>
-              <button type="button" className="w-12 h-12 border border-gray-700 text-white font-semibold text-sm hover:border-[#C8952A] transition-all rounded-lg">02</button>
-              <button type="button" className="w-12 h-12 border border-gray-700 text-white font-semibold text-sm hover:border-[#C8952A] transition-all rounded-lg">03</button>
+              <button type="button" className="w-12 h-12 border border-[#DAD6CD] text-[#1A1815] font-semibold text-sm hover:border-[#C8952A] transition-all rounded-lg">02</button>
+              <button type="button" className="w-12 h-12 border border-[#DAD6CD] text-[#1A1815] font-semibold text-sm hover:border-[#C8952A] transition-all rounded-lg">03</button>
             </div>
-            <button type="button" aria-label="Next page" className="w-12 h-12 border border-gray-700 flex items-center justify-center text-gray-400 hover:text-[#C8952A] hover:border-[#C8952A] transition-all rounded-lg">
+            <button type="button" aria-label="Next page" className="w-12 h-12 border border-[#DAD6CD] flex items-center justify-center text-[#5C574F] hover:text-[#8A6410] hover:border-[#C8952A] transition-all rounded-lg">
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
         )}
       </section>
-      
+
       {/* Sourcing CTA */}
-      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 bg-[#1A1A1A] text-center">
+      <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 section-dark text-center">
         <p className="text-sm text-[#C8952A] uppercase tracking-widest mb-4 font-semibold">
           Can&apos;t find what you need?
         </p>
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
           We Source Vehicles Globally
         </h2>
-        <p className="text-gray-400 max-w-xl mx-auto mb-8">
+        <p className="text-[#B7B2AA] max-w-xl mx-auto mb-8">
           Our global network can source any vehicle you desire. No obligation to proceed.
         </p>
         <Link href="/sourcing" className="btn btn-primary">
