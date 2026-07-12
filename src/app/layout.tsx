@@ -2,8 +2,13 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Montserrat, Inter } from 'next/font/google'
 import { AuthProvider, CurrencyProvider } from '@/context'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
+import { MotionRoot } from '@/components/motion'
 import { SITE_URL } from '@/lib/seo'
 import './globals.css'
+
+// Flag JS as available BEFORE first paint so scroll-reveal at-rest styles apply
+// without a flash. Without JS this never runs and all content stays visible.
+const MOTION_FLAG = "document.documentElement.classList.add('js-motion')"
 
 // ============================================================================
 // TYPOGRAPHY SYSTEM - Visual Design Specification
@@ -86,8 +91,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${playfairDisplay.variable} ${montserrat.variable} ${inter.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: MOTION_FLAG }} />
+      </head>
       <body className="bg-brand-black text-brand-white min-h-screen antialiased font-body">
         <GoogleAnalytics />
+        <MotionRoot />
         <AuthProvider>
           <CurrencyProvider>
             {children}

@@ -1,5 +1,6 @@
 import { safeSettings } from '@/lib/safe-db'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
+import { AnimatedCounter } from '@/components/motion'
 import { Youtube, Instagram, Facebook, MapPin, Clock, MessageCircle, ArrowRight } from 'lucide-react'
 
 // Live-data page: render per-request so the build never depends on the DB.
@@ -82,11 +83,11 @@ export default async function AboutPage() {
               <p className="text-[#5C574F] text-sm mt-1">Uganda</p>
             </div>
             <div>
-              <p className="text-4xl font-bold text-[#8A6410]">100+</p>
+              <p className="text-4xl font-bold text-[#8A6410]"><AnimatedCounter value={100} suffix="+" /></p>
               <p className="text-[#5C574F] text-sm mt-1">Vehicles Sold</p>
             </div>
             <div>
-              <p className="text-4xl font-bold text-[#8A6410]">50+</p>
+              <p className="text-4xl font-bold text-[#8A6410]"><AnimatedCounter value={50} suffix="+" /></p>
               <p className="text-[#5C574F] text-sm mt-1">Brands Served</p>
             </div>
           </div>

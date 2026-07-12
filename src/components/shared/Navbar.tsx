@@ -32,6 +32,16 @@ export function Navbar() {
   const pathname = usePathname()
   const { data: session } = useSession()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  // Scroll-aware chrome: transparent over the (dark) hero at the top of every
+  // page, then settle into a solid, blurred bar once the user scrolls.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   // Close the mobile menu when the route changes. Depend ONLY on pathname —
   // depending on mobileMenuOpen here would re-close the menu the instant it
@@ -53,7 +63,14 @@ export function Navbar() {
   }, [mobileMenuOpen])
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#121414]/90 backdrop-blur-xl h-20 border-b border-gray-800 shadow-sm">
+    <header
+      className={cn(
+        'fixed top-0 left-0 right-0 z-50 h-20 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
+        scrolled || mobileMenuOpen
+          ? 'bg-[#121414]/90 backdrop-blur-xl border-b border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.35)]'
+          : 'bg-transparent border-b border-transparent',
+      )}
+    >
       <nav className="flex justify-between items-center w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 h-full">
         {/* Logo - Responsive Image */}
         <Link 
@@ -77,13 +94,17 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               className={cn(
-                'font-semibold text-sm uppercase tracking-wider transition-all duration-300',
-                pathname === link.href
-                  ? 'text-[#C8952A] border-b-2 border-[#C8952A] pb-1'
-                  : 'text-gray-300 hover:text-[#C8952A]'
+                'group relative font-semibold text-sm uppercase tracking-wider transition-colors duration-300',
+                pathname === link.href ? 'text-[#C8952A]' : 'text-gray-200 hover:text-white'
               )}
             >
               {link.label}
+              <span
+                className={cn(
+                  'absolute -bottom-1.5 left-0 h-[2px] bg-[#C8952A] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
+                  pathname === link.href ? 'w-full' : 'w-0 group-hover:w-full'
+                )}
+              />
             </Link>
           ))}
         </div>

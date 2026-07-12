@@ -79,7 +79,7 @@ export default async function ServicesPage() {
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuDy5wSXhxJlm2y1yLobjMIvWbVEXxT_Czk_-4SX67-Av81FqZHKWbYkF4UijHqi9oCsq7gns5kHwLOo38WGng_GO4jP7K6C0v_CD_q3rnSzgk0eFjjq6rUPF9L1P1WOmS-lR2ENiPCNC7SgpadhZYQFSGLryLwF1Zs3YLjgAwj3A96rdzg7QN12ineG_gc9Q2uGmveoSG8MJXf0eYz2UtUEbCPetotNn4_5dnu06oMshxbqiE9BcClbIq9UGWkXPpv_sxCVKXr4KUk"
             alt="Luxury car service"
             fill
-            className="object-cover scale-105"
+            className="object-cover kenburns"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent" />

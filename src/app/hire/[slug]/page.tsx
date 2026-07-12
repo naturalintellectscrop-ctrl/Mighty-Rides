@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { db } from '@/lib/db'
 import { notFound } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
+import { VehicleGallery } from '@/components/vehicles'
 import { BookingForm } from '@/components/booking'
 import { VehicleJsonLd } from '@/components/analytics/JsonLd'
 import { formatDualPrice } from '@/lib/utils'
@@ -69,7 +69,7 @@ export default async function RentalDetailPage({ params }: RentalDetailPageProps
   const monthlyRate = vehicle.monthly_rate_ugx || dailyRate * 30 * 0.7
 
   return (
-    <main className="min-h-screen bg-brand-black">
+    <main className="min-h-screen bg-[#141312]">
       <VehicleJsonLd
         name={vehicle.name}
         description={vehicle.description || `Hire the ${vehicle.year} ${vehicle.make} ${vehicle.model} in Kampala, Uganda.`}
@@ -105,25 +105,15 @@ export default async function RentalDetailPage({ params }: RentalDetailPageProps
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Left: Gallery */}
-            <div className="space-y-4">
-              {/* Main Image */}
-              <div className="relative aspect-video rounded-lg overflow-hidden bg-brand-surface-2">
-                {photos[0] ? (
-                  <Image
-                    src={photos[0]}
-                    alt={vehicle.name}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <p className="text-brand-muted">No photos available</p>
-                  </div>
-                )}
-                
-                {/* Status Badge */}
-                <div className="absolute top-4 left-4">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <VehicleGallery photos={photos} alt={vehicle.name} />
+            </div>
+
+            {/* Right: Details */}
+            <div className="space-y-8 reveal reveal-right">
+              {/* Header */}
+              <div>
+                <div className="mb-2">
                   <span className={`status-badge ${
                     isAvailable ? 'status-available' :
                     isRented ? 'status-rented' :
@@ -132,27 +122,6 @@ export default async function RentalDetailPage({ params }: RentalDetailPageProps
                     {vehicle.status.replace('_', ' ')}
                   </span>
                 </div>
-              </div>
-
-              {/* Thumbnails */}
-              {photos.length > 1 && (
-                <div className="flex gap-2 overflow-x-auto pb-2">
-                  {photos.map((photo: string, index: number) => (
-                    <div
-                      key={index}
-                      className="relative w-24 h-16 flex-shrink-0 rounded overflow-hidden cursor-pointer hover:ring-2 hover:ring-brand-gold transition-all"
-                    >
-                      <Image src={photo} alt={`Photo ${index + 1}`} fill className="object-cover" />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Right: Details */}
-            <div className="space-y-8">
-              {/* Header */}
-              <div>
                 <h1 className="font-display text-3xl md:text-4xl font-bold text-brand-white">
                   {vehicle.name}
                 </h1>

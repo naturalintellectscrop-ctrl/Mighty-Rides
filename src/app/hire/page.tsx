@@ -200,7 +200,7 @@ export default async function HirePage({ searchParams }: HirePageProps) {
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHAM6z-lVoessOOdOaEVb_uT4JeKB9KvzDxITfttCKT7GLLMXgyC5kcC9UZzm18gQSC4KWpxq1qRnjxgSKUh82TR3TPo10u9-ISxLpcUPOUtQz8dog29ncyRKSpu29SsPV2jrTxTVUTiF2N5qsMMlHvlCgKpJmkBkTNC7qDEyCN6j_69K3uFSuYngUh_YsckztLoN1obhuXbXy_VpkZsdUPWrp6LgtQb_FBm7e6I1zGt0Y3DeRk4S9YSE02x6SRbXMDWdsPMZYTpU"
             alt="Luxury car hire"
             fill
-            className="object-cover brightness-[0.3]"
+            className="object-cover brightness-[0.3] kenburns"
             priority
           />
         </div>

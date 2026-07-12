@@ -75,7 +75,7 @@ export default async function CorporatePage() {
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4wXwTKi2Vj_VHzp9OGyzoy860iFbVN729l2ger7XgeD4F7MMUZQbATeu74iBImqmJ3SUFjMbnorBGXgohMMXKqhavSnf9YN9p_klZDQUSWG9JJoiEU2wHV-UDQ0iXP1IWRFK3EWOYSDmsQMtbZahr3eY0cZfESXFIvG1r5lBlYJsCkXpSqT7wX46PKWB3WcMC4pYnnblVdIDeKZsscqWZ3UDUYY0b97K7P4FZVuOoEmSmAERSfLaXUUvAKfkEz5MoC5B4s3_RTWE"
             alt="Corporate fleet"
             fill
-            className="object-cover scale-105"
+            className="object-cover kenburns"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-black via-brand-black/60 to-transparent" />

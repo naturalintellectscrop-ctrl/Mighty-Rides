@@ -4,6 +4,7 @@ import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import { db } from '@/lib/db'
 import { formatUGX, formatUSD } from '@/lib/utils'
 import { LocalBusinessJsonLd } from '@/components/analytics/JsonLd'
+import { MagneticButton, ScrollCue } from '@/components/motion'
 import {
   MapPin, Calendar, Car, ArrowRight, Star,
   Search, CreditCard, BadgeCheck, Key, Globe, Wrench, Building, Settings, Check,
@@ -28,11 +29,11 @@ function Hero() {
   return (
     <section className="relative min-h-screen w-full flex items-center overflow-hidden py-32 md:py-28">
       <div className="absolute inset-0 z-0">
-        <Image src={HERO_IMG} alt="A luxury vehicle in a Mighty Rides showroom" fill className="object-cover" priority sizes="100vw" />
+        <Image src={HERO_IMG} alt="A luxury vehicle in a Mighty Rides showroom" fill className="object-cover kenburns" priority sizes="100vw" />
         <div className="absolute inset-0 hero-gradient" />
       </div>
 
-      <div className={`relative z-10 w-full ${PAD} pt-20`}>
+      <div className={`relative z-10 w-full ${PAD} pt-20 reveal-group`}>
         <p className="text-xs md:text-sm text-[#C8952A] uppercase tracking-[0.3em] mb-7 font-semibold">Kampala · Est. 2018</p>
         <h1 className="text-5xl md:text-7xl xl:text-8xl font-bold text-white mb-8 leading-[0.98] tracking-tight">
           Excellence,<br />in motion.
@@ -42,8 +43,8 @@ function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4">
-          <Link href="/hire" className="bg-[#C8952A] text-black px-11 py-4 md:py-5 rounded-xl font-semibold text-center hover:bg-[#D4A644] transition-colors uppercase tracking-wide text-sm">Hire a Vehicle</Link>
-          <Link href="/cars" className="border border-white/30 text-white px-11 py-4 md:py-5 rounded-xl font-semibold text-center hover:border-[#C8952A] hover:text-[#C8952A] transition-colors uppercase tracking-wide text-sm">Explore Inventory</Link>
+          <MagneticButton href="/hire" className="btn-shine bg-[#C8952A] text-black px-11 py-4 md:py-5 rounded-xl font-semibold text-center hover:bg-[#D4A644] transition-colors uppercase tracking-wide text-sm">Hire a Vehicle</MagneticButton>
+          <MagneticButton href="/cars" className="border border-white/30 text-white px-11 py-4 md:py-5 rounded-xl font-semibold text-center hover:border-[#C8952A] hover:text-[#C8952A] transition-colors uppercase tracking-wide text-sm">Explore Inventory</MagneticButton>
         </div>
 
         {/* Booking widget — desktop, in flow */}
@@ -86,6 +87,10 @@ function Hero() {
         <div className="md:hidden mt-8">
           <Link href="/hire" className="block w-full bg-[#C8952A] text-black py-5 rounded-xl font-semibold text-center uppercase tracking-wide">Find Your Ride</Link>
         </div>
+      </div>
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden md:block">
+        <ScrollCue label="Scroll to explore" />
       </div>
     </section>
   )
@@ -457,7 +462,7 @@ function FinalCTA() {
           Whether a milestone, a meeting, or a moment that matters — begin with the vehicle that carries it well.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <Link href="/hire" className="bg-[#C8952A] text-black px-11 py-4 md:py-5 rounded-xl font-semibold text-center hover:bg-[#D4A644] transition-colors uppercase tracking-wide text-sm">Reserve a Vehicle</Link>
+          <Link href="/hire" className="btn-shine bg-[#C8952A] text-black px-11 py-4 md:py-5 rounded-xl font-semibold text-center hover:bg-[#D4A644] transition-colors uppercase tracking-wide text-sm">Reserve a Vehicle</Link>
           <Link href="/contact" className="border border-white/30 text-white px-11 py-4 md:py-5 rounded-xl font-semibold text-center hover:border-[#C8952A] hover:text-[#C8952A] transition-colors uppercase tracking-wide text-sm">Speak to Concierge</Link>
         </div>
       </div>
