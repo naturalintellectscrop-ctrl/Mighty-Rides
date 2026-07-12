@@ -16,6 +16,15 @@ cloudinary.config({
   secure: true,
 })
 
+/** True only when all three Cloudinary credentials are present. */
+export function isCloudinaryConfigured(): boolean {
+  return Boolean(
+    process.env.CLOUDINARY_API_KEY &&
+    process.env.CLOUDINARY_API_SECRET &&
+    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+  )
+}
+
 // ============================================================================
 // TYPES
 // ============================================================================
@@ -58,6 +67,17 @@ export async function uploadImage(
     transformation?: object
   } = {}
 ): Promise<UploadResult> {
+  // Demo / unconfigured fallback — simulate storage so uploads never dead-end.
+  // The moment real Cloudinary credentials are added, this branch is skipped
+  // and images are uploaded for real (no other code changes needed).
+  if (!isCloudinaryConfigured()) {
+    const rand = Math.random().toString(36).slice(2, 10)
+    const publicId = options.publicId || `demo/${folder}/${Date.now()}_${rand}`
+    // Echo a data URI straight back so client previews and stored refs work.
+    const echoed = typeof file === 'string' && file.startsWith('data:') ? file : ''
+    return { success: true, publicId, url: echoed, secureUrl: echoed }
+  }
+
   try {
     const uploadOptions: Record<string, unknown> = {
       folder,

@@ -2,7 +2,13 @@ import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { compare } from 'bcryptjs'
 import { db } from './db'
+import { isDemoMode } from './demo/config'
 type UserRole = 'RENTEE' | 'ADMIN'
+
+// Email verification can only be enforced when we can actually deliver the
+// verification email. In Demo Mode (or with no Resend key) there is no email
+// provider, so the check is skipped rather than locking users out.
+const emailVerificationEnforced = !isDemoMode() && Boolean(process.env.RESEND_API_KEY)
 
 declare module 'next-auth' {
   interface Session {
@@ -63,8 +69,9 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        // Require a verified email before allowing sign-in
-        if (!user.email_verified) {
+        // Require a verified email before allowing sign-in — but only when we
+        // can actually send verification emails (see emailVerificationEnforced).
+        if (emailVerificationEnforced && !user.email_verified) {
           throw new Error('EMAIL_NOT_VERIFIED')
         }
 

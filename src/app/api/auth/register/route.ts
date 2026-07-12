@@ -3,6 +3,7 @@ import { db } from '@/lib/db'
 import { hash } from 'bcryptjs'
 import { checkRateLimit, rateLimitResponse, getClientIp } from '@/lib/rate-limit'
 import { sendEmail, emailVerificationTemplate } from '@/lib/email'
+import { isDemoMode } from '@/lib/demo/config'
 import crypto from 'crypto'
 
 // Ugandan mobile numbers: 07XXXXXXXX, 2567XXXXXXXX or +2567XXXXXXXX
@@ -185,6 +186,11 @@ export async function POST(request: NextRequest) {
     // Hash password
     const passwordHash = await hash(password, 12)
 
+    // When we cannot actually deliver a verification email (Demo Mode or no
+    // Resend key), auto-verify so the account can sign in immediately rather
+    // than being locked out waiting for an email that will never arrive.
+    const autoVerify = isDemoMode() || !process.env.RESEND_API_KEY
+
     // Create user
     const user = await db.user.create({
       data: {
@@ -198,37 +204,43 @@ export async function POST(request: NextRequest) {
         id_type: idType || null,
         id_front_url: idFrontUrl || null,
         id_back_url: idBackUrl || null,
-        email_verified: false,
+        email_verified: autoVerify,
         id_verified: false,
         account_status: 'ACTIVE',
       }
     })
 
-    // Generate an email-verification token and store it (24h expiry).
-    // Token storage mirrors /api/auth/verify-email (settings table, key `verify_<token>`).
-    try {
-      const token = crypto.randomBytes(32).toString('hex')
-      const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000)
-      await db.setting.upsert({
-        where: { key: `verify_${token}` },
-        create: {
-          key: `verify_${token}`,
-          value: JSON.stringify({ userId: user.id, expiresAt: expiresAt.toISOString() }),
-        },
-        update: {
-          value: JSON.stringify({ userId: user.id, expiresAt: expiresAt.toISOString() }),
-        },
-      })
+    // Only send a verification email when it can actually be delivered.
+    if (!autoVerify) {
+      // Generate an email-verification token and store it (24h expiry).
+      // Token storage mirrors /api/auth/verify-email (settings table, key `verify_<token>`).
+      try {
+        const token = crypto.randomBytes(32).toString('hex')
+        const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000)
+        await db.setting.upsert({
+          where: { key: `verify_${token}` },
+          create: {
+            key: `verify_${token}`,
+            value: JSON.stringify({ userId: user.id, expiresAt: expiresAt.toISOString() }),
+          },
+          update: {
+            value: JSON.stringify({ userId: user.id, expiresAt: expiresAt.toISOString() }),
+          },
+        })
 
-      await sendEmail(emailVerificationTemplate(user.email, token, user.full_name))
-    } catch (emailError) {
-      // Account is created; surface a soft failure so the user can request a resend.
-      console.error('[REGISTER] Failed to send verification email:', emailError)
+        await sendEmail(emailVerificationTemplate(user.email, token, user.full_name))
+      } catch (emailError) {
+        // Account is created; surface a soft failure so the user can request a resend.
+        console.error('[REGISTER] Failed to send verification email:', emailError)
+      }
     }
 
     return NextResponse.json({
       success: true,
-      message: 'Account created. Please check your email to verify your account.',
+      message: autoVerify
+        ? 'Account created. You can now sign in.'
+        : 'Account created. Please check your email to verify your account.',
+      autoVerified: autoVerify,
       userId: user.id
     })
   } catch (error) {
