@@ -1,6 +1,7 @@
 export { Navbar } from './Navbar'
 export { Footer } from './Footer'
 export { WhatsAppButton } from './WhatsAppButton'
+export { HeroMedia } from './HeroMedia'
 export { BookingWidget } from './BookingWidget'
 export { HowItWorks } from './HowItWorks'
 export { 

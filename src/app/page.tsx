@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
+import { Navbar, Footer, WhatsAppButton, HeroMedia } from '@/components/shared'
 import { db } from '@/lib/db'
 import { formatUGX, formatUSD } from '@/lib/utils'
 import { LocalBusinessJsonLd } from '@/components/analytics/JsonLd'
 import { MagneticButton, ScrollCue } from '@/components/motion'
+import { blurProps } from '@/lib/images'
 import {
   MapPin, Calendar, Car, ArrowRight, Star,
   Search, CreditCard, BadgeCheck, Key, Globe, Wrench, Building, Settings, Check,
@@ -20,6 +21,9 @@ const HERO_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuCdTMemLRrV
 const CTA_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDDAik8snEDPDURyMU2fIsYO5mCJ7Bm0HrmXtayEjjcwp-bmZtP9bUQ0FL5Tli094AGPxpj686I_vEr7JxmPg8wWgfsH55lYhuG3Zf316EJsTDpQ3D28e2eE__bmtYDP1hKjFZPOARqgYRmXu6GaMt--PujbpdSQIM9JDETU_bm5ZNZNUQ0fFlNXMvZ79IoPsOtt5RlSi6ylDsOqWWwfTlOaNeOuFtXsFEmb9fRg4ApexTDgnZvsXpqGYVDP60oVXbuyNE-zxXl-A8'
 const BAND_IMG = 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=1900&q=80'
 const CRAFT_IMG = 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1400&q=80'
+// Cinematic hero clip — drop an .mp4 in /public and set this (e.g. '/hero.mp4').
+// Until then the high-res still below is used as a graceful fallback/poster.
+const HERO_VIDEO: string | undefined = undefined
 
 // ============================================================================
 // HERO — cinematic full-bleed
@@ -28,10 +32,13 @@ const CRAFT_IMG = 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?
 function Hero() {
   return (
     <section className="relative min-h-screen w-full flex items-center overflow-hidden py-32 md:py-28">
-      <div className="absolute inset-0 z-0">
-        <Image src={HERO_IMG} alt="A luxury vehicle in a Mighty Rides showroom" fill className="object-cover kenburns" priority sizes="100vw" />
-        <div className="absolute inset-0 hero-gradient" />
-      </div>
+      <HeroMedia
+        image={HERO_IMG}
+        video={HERO_VIDEO}
+        alt="A luxury vehicle in a Mighty Rides showroom"
+        priority
+        mediaClassName="kenburns"
+      />
 
       <div className={`relative z-10 w-full ${PAD} pt-20 reveal-group`}>
         <p className="text-xs md:text-sm text-[#C8952A] uppercase tracking-[0.3em] mb-7 font-semibold">Kampala · Est. 2018</p>
@@ -230,7 +237,7 @@ function Collection({ vehicles }: { vehicles: FleetCard[] }) {
           <Link href={lead.href} className="group grid lg:grid-cols-2 gap-8 lg:gap-16 items-center reveal">
             <div className="relative aspect-[16/11] overflow-hidden rounded-2xl bg-[#EFEDE7] shadow-[0_18px_44px_rgba(26,24,21,0.13)]">
               {lead.image
-                ? <Image src={lead.image} alt={lead.name} fill className="object-cover transition-transform duration-[900ms] group-hover:scale-105" sizes="(max-width:1024px) 100vw, 50vw" />
+                ? <Image src={lead.image} alt={lead.name} fill {...blurProps} className="object-cover transition-transform duration-[900ms] group-hover:scale-105" sizes="(max-width:1024px) 100vw, 50vw" />
                 : <div className="w-full h-full flex items-center justify-center"><Car className="w-12 h-12 text-[#C9C4BA]" /></div>}
               <span className="absolute top-5 left-5 bg-black/70 backdrop-blur-md px-4 py-1.5 rounded-full text-[11px] font-bold text-[#C8952A] uppercase tracking-wider">{lead.status}</span>
             </div>
@@ -257,7 +264,7 @@ function Collection({ vehicles }: { vehicles: FleetCard[] }) {
                 <Link key={v.href} href={v.href} className="group reveal">
                   <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-[#EFEDE7] shadow-[0_10px_30px_rgba(26,24,21,0.09)]">
                     {v.image
-                      ? <Image src={v.image} alt={v.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width:640px) 100vw, 33vw" />
+                      ? <Image src={v.image} alt={v.name} fill {...blurProps} className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width:640px) 100vw, 33vw" />
                       : <div className="w-full h-full flex items-center justify-center"><Car className="w-9 h-9 text-[#C9C4BA]" /></div>}
                     <span className="absolute top-4 left-4 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-[#C8952A] uppercase tracking-wider">{v.status}</span>
                   </div>

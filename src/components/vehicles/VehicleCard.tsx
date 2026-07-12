@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useCurrency } from '@/context'
 import { cn } from '@/lib/utils'
+import { blurProps } from '@/lib/images'
 import { Car, Plus } from 'lucide-react'
 
 interface VehicleCardProps {
@@ -96,6 +97,7 @@ export function VehicleCard({ vehicle, hrefPrefix = '/cars', showDailyRate = fal
             alt={vehicle.name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            {...blurProps}
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (

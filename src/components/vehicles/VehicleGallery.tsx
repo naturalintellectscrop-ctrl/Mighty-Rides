@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState, useCallback } from 'react'
 import { ChevronLeft, ChevronRight, ImageOff } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { blurProps } from '@/lib/images'
 
 /**
  * VehicleGallery — an interactive, cinematic product gallery.
@@ -46,6 +47,7 @@ export function VehicleGallery({ photos, alt }: { photos: string[]; alt: string 
             alt={`${alt} — photo ${i + 1}`}
             fill
             priority={i === 0}
+            {...blurProps}
             sizes="(max-width: 1024px) 100vw, 50vw"
             className={cn(
               'object-cover transition-[opacity,transform] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]',

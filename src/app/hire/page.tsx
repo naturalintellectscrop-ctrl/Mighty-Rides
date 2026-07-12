@@ -2,6 +2,7 @@ import { db } from '@/lib/db'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import Image from 'next/image'
 import Link from 'next/link'
+import { blurProps } from '@/lib/images'
 import { ArrowRight, Car, Heart, Plane, Users, Calendar, Building } from 'lucide-react'
 
 // Live-data page: render per-request so the build never depends on the DB.
@@ -67,6 +68,7 @@ function RentalCard({ vehicle, currency }: { vehicle: {
             alt={vehicle.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            {...blurProps}
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
         ) : (

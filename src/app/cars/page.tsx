@@ -3,6 +3,7 @@ import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import { CurrencyToggle } from '@/components/vehicles'
 import Image from 'next/image'
 import Link from 'next/link'
+import { blurProps } from '@/lib/images'
 import { ArrowRight, ChevronDown, Settings, Fuel } from 'lucide-react'
 
 // Live-data page: render per-request so the build never depends on the DB.
@@ -130,6 +131,7 @@ function InventoryCard({ vehicle, currency }: {
             alt={vehicle.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            {...blurProps}
             className="object-cover transition-transform duration-700 group-hover:scale-110"
           />
         ) : (

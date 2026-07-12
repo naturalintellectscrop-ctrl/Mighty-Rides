@@ -9,7 +9,9 @@
  */
 import { db } from '../src/lib/db'
 
-const img = (id: string) => `https://images.unsplash.com/photo-${id}?w=1200&q=80&auto=format&fit=crop`
+// Higher source resolution + quality so large hero/gallery frames stay crisp on
+// retina (next/image downscales per `sizes`; it can't upscale beyond the source).
+const img = (id: string) => `https://images.unsplash.com/photo-${id}?w=1600&q=82&auto=format&fit=crop`
 
 // Detail/on-road shots reused as secondary gallery images.
 const DETAIL = img('1583121274602-3e2820c69888')
