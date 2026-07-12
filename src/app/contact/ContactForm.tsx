@@ -64,8 +64,8 @@ export default function ContactForm() {
   if (status === 'success') {
     return (
       <div className="text-center py-8 sm:py-12">
-        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-          <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-green-500" />
+        <div className="success-pop w-12 h-12 sm:w-16 sm:h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-green-600" />
         </div>
         <h3 className="text-lg sm:text-xl font-bold text-[#1A1815] mb-2">
           Message Sent!

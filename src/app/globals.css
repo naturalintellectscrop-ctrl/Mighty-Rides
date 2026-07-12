@@ -608,7 +608,23 @@ label {
    Everything honours prefers-reduced-motion (MotionRoot reveals immediately).
    Timing uses an "expo-out" curve for an unhurried, luxury settle.
    ---------------------------------------------------------------------------- */
-:root { --ease-lux: cubic-bezier(0.16, 1, 0.3, 1); }
+/* ----------------------------------------------------------------------------
+   MOTION DESIGN TOKENS — one rhythm for the whole experience.
+   Every transition/animation across the site references these so timing and
+   feel stay consistent. Durations climb from micro-interactions to cinematic;
+   easings: expo-out for entrances, a gentle spring for press feedback.
+   ---------------------------------------------------------------------------- */
+:root {
+  --ease-lux: cubic-bezier(0.16, 1, 0.3, 1);      /* expo-out — entrances, reveals */
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);     /* general UI settle */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);  /* symmetric transitions */
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);/* subtle overshoot — press/lift */
+
+  --dur-fast: 180ms;    /* hover, press, micro-feedback */
+  --dur-base: 300ms;    /* standard UI state changes */
+  --dur-slow: 600ms;    /* section reveals, card lifts */
+  --dur-slower: 850ms;  /* hero / cinematic entrances */
+}
 
 @media (prefers-reduced-motion: no-preference) {
   html.js-motion .reveal {
@@ -681,6 +697,135 @@ label {
 .btn-shine:hover::after, .btn:hover::after { left: 130%; }
 @media (prefers-reduced-motion: reduce) {
   .btn-shine::after, .btn::after { display: none; }
+}
+
+/* ============================================================================
+   FORM SUCCESS — a spring pop for confirmation icons.
+   ============================================================================ */
+@keyframes success-pop {
+  0%   { transform: scale(0.6); opacity: 0; }
+  60%  { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.success-pop { animation: success-pop 0.5s var(--ease-spring) both; }
+@media (prefers-reduced-motion: reduce) { .success-pop { animation: none; } }
+
+/* ============================================================================
+   ACCORDION — smooth content reveal when a <details.faq-item> opens.
+   ============================================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  details.faq-item[open] > .faq-body { animation: faq-open 0.38s var(--ease-lux) both; }
+}
+@keyframes faq-open {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ============================================================================
+   PREMIUM SKELETON / SHIMMER — theme-aware content placeholders.
+   Use .sk for a light-surface placeholder, add .sk-dark on dark sections.
+   ============================================================================ */
+.sk {
+  position: relative;
+  overflow: hidden;
+  background: #E9E6DF;
+  border-radius: 10px;
+}
+.sk::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  animation: sk-shimmer 1.6s var(--ease-lux) infinite;
+}
+.sk-dark { background: #1E1C1A; }
+.sk-dark::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+}
+@keyframes sk-shimmer { 100% { transform: translateX(100%); } }
+@media (prefers-reduced-motion: reduce) { .sk::after { animation: none; } }
+
+/* ============================================================================
+   PREMIUM FOCUS — a soft gold ring for keyboard users (opt-in .focus-lux, and
+   applied to form controls globally). Only shows for :focus-visible so mouse
+   users never see a ring.
+   ============================================================================ */
+.focus-lux:focus-visible,
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  border-color: #C8952A;
+  box-shadow: 0 0 0 3px rgba(200, 149, 42, 0.22);
+}
+
+/* ============================================================================
+   AMBIENT LIGHTING — a soft radial glow layer for dark sections (depth without
+   clutter). ::before sits behind content; the section needs position + z-index
+   on its content. Honours the parent's overflow.
+   ============================================================================ */
+.ambient-gold { position: relative; isolation: isolate; }
+.ambient-gold::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(60% 55% at 50% 0%, rgba(200, 149, 42, 0.10), transparent 68%);
+}
+.ambient-top { position: relative; isolation: isolate; }
+.ambient-top::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(80% 60% at 80% -10%, rgba(200, 149, 42, 0.08), transparent 60%);
+}
+
+/* ============================================================================
+   ROUTE PROGRESS — thin gold bar during client navigation.
+   ============================================================================ */
+.route-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  z-index: 200;
+  background: linear-gradient(90deg, #C8952A, #E9C765);
+  box-shadow: 0 0 12px rgba(200, 149, 42, 0.6);
+  transition: width 0.2s var(--ease-out), opacity 0.3s ease;
+  pointer-events: none;
+}
+
+/* ============================================================================
+   PAGE ENTRANCE — a graceful crossfade on route change. Opacity-only on purpose:
+   a transform/filter here would create a containing block and break the fixed
+   Navbar's positioning mid-animation. Pure fade is safe and suitably restrained.
+   ============================================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .page-enter { animation: page-enter var(--dur-slow) var(--ease-lux) both; }
+}
+@keyframes page-enter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ============================================================================
+   TEXT REVEAL — line-by-line clip reveal for cinematic headlines. Lines rise
+   from behind an overflow-hidden mask, staggered via --tr-delay. Gated behind
+   html.js-motion so text is fully visible without JS.
+   ============================================================================ */
+.text-reveal .tr-line { display: block; overflow: hidden; }
+.text-reveal .tr-inner { display: inline-block; will-change: transform; }
+@media (prefers-reduced-motion: no-preference) {
+  html.js-motion .text-reveal .tr-inner {
+    transform: translateY(115%);
+    opacity: 0;
+    transition: transform var(--dur-slower) var(--ease-lux), opacity var(--dur-slower) var(--ease-lux);
+    transition-delay: var(--tr-delay, 0ms);
+  }
+  html.js-motion .text-reveal.is-visible .tr-inner { transform: none; opacity: 1; }
 }
 
 /* ============================================================================

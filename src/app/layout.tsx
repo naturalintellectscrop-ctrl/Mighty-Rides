@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Montserrat, Inter } from 'next/font/google'
 import { AuthProvider, CurrencyProvider } from '@/context'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
-import { MotionRoot } from '@/components/motion'
+import { MotionRoot, RouteProgress, PageTransition } from '@/components/motion'
 import { SITE_URL } from '@/lib/seo'
 import './globals.css'
 
@@ -97,9 +97,10 @@ export default function RootLayout({
       <body className="bg-brand-black text-brand-white min-h-screen antialiased font-body">
         <GoogleAnalytics />
         <MotionRoot />
+        <RouteProgress />
         <AuthProvider>
           <CurrencyProvider>
-            {children}
+            <PageTransition>{children}</PageTransition>
           </CurrencyProvider>
         </AuthProvider>
       </body>

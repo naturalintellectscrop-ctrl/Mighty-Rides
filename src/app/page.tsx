@@ -4,7 +4,7 @@ import { Navbar, Footer, WhatsAppButton, HeroMedia } from '@/components/shared'
 import { db } from '@/lib/db'
 import { formatUGX, formatUSD } from '@/lib/utils'
 import { LocalBusinessJsonLd } from '@/components/analytics/JsonLd'
-import { MagneticButton, ScrollCue } from '@/components/motion'
+import { MagneticButton, ScrollCue, TextReveal } from '@/components/motion'
 import { blurProps } from '@/lib/images'
 import {
   MapPin, Calendar, Car, ArrowRight, Star,
@@ -40,22 +40,26 @@ function Hero() {
         mediaClassName="kenburns"
       />
 
-      <div className={`relative z-10 w-full ${PAD} pt-20 reveal-group`}>
-        <p className="text-xs md:text-sm text-[#C8952A] uppercase tracking-[0.3em] mb-7 font-semibold">Kampala · Est. 2018</p>
-        <h1 className="text-5xl md:text-7xl xl:text-8xl font-bold text-white mb-8 leading-[0.98] tracking-tight">
-          Excellence,<br />in motion.
-        </h1>
-        <p className="text-lg md:text-xl text-gray-300/90 mb-11 max-w-xl leading-relaxed">
+      <div className={`relative z-10 w-full ${PAD} pt-20`}>
+        <p className="reveal text-xs md:text-sm text-[#C8952A] uppercase tracking-[0.3em] mb-7 font-semibold">Kampala · Est. 2018</p>
+        <TextReveal
+          as="h1"
+          lines={['Excellence,', 'in motion.']}
+          startDelay={120}
+          stagger={110}
+          className="text-5xl md:text-7xl xl:text-8xl font-bold text-white mb-8 leading-[0.98] tracking-tight"
+        />
+        <p className="reveal text-lg md:text-xl text-gray-300/90 mb-11 max-w-xl leading-relaxed" style={{ ['--reveal-delay' as string]: '360ms' }}>
           East Africa&apos;s most considered fleet — curated for those who value presence, discretion, and the quiet assurance of an exceptional drive.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="reveal flex flex-col sm:flex-row gap-4" style={{ ['--reveal-delay' as string]: '460ms' }}>
           <MagneticButton href="/hire" className="btn-shine bg-[#C8952A] text-black px-11 py-4 md:py-5 rounded-xl font-semibold text-center hover:bg-[#D4A644] transition-colors uppercase tracking-wide text-sm">Hire a Vehicle</MagneticButton>
           <MagneticButton href="/cars" className="border border-white/30 text-white px-11 py-4 md:py-5 rounded-xl font-semibold text-center hover:border-[#C8952A] hover:text-[#C8952A] transition-colors uppercase tracking-wide text-sm">Explore Inventory</MagneticButton>
         </div>
 
         {/* Booking widget — desktop, in flow */}
-        <div className="hidden md:block mt-14 lg:mt-16 max-w-5xl">
+        <div className="reveal hidden md:block mt-14 lg:mt-16 max-w-5xl" style={{ ['--reveal-delay' as string]: '560ms' }}>
           <div className="bg-[#1A1A1A]/85 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 shadow-2xl">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="flex flex-col gap-3">
@@ -116,7 +120,7 @@ const assurances = [
 
 function EditorialIntro() {
   return (
-    <section className={`w-full bg-[#0A0A0A] ${PAD} py-24 md:py-36 border-t border-white/5`}>
+    <section className={`ambient-top w-full bg-[#0A0A0A] ${PAD} py-24 md:py-36 border-t border-white/5`}>
       <div className="max-w-4xl reveal">
         <p className="text-xs text-[#C8952A] uppercase tracking-[0.3em] mb-8 font-semibold">More than transportation</p>
         <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.04] tracking-tight">
@@ -399,7 +403,7 @@ const confidence = [
 
 function Craftsmanship() {
   return (
-    <section className={`w-full bg-[#0A0A0A] ${PAD} py-20 md:py-32`}>
+    <section className={`ambient-top w-full bg-[#0A0A0A] ${PAD} py-20 md:py-32`}>
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         <div className="relative aspect-[4/5] md:aspect-[4/4.4] overflow-hidden rounded-2xl bg-[#141210] reveal">
           <Image src={CRAFT_IMG} alt="Close attention to a luxury vehicle's detail" fill className="object-cover" sizes="(max-width:1024px) 100vw, 50vw" />

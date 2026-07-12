@@ -29,7 +29,7 @@ export function MotionRoot() {
 
     // Reduced motion: reveal on sight with no transition delay.
     if (prefersReduced) {
-      document.querySelectorAll('.reveal, .reveal-group').forEach(reveal)
+      document.querySelectorAll('.reveal, .reveal-group, .text-reveal').forEach(reveal)
       return
     }
 
@@ -47,7 +47,7 @@ export function MotionRoot() {
 
     const observed = new WeakSet<Element>()
     const scan = () => {
-      document.querySelectorAll('.reveal, .reveal-group').forEach((el) => {
+      document.querySelectorAll('.reveal, .reveal-group, .text-reveal').forEach((el) => {
         if (observed.has(el) || el.classList.contains('is-visible')) return
         observed.add(el)
         // Anything already within/above the viewport on load reveals right away.

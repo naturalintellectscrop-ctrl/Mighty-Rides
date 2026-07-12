@@ -73,13 +73,13 @@ export default function FaqPage() {
                 {category.items.map((item) => (
                   <details
                     key={item.q}
-                    className="group bg-white border border-[#ECEAE3] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(26,24,21,0.04)] open:border-[#C8952A]/50 open:shadow-[0_10px_28px_rgba(26,24,21,0.08)] transition-shadow"
+                    className="faq-item group bg-white border border-[#ECEAE3] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(26,24,21,0.04)] open:border-[#C8952A]/50 open:shadow-[0_10px_28px_rgba(26,24,21,0.08)] transition-shadow"
                   >
-                    <summary className="flex items-center justify-between gap-4 cursor-pointer list-none p-5 md:p-6 text-[#1A1815] font-semibold">
+                    <summary className="flex items-center justify-between gap-4 cursor-pointer list-none p-5 md:p-6 text-[#1A1815] font-semibold [&::-webkit-details-marker]:hidden hover:text-[#8A6410] transition-colors">
                       <span>{item.q}</span>
-                      <ChevronDown className="w-5 h-5 text-[#8A6410] shrink-0 transition-transform group-open:rotate-180" />
+                      <ChevronDown className="w-5 h-5 text-[#8A6410] shrink-0 transition-transform duration-300 group-open:rotate-180" />
                     </summary>
-                    <div className="px-5 md:px-6 pb-5 md:pb-6 text-[#5C574F] leading-relaxed">
+                    <div className="faq-body px-5 md:px-6 pb-5 md:pb-6 text-[#5C574F] leading-relaxed">
                       {item.a}
                     </div>
                   </details>
