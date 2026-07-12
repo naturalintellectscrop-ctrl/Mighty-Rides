@@ -716,6 +716,14 @@ label {
 .admin-light .text-brand-silver { color: #4B5563; }
 .admin-light .text-brand-muted { color: #6B7280; }
 .admin-light .border-brand-border { border-color: #E5E7EB; }
+/* Bright gold (#C8952A) as TEXT on the admin's white surfaces fails WCAG AA
+   (~2.4:1). Remap gold text/icons to an AA-safe ink-gold across the whole
+   admin. Gold *fills* (.bg-brand-gold, .btn) keep the bright brand gold. */
+.admin-light .text-brand-gold { color: #8A6410; }
+
+/* Data-table / list row hover — subtle highlight for scannability. */
+.admin-light .row-hover { transition: background-color 0.15s ease; }
+.admin-light .row-hover:hover { background-color: #F4F2EC; }
 
 /* Sidebar: white, distinct from the light-grey main area */
 .admin-light aside {

@@ -88,35 +88,38 @@ export default async function AdminDashboard() {
             <div className="p-2 bg-brand-gold/10 rounded-lg"><TrendingUp className="w-6 h-6 text-brand-gold" /></div>
             <div>
               <p className="text-xs text-brand-muted uppercase tracking-wider">Revenue Processed (paid)</p>
-              <p className="font-display text-3xl font-bold text-brand-white mt-0.5">{formatUGX(stats.revenue)}</p>
+              <p className="font-display text-3xl font-bold text-brand-white mt-0.5 tabular-nums">{formatUGX(stats.revenue)}</p>
             </div>
           </div>
           <div className="flex gap-6 text-center">
-            <div><p className="font-display text-2xl font-bold text-brand-gold">{stats.paidOrders}</p><p className="text-xs text-brand-muted">Vehicles Sold</p></div>
-            <div><p className="font-display text-2xl font-bold text-brand-gold">{stats.activeReservations}</p><p className="text-xs text-brand-muted">Active Holds</p></div>
-            <div><p className="font-display text-2xl font-bold text-brand-gold">{stats.financeApps}</p><p className="text-xs text-brand-muted">Finance Apps</p></div>
+            <div><p className="font-display text-2xl font-bold text-brand-gold tabular-nums">{stats.paidOrders}</p><p className="text-xs text-brand-muted">Vehicles Sold</p></div>
+            <div><p className="font-display text-2xl font-bold text-brand-gold tabular-nums">{stats.activeReservations}</p><p className="text-xs text-brand-muted">Active Holds</p></div>
+            <div><p className="font-display text-2xl font-bold text-brand-gold tabular-nums">{stats.financeApps}</p><p className="text-xs text-brand-muted">Finance Apps</p></div>
           </div>
         </div>
 
         {/* KPI Cards */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
           {[
-            { label: 'Active Rentals', value: stats.activeRentals, color: 'text-green-500' },
-            { label: 'Pending Bookings', value: stats.pendingBookings, color: 'text-yellow-500', alert: stats.pendingBookings > 0 },
-            { label: 'Vehicle Orders', value: stats.totalOrders, color: 'text-brand-gold' },
-            { label: 'Reservations', value: stats.activeReservations, color: 'text-blue-400' },
-            { label: 'Open Complaints', value: stats.openComplaints, color: 'text-orange-500', alert: stats.openComplaints > 0 },
-            { label: 'New Inquiries', value: stats.newInquiries, color: 'text-blue-400', alert: stats.newInquiries > 0 },
-            { label: 'Corporate Leads', value: stats.newCorporate, color: 'text-purple-400', alert: stats.newCorporate > 0 },
-            { label: 'Trade-In Requests', value: stats.newTradeIns, color: 'text-teal-400', alert: stats.newTradeIns > 0 },
-            { label: 'Service Requests', value: stats.newServiceReqs, color: 'text-cyan-400', alert: stats.newServiceReqs > 0 },
-            { label: 'Available Vehicles', value: stats.availableVehicles, color: 'text-brand-gold' },
-            { label: 'Rented Out', value: stats.rentedOut, color: 'text-red-400' },
-            { label: 'New Users Today', value: stats.newUsersToday, color: 'text-green-400' },
+            { label: 'Active Rentals', value: stats.activeRentals, dot: 'bg-green-500' },
+            { label: 'Pending Bookings', value: stats.pendingBookings, dot: 'bg-amber-500', alert: stats.pendingBookings > 0 },
+            { label: 'Vehicle Orders', value: stats.totalOrders, dot: 'bg-[#C8952A]' },
+            { label: 'Reservations', value: stats.activeReservations, dot: 'bg-blue-500' },
+            { label: 'Open Complaints', value: stats.openComplaints, dot: 'bg-orange-500', alert: stats.openComplaints > 0 },
+            { label: 'New Inquiries', value: stats.newInquiries, dot: 'bg-sky-500', alert: stats.newInquiries > 0 },
+            { label: 'Corporate Leads', value: stats.newCorporate, dot: 'bg-purple-500', alert: stats.newCorporate > 0 },
+            { label: 'Trade-In Requests', value: stats.newTradeIns, dot: 'bg-teal-500', alert: stats.newTradeIns > 0 },
+            { label: 'Service Requests', value: stats.newServiceReqs, dot: 'bg-cyan-500', alert: stats.newServiceReqs > 0 },
+            { label: 'Available Vehicles', value: stats.availableVehicles, dot: 'bg-[#C8952A]' },
+            { label: 'Rented Out', value: stats.rentedOut, dot: 'bg-red-500' },
+            { label: 'New Users Today', value: stats.newUsersToday, dot: 'bg-green-500' },
           ].map((kpi) => (
             <div key={kpi.label} className="card p-4">
-              <p className="text-xs text-brand-muted uppercase tracking-wider">{kpi.label}</p>
-              <p className={`font-display text-3xl font-bold mt-1 ${kpi.color}`}>
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-xs text-brand-muted uppercase tracking-wider">{kpi.label}</p>
+                <span className={`w-2 h-2 rounded-full shrink-0 ${kpi.dot}`} aria-hidden="true" />
+              </div>
+              <p className="font-display text-3xl font-bold mt-1 text-brand-white tabular-nums">
                 {kpi.value}
               </p>
               {kpi.alert && kpi.value > 0 && (
@@ -136,14 +139,14 @@ export default async function AdminDashboard() {
               <div className="card divide-y divide-white/5">
                 {stats.recentOrders.length === 0 && <p className="p-4 text-sm text-brand-muted">No purchases yet.</p>}
                 {stats.recentOrders.map((o) => (
-                  <div key={o.id} className="p-4 flex items-center justify-between gap-3">
+                  <div key={o.id} className="row-hover p-4 flex items-center justify-between gap-3">
                     <div className="min-w-0">
                       <p className="text-brand-white font-medium truncate">{o.vehicleName}</p>
                       <p className="text-xs text-brand-muted">{o.orderRef} · {o.customerName} · {formatEAT(o.createdAt, 'PP')}</p>
                     </div>
                     <div className="text-right whitespace-nowrap">
-                      <p className="text-brand-gold font-semibold">{formatUGX(o.amountUgx)}</p>
-                      <p className={`text-xs ${o.paymentStatus === 'PAID' ? 'text-green-400' : 'text-yellow-400'}`}>{o.paymentStatus}</p>
+                      <p className="text-brand-gold font-semibold tabular-nums">{formatUGX(o.amountUgx)}</p>
+                      <p className={`text-xs font-medium ${o.paymentStatus === 'PAID' ? 'text-green-700' : 'text-amber-700'}`}>{o.paymentStatus}</p>
                     </div>
                   </div>
                 ))}
@@ -154,13 +157,13 @@ export default async function AdminDashboard() {
               <div className="card divide-y divide-white/5">
                 {stats.recentFinance.length === 0 && <p className="p-4 text-sm text-brand-muted">No applications yet.</p>}
                 {stats.recentFinance.map((f) => (
-                  <div key={f.id} className="p-4 flex items-center justify-between gap-3">
+                  <div key={f.id} className="row-hover p-4 flex items-center justify-between gap-3">
                     <div className="min-w-0">
                       <p className="text-brand-white font-medium truncate">{f.fullName}</p>
                       <p className="text-xs text-brand-muted">{f.applicationRef} · {f.vehicleName || 'Vehicle financing'}</p>
                     </div>
                     <div className="text-right whitespace-nowrap">
-                      <p className="text-brand-gold font-semibold">{formatUGX(f.amountUgx)}</p>
+                      <p className="text-brand-gold font-semibold tabular-nums">{formatUGX(f.amountUgx)}</p>
                       <p className="text-xs text-brand-silver">{f.status.replace('_', ' ')}</p>
                     </div>
                   </div>
@@ -216,7 +219,7 @@ export default async function AdminDashboard() {
                 </div>
                 <div>
                   <p className="text-xs text-brand-muted">Scheduled Pickups</p>
-                  <p className="font-display text-xl font-bold text-brand-white">{stats.todayPickups}</p>
+                  <p className="font-display text-xl font-bold text-brand-white tabular-nums">{stats.todayPickups}</p>
                 </div>
               </div>
             </div>
@@ -227,7 +230,7 @@ export default async function AdminDashboard() {
                 </div>
                 <div>
                   <p className="text-xs text-brand-muted">Returns Due</p>
-                  <p className="font-display text-xl font-bold text-brand-white">{stats.todayReturns}</p>
+                  <p className="font-display text-xl font-bold text-brand-white tabular-nums">{stats.todayReturns}</p>
                 </div>
               </div>
             </div>
@@ -238,7 +241,7 @@ export default async function AdminDashboard() {
                 </div>
                 <div>
                   <p className="text-xs text-brand-muted">New Registrations</p>
-                  <p className="font-display text-xl font-bold text-brand-white">{stats.newUsersToday}</p>
+                  <p className="font-display text-xl font-bold text-brand-white tabular-nums">{stats.newUsersToday}</p>
                 </div>
               </div>
             </div>
