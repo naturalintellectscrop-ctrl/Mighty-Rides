@@ -367,3 +367,130 @@ model NewsletterSubscriber {
 
   @@map("newsletter_subscribers")
 }
+
+// ----------------------------------------------------------------------------
+// DEMO EXPERIENCE LAYER MODELS
+// Additive tables that back the simulated end-to-end customer journeys
+// (purchase, reservation, financing) plus the payment + notification logs.
+// Deliberately NOT related to User/Vehicle by FK so the migration is purely
+// additive and safe — customer/vehicle data is snapshotted inline, and userId
+// is a soft link (set when a checkout happens inside a signed-in session).
+// ----------------------------------------------------------------------------
+
+model Order {
+  id             String   @id @default(cuid())
+  orderRef       String   @unique // Purchase Order Number (PO-...)
+  invoiceNumber  String   @unique // INV-...
+  userId         String?
+  vehicleId      String
+  vehicleName    String
+  vehicleSlug    String?
+  vehicleImage   String?
+  customerName   String
+  customerEmail  String
+  customerPhone  String
+  amountUgx      Float
+  method         String   // FLUTTERWAVE | MOBILE_MONEY | VISA | MASTERCARD | BANK_TRANSFER
+  paymentStatus  String   @default("PENDING") // PENDING | PAID | FAILED
+  transactionRef String?
+  status         String   @default("PROCESSING") // PROCESSING | CONFIRMED | DELIVERED | CANCELLED
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId])
+  @@index([customerEmail])
+  @@map("orders")
+}
+
+model Reservation {
+  id             String   @id @default(cuid())
+  reservationRef String   @unique // RSV-...
+  userId         String?
+  vehicleId      String
+  vehicleName    String
+  vehicleSlug    String?
+  vehicleImage   String?
+  customerName   String
+  customerEmail  String
+  customerPhone  String
+  holdFeeUgx     Float    @default(0)
+  paymentStatus  String   @default("NONE") // NONE | PAID | FAILED
+  transactionRef String?
+  status         String   @default("ACTIVE") // ACTIVE | CONVERTED | EXPIRED | CANCELLED
+  expiresAt      DateTime
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId])
+  @@index([customerEmail])
+  @@map("reservations")
+}
+
+model FinanceApplication {
+  id               String   @id @default(cuid())
+  applicationRef   String   @unique // FIN-...
+  userId           String?
+  vehicleId        String?
+  vehicleName      String?
+  fullName         String
+  email            String
+  phone            String
+  nationalId       String?
+  employmentStatus String   // EMPLOYED | SELF_EMPLOYED | BUSINESS | OTHER
+  employer         String?
+  monthlyIncomeUgx Float?
+  amountUgx        Float
+  downPaymentUgx   Float?
+  termMonths       Int
+  status           String   @default("SUBMITTED") // SUBMITTED | UNDER_REVIEW | PRE_APPROVED | APPROVED | REJECTED
+  decisionNote     String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([userId])
+  @@index([email])
+  @@map("finance_applications")
+}
+
+model Payment {
+  id            String   @id @default(cuid())
+  txRef         String   @unique
+  transactionId String?  // gateway transaction id (demo or live)
+  entityType    String   // ORDER | BOOKING | RESERVATION | FINANCE
+  entityId      String
+  entityRef     String?
+  userId        String?
+  amountUgx     Float
+  currency      String   @default("UGX")
+  method        String   // FLUTTERWAVE | MOBILE_MONEY | VISA | MASTERCARD | BANK_TRANSFER
+  provider      String   @default("DEMO") // DEMO | FLUTTERWAVE
+  status        String   @default("PENDING") // PENDING | PROCESSING | SUCCESSFUL | FAILED
+  receiptNumber String?
+  meta          String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([entityType, entityId])
+  @@index([userId])
+  @@map("payments")
+}
+
+model NotificationLog {
+  id         String   @id @default(cuid())
+  channel    String   // EMAIL | SMS | WHATSAPP
+  recipient  String
+  subject    String?
+  body       String
+  entityType String?
+  entityId   String?
+  userId     String?
+  status     String   @default("DELIVERED") // QUEUED | SENT | DELIVERED | FAILED
+  provider   String   @default("DEMO") // DEMO | RESEND | ...
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([entityType, entityId])
+  @@map("notification_logs")
+}

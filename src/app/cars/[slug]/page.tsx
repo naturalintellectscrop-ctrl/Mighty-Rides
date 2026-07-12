@@ -1,9 +1,8 @@
 import { db } from '@/lib/db'
 import { notFound } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
-import { VehicleCard } from '@/components/vehicles'
+import { VehicleCard, VehicleGallery } from '@/components/vehicles'
 import { VehicleJsonLd } from '@/components/analytics/JsonLd'
 import { formatDualPrice } from '@/lib/utils'
 import { SITE_URL } from '@/lib/seo'
@@ -11,54 +10,6 @@ import { ArrowRight, Calendar, Fuel, Gauge, Users, Cog, Palette, Check, Phone, M
 
 // Live-data page: render per-request so the build never depends on the DB.
 export const dynamic = 'force-dynamic'
-
-// ============================================================================
-// GALLERY COMPONENT
-// ============================================================================
-
-function VehicleGallery({ photos }: { photos: string[] }) {
-  if (photos.length === 0) {
-    return (
-      <div className="aspect-video bg-brand-surface-2 rounded-lg flex items-center justify-center">
-        <p className="text-brand-muted">No photos available</p>
-      </div>
-    )
-  }
-
-  return (
-    <div className="space-y-4">
-      {/* Main Image */}
-      <div className="relative aspect-video rounded-lg overflow-hidden bg-brand-surface-2">
-        <Image
-          src={photos[0]}
-          alt="Vehicle photo"
-          fill
-          className="object-cover"
-          priority
-        />
-      </div>
-      
-      {/* Thumbnail Strip */}
-      {photos.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto pb-2">
-          {photos.map((photo, index) => (
-            <div
-              key={index}
-              className="relative w-24 h-16 flex-shrink-0 rounded overflow-hidden cursor-pointer hover:ring-2 hover:ring-brand-gold transition-all"
-            >
-              <Image
-                src={photo}
-                alt={`Vehicle photo ${index + 1}`}
-                fill
-                className="object-cover"
-              />
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
 
 // ============================================================================
 // SPEC TABLE
@@ -78,11 +29,17 @@ function SpecTable({ specs }: { specs: Record<string, unknown> }) {
   if (specItems.length === 0) return null
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="reveal-group grid grid-cols-2 md:grid-cols-3 gap-3">
       {specItems.map(item => (
-        <div key={item.label} className="bg-brand-surface p-4 rounded-lg">
-          <p className="text-brand-muted text-xs uppercase tracking-wider mb-1">{item.label}</p>
-          <p className="text-brand-white font-medium">{String(item.value)}</p>
+        <div
+          key={item.label}
+          className="bg-white/[0.03] border border-white/10 p-4 rounded-xl hover:border-[#C8952A]/40 transition-colors duration-300"
+        >
+          <div className="flex items-center gap-2 mb-1.5">
+            {item.icon && <item.icon className="w-3.5 h-3.5 text-[#C8952A]" />}
+            <p className="text-[#9C978D] text-[11px] uppercase tracking-[0.15em]">{item.label}</p>
+          </div>
+          <p className="text-white font-semibold">{String(item.value)}</p>
         </div>
       ))}
     </div>
@@ -215,7 +172,7 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
   const isSold = vehicle.status === 'SOLD'
 
   return (
-    <main className="min-h-screen bg-brand-black">
+    <main className="min-h-screen bg-[#141312]">
       <VehicleJsonLd
         name={vehicle.name}
         description={vehicle.description || `${vehicle.year} ${vehicle.make} ${vehicle.model} for sale in Kampala, Uganda.`}
@@ -251,12 +208,12 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Left: Gallery */}
-            <div>
-              <VehicleGallery photos={photos} />
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <VehicleGallery photos={photos} alt={vehicle.name} />
             </div>
 
             {/* Right: Details */}
-            <div className="space-y-8">
+            <div className="space-y-8 reveal reveal-right">
               {/* Header */}
               <div>
                 <div className="flex items-center gap-3 mb-2">
@@ -304,26 +261,48 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
               )}
 
               {/* Actions */}
-              <div className="flex flex-wrap gap-4">
-                {isAvailable ? (
-                  <>
+              {isAvailable ? (
+                <div className="space-y-4">
+                  {vehicle.sale_price_ugx && (
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <Link
+                        href={`/buy/${vehicle.slug}`}
+                        className="col-span-1 sm:col-span-1 bg-[#C8952A] text-black py-3.5 px-5 rounded-xl font-semibold text-center hover:bg-[#D4A644] transition-colors uppercase tracking-wide text-sm"
+                      >
+                        Buy Now
+                      </Link>
+                      <Link
+                        href={`/reserve/${vehicle.slug}`}
+                        className="border border-white/25 text-white py-3.5 px-5 rounded-xl font-semibold text-center hover:border-[#C8952A] hover:text-[#C8952A] transition-colors uppercase tracking-wide text-sm"
+                      >
+                        Reserve
+                      </Link>
+                      <Link
+                        href={`/financing?vehicle=${vehicle.slug}`}
+                        className="border border-white/25 text-white py-3.5 px-5 rounded-xl font-semibold text-center hover:border-[#C8952A] hover:text-[#C8952A] transition-colors uppercase tracking-wide text-sm"
+                      >
+                        Finance
+                      </Link>
+                    </div>
+                  )}
+                  <div className="flex flex-wrap items-center gap-4 pt-1">
                     <a
                       href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '256785642717'}?text=${encodeURIComponent(`Hi, I'm interested in the ${vehicle.name} on your website.`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="btn flex items-center gap-2"
+                      className="text-brand-gold hover:opacity-80 transition-opacity flex items-center gap-2 text-sm font-medium"
                     >
                       <MessageCircle className="w-4 h-4" />
-                      WhatsApp Us
+                      Talk to an advisor on WhatsApp
                     </a>
-                    <Link href="/concierge" className="text-brand-gold hover:opacity-80 transition-opacity flex items-center gap-2 text-sm font-medium">
-                      Looking for a private buying experience? <ArrowRight className="w-4 h-4" />
+                    <Link href="/concierge" className="text-brand-silver hover:text-brand-gold transition-colors flex items-center gap-2 text-sm">
+                      Private buying experience <ArrowRight className="w-4 h-4" />
                     </Link>
-                  </>
-                ) : (
-                  <p className="text-brand-silver">This vehicle has been sold.</p>
-                )}
-              </div>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-brand-silver">This vehicle has been sold.</p>
+              )}
             </div>
           </div>
         </div>
@@ -332,7 +311,7 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
       {/* Trust Signals */}
       <section className="py-12 bg-brand-surface">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="reveal-group grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* What Happens Next */}
             <div className="p-6 bg-brand-black rounded-lg border-l-4 border-brand-gold">
               <div className="flex items-center gap-3 mb-4">
@@ -389,7 +368,7 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
       {/* Concierge Upsell */}
       <section className="py-8 bg-brand-black">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="bg-brand-gold/10 border border-brand-gold/30 rounded-xl p-6 md:p-8">
+          <div className="reveal bg-brand-gold/10 border border-brand-gold/30 rounded-xl p-6 md:p-8">
             <div className="flex flex-col md:flex-row items-start gap-6">
               <div className="p-4 bg-brand-gold/20 rounded-xl">
                 <Crown className="w-8 h-8 text-brand-gold" />
@@ -418,8 +397,8 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
       {isAvailable && (
         <section className="section bg-brand-surface">
           <div className="container mx-auto px-4 sm:px-6">
-            <div className="max-w-xl mx-auto">
-              <p className="eyebrow mb-2 text-center">INTERESTED?</p>
+            <div className="max-w-xl mx-auto reveal">
+              <p className="eyebrow mb-2 text-center text-[#C8952A]">INTERESTED?</p>
               <h2 className="font-display text-2xl md:text-3xl font-bold text-brand-white mb-2 text-center">
                 Enquire About This Vehicle
               </h2>
@@ -441,10 +420,10 @@ export default async function VehicleDetailPage({ params }: VehicleDetailPagePro
       {relatedVehicles.length > 0 && (
         <section className="section bg-brand-surface">
           <div className="container mx-auto px-4 sm:px-6">
-            <h2 className="font-display text-2xl font-bold text-brand-white mb-6">
+            <h2 className="font-display text-2xl font-bold text-brand-white mb-6 reveal">
               Similar Vehicles
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="reveal-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedVehicles.map(v => (
                 <VehicleCard key={v.id} vehicle={v} />
               ))}

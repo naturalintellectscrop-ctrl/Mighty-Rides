@@ -3,13 +3,17 @@ import { redirect } from 'next/navigation'
 import { authOptions } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { AdminLayout } from '@/components/admin/AdminLayout'
+import { formatUGX, formatEAT } from '@/lib/utils'
 import Link from 'next/link'
-import { ArrowRight, TrendingUp, AlertTriangle, Calendar, Car, Users, Inbox, Settings } from 'lucide-react'
+import { ArrowRight, AlertTriangle, Calendar, Car, Users, Inbox, Settings, ShoppingBag, Landmark, TrendingUp } from 'lucide-react'
 
 // Auth/live-data page: render per-request so the build never depends on the DB.
 export const dynamic = 'force-dynamic'
 
 async function getDashboardStats() {
+  const startOfToday = new Date(new Date().setHours(0, 0, 0, 0))
+  const endOfToday = new Date(new Date().setHours(23, 59, 59, 999))
+
   const [
     activeRentals,
     pendingBookings,
@@ -19,6 +23,17 @@ async function getDashboardStats() {
     newInquiries,
     todayPickups,
     todayReturns,
+    totalOrders,
+    paidOrders,
+    activeReservations,
+    financeApps,
+    newCorporate,
+    newTradeIns,
+    newServiceReqs,
+    revenueAgg,
+    newUsersToday,
+    recentOrders,
+    recentFinance,
   ] = await Promise.all([
     db.booking.count({ where: { status: 'ACTIVE' } }),
     db.booking.count({ where: { status: 'PENDING' } }),
@@ -26,35 +41,27 @@ async function getDashboardStats() {
     db.vehicle.count({ where: { status: 'RENTED_OUT' } }),
     db.complaint.count({ where: { status: 'OPEN' } }),
     db.inquiry.count({ where: { status: 'NEW' } }),
-    db.booking.count({
-      where: {
-        status: 'CONFIRMED',
-        pickup_datetime: {
-          gte: new Date(new Date().setHours(0, 0, 0, 0)),
-          lt: new Date(new Date().setHours(23, 59, 59, 999))
-        }
-      }
-    }),
-    db.booking.count({
-      where: {
-        status: 'ACTIVE',
-        return_datetime: {
-          gte: new Date(new Date().setHours(0, 0, 0, 0)),
-          lt: new Date(new Date().setHours(23, 59, 59, 999))
-        }
-      }
-    }),
+    db.booking.count({ where: { status: 'CONFIRMED', pickup_datetime: { gte: startOfToday, lt: endOfToday } } }),
+    db.booking.count({ where: { status: 'ACTIVE', return_datetime: { gte: startOfToday, lt: endOfToday } } }),
+    db.order.count(),
+    db.order.count({ where: { paymentStatus: 'PAID' } }),
+    db.reservation.count({ where: { status: 'ACTIVE' } }),
+    db.financeApplication.count(),
+    db.corporateInquiry.count({ where: { status: 'New' } }),
+    db.tradeInRequest.count({ where: { status: 'New' } }),
+    db.afterSaleRequest.count({ where: { status: 'New' } }),
+    db.payment.aggregate({ _sum: { amountUgx: true }, where: { status: 'SUCCESSFUL' } }),
+    db.user.count({ where: { created_at: { gte: startOfToday } } }),
+    db.order.findMany({ orderBy: { createdAt: 'desc' }, take: 5 }),
+    db.financeApplication.findMany({ orderBy: { createdAt: 'desc' }, take: 5 }),
   ])
 
   return {
-    activeRentals,
-    pendingBookings,
-    availableVehicles,
-    rentedOut,
-    openComplaints,
-    newInquiries,
-    todayPickups,
-    todayReturns,
+    activeRentals, pendingBookings, availableVehicles, rentedOut, openComplaints, newInquiries,
+    todayPickups, todayReturns, totalOrders, paidOrders, activeReservations, financeApps,
+    newCorporate, newTradeIns, newServiceReqs,
+    revenue: revenueAgg._sum.amountUgx ?? 0,
+    newUsersToday, recentOrders, recentFinance,
   }
 }
 
@@ -75,15 +82,37 @@ export default async function AdminDashboard() {
         </h1>
         <p className="text-brand-silver mb-8">Welcome back, {session.user.name}</p>
 
+        {/* Revenue banner */}
+        <div className="card p-6 mb-8 border-l-4 border-brand-gold flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-brand-gold/10 rounded-lg"><TrendingUp className="w-6 h-6 text-brand-gold" /></div>
+            <div>
+              <p className="text-xs text-brand-muted uppercase tracking-wider">Revenue Processed (paid)</p>
+              <p className="font-display text-3xl font-bold text-brand-white mt-0.5">{formatUGX(stats.revenue)}</p>
+            </div>
+          </div>
+          <div className="flex gap-6 text-center">
+            <div><p className="font-display text-2xl font-bold text-brand-gold">{stats.paidOrders}</p><p className="text-xs text-brand-muted">Vehicles Sold</p></div>
+            <div><p className="font-display text-2xl font-bold text-brand-gold">{stats.activeReservations}</p><p className="text-xs text-brand-muted">Active Holds</p></div>
+            <div><p className="font-display text-2xl font-bold text-brand-gold">{stats.financeApps}</p><p className="text-xs text-brand-muted">Finance Apps</p></div>
+          </div>
+        </div>
+
         {/* KPI Cards */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
           {[
             { label: 'Active Rentals', value: stats.activeRentals, color: 'text-green-500' },
             { label: 'Pending Bookings', value: stats.pendingBookings, color: 'text-yellow-500', alert: stats.pendingBookings > 0 },
-            { label: 'Available Vehicles', value: stats.availableVehicles, color: 'text-brand-gold' },
-            { label: 'Rented Out', value: stats.rentedOut, color: 'text-red-400' },
+            { label: 'Vehicle Orders', value: stats.totalOrders, color: 'text-brand-gold' },
+            { label: 'Reservations', value: stats.activeReservations, color: 'text-blue-400' },
             { label: 'Open Complaints', value: stats.openComplaints, color: 'text-orange-500', alert: stats.openComplaints > 0 },
             { label: 'New Inquiries', value: stats.newInquiries, color: 'text-blue-400', alert: stats.newInquiries > 0 },
+            { label: 'Corporate Leads', value: stats.newCorporate, color: 'text-purple-400', alert: stats.newCorporate > 0 },
+            { label: 'Trade-In Requests', value: stats.newTradeIns, color: 'text-teal-400', alert: stats.newTradeIns > 0 },
+            { label: 'Service Requests', value: stats.newServiceReqs, color: 'text-cyan-400', alert: stats.newServiceReqs > 0 },
+            { label: 'Available Vehicles', value: stats.availableVehicles, color: 'text-brand-gold' },
+            { label: 'Rented Out', value: stats.rentedOut, color: 'text-red-400' },
+            { label: 'New Users Today', value: stats.newUsersToday, color: 'text-green-400' },
           ].map((kpi) => (
             <div key={kpi.label} className="card p-4">
               <p className="text-xs text-brand-muted uppercase tracking-wider">{kpi.label}</p>
@@ -98,6 +127,48 @@ export default async function AdminDashboard() {
             </div>
           ))}
         </div>
+
+        {/* Recent Sales & Applications */}
+        {(stats.recentOrders.length > 0 || stats.recentFinance.length > 0) && (
+          <section className="mb-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div>
+              <h2 className="font-display text-lg font-bold text-brand-white mb-4 flex items-center gap-2"><ShoppingBag className="w-4 h-4 text-brand-gold" /> Recent Purchases</h2>
+              <div className="card divide-y divide-white/5">
+                {stats.recentOrders.length === 0 && <p className="p-4 text-sm text-brand-muted">No purchases yet.</p>}
+                {stats.recentOrders.map((o) => (
+                  <div key={o.id} className="p-4 flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-brand-white font-medium truncate">{o.vehicleName}</p>
+                      <p className="text-xs text-brand-muted">{o.orderRef} · {o.customerName} · {formatEAT(o.createdAt, 'PP')}</p>
+                    </div>
+                    <div className="text-right whitespace-nowrap">
+                      <p className="text-brand-gold font-semibold">{formatUGX(o.amountUgx)}</p>
+                      <p className={`text-xs ${o.paymentStatus === 'PAID' ? 'text-green-400' : 'text-yellow-400'}`}>{o.paymentStatus}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h2 className="font-display text-lg font-bold text-brand-white mb-4 flex items-center gap-2"><Landmark className="w-4 h-4 text-brand-gold" /> Recent Finance Applications</h2>
+              <div className="card divide-y divide-white/5">
+                {stats.recentFinance.length === 0 && <p className="p-4 text-sm text-brand-muted">No applications yet.</p>}
+                {stats.recentFinance.map((f) => (
+                  <div key={f.id} className="p-4 flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-brand-white font-medium truncate">{f.fullName}</p>
+                      <p className="text-xs text-brand-muted">{f.applicationRef} · {f.vehicleName || 'Vehicle financing'}</p>
+                    </div>
+                    <div className="text-right whitespace-nowrap">
+                      <p className="text-brand-gold font-semibold">{formatUGX(f.amountUgx)}</p>
+                      <p className="text-xs text-brand-silver">{f.status.replace('_', ' ')}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Alerts */}
         {(stats.pendingBookings > 0 || stats.openComplaints > 0) && (
@@ -167,7 +238,7 @@ export default async function AdminDashboard() {
                 </div>
                 <div>
                   <p className="text-xs text-brand-muted">New Registrations</p>
-                  <p className="font-display text-xl font-bold text-brand-white">0</p>
+                  <p className="font-display text-xl font-bold text-brand-white">{stats.newUsersToday}</p>
                 </div>
               </div>
             </div>
