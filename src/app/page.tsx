@@ -5,6 +5,7 @@ import { db } from '@/lib/db'
 import { formatUGX, formatUSD } from '@/lib/utils'
 import { LocalBusinessJsonLd } from '@/components/analytics/JsonLd'
 import { MagneticButton, ScrollCue, TextReveal } from '@/components/motion'
+import { OwnershipStory } from '@/components/mighty-rides/ownership-story'
 import { blurProps } from '@/lib/images'
 import {
   MapPin, Calendar, Car, ArrowRight, Star,
@@ -506,6 +507,7 @@ export default async function HomePage() {
       <EditorialIntro />
       <Collection vehicles={vehicles} />
       <LifestyleBand />
+      <OwnershipStory />
       <Services />
       <Journey />
       <Craftsmanship />
