@@ -1,6 +1,6 @@
 import { safeSettings } from '@/lib/safe-db'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
-import { AnimatedCounter } from '@/components/motion'
+import { AnimatedCounter, TextReveal } from '@/components/motion'
 import { Youtube, Instagram, Facebook, MapPin, Clock, MessageCircle, ArrowRight } from 'lucide-react'
 
 // Live-data page: render per-request so the build never depends on the DB.
@@ -31,10 +31,11 @@ export default async function AboutPage() {
           <p className="text-sm md:text-base text-[#C8952A] uppercase tracking-widest mb-2 font-semibold">
             ABOUT US
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            East Africa&apos;s
-            <span className="block text-[#C8952A]">Premium Car Dealership</span>
-          </h1>
+          <TextReveal
+            as="h1"
+            lines={['East Africa’s', <span key="d" className="text-[#C8952A]">Premium Car Dealership</span>]}
+            className="text-4xl md:text-5xl font-bold text-white mb-4 leading-[1.08]"
+          />
           <p className="text-lg text-[#B7B2AA] max-w-xl leading-relaxed">
             Since 2018, Mighty Rides has been the trusted name for premium vehicles 
             in Kampala, Uganda. We don&apos;t just sell cars — we deliver experiences.

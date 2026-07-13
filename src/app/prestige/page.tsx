@@ -2,6 +2,7 @@ import { db } from '@/lib/db'
 import { safeSettings } from '@/lib/safe-db'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import { CurrencyToggle } from '@/components/vehicles'
+import { TextReveal } from '@/components/motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Crown, Shield, Award, Star, Car } from 'lucide-react'
@@ -70,10 +71,11 @@ export default async function PrestigePage() {
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-[44px] md:text-[72px] font-bold leading-[52px] md:leading-[84px] text-white mb-6">
-              The Prestige
-              <span className="block text-[#C8952A]">Collection</span>
-            </h1>
+            <TextReveal
+              as="h1"
+              lines={['The Prestige', <span key="c" className="text-[#C8952A]">Collection</span>]}
+              className="text-[44px] md:text-[72px] font-bold leading-[52px] md:leading-[84px] text-white mb-6"
+            />
 
             {/* Subheading */}
             <p className="text-lg md:text-xl text-gray-400 max-w-xl mb-8 leading-relaxed">

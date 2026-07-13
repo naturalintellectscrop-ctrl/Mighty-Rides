@@ -1,4 +1,5 @@
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
+import { TextReveal } from '@/components/motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Wrench, Paintbrush, Cog, Car, Shield, Clock, CheckCircle } from 'lucide-react'
@@ -97,10 +98,11 @@ export default async function ServicesPage() {
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-[44px] md:text-[72px] font-bold leading-[52px] md:leading-[84px] text-white mb-8">
-              Mastering the Art of{' '}
-              <span className="text-[#C8952A]">Performance</span>
-            </h1>
+            <TextReveal
+              as="h1"
+              lines={['Mastering the Art of', <span key="p" className="text-[#C8952A]">Performance</span>]}
+              className="text-[44px] md:text-[72px] font-bold leading-[52px] md:leading-[84px] text-white mb-8"
+            />
 
             {/* Subheading */}
             <p className="text-lg md:text-xl text-gray-400 max-w-xl mb-12 leading-relaxed">

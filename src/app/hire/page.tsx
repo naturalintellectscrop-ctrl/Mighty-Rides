@@ -1,5 +1,6 @@
 import { db } from '@/lib/db'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
+import { TextReveal } from '@/components/motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { blurProps } from '@/lib/images'
@@ -213,9 +214,11 @@ export default async function HirePage({ searchParams }: HirePageProps) {
               <span className="text-sm text-[#C8952A] tracking-widest uppercase mb-4 block font-semibold">
                 Elevate Your Journey
               </span>
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-                Luxury Car Hire Kampala
-              </h1>
+              <TextReveal
+                as="h1"
+                lines={['Luxury Car Hire', 'Kampala']}
+                className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.05]"
+              />
               <p className="text-lg text-gray-400 max-w-lg mb-8">
                 Experience the pinnacle of automotive excellence. Our curated fleet offers prestige and performance for those who demand more from every mile.
               </p>

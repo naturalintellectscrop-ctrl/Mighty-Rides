@@ -5,11 +5,24 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useSession, signIn } from 'next-auth/react'
 import { useState, useEffect } from 'react'
-import { Menu, X, User } from 'lucide-react'
+import { Menu, X, User, ChevronDown, Car, Key, Crown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+// Desktop "Inventory" mega-dropdown destinations.
+const inventoryMenu = [
+  { href: '/cars', label: 'Cars for Sale', desc: 'Premium vehicles, verified & documented', icon: Car },
+  { href: '/hire', label: 'Cars for Hire', desc: 'Weddings, arrivals & executive travel', icon: Key },
+  { href: '/prestige', label: 'The Prestige Collection', desc: 'Rare & exceptional — by appointment', icon: Crown },
+]
+// Desktop top-level links shown alongside the Inventory dropdown.
+const topLinks = [
+  { href: '/services', label: 'Services' },
+  { href: '/about', label: 'Heritage' },
+]
+// Flat list used by the mobile menu (Inventory expanded so Hire is reachable).
 const navLinks = [
-  { href: '/cars', label: 'Inventory' },
+  { href: '/cars', label: 'Cars for Sale' },
+  { href: '/hire', label: 'Cars for Hire' },
   { href: '/prestige', label: 'Prestige' },
   { href: '/services', label: 'Services' },
   { href: '/about', label: 'Heritage' },
@@ -89,7 +102,54 @@ export function Navbar() {
 
         {/* Desktop Navigation - Hidden on mobile/tablet, visible md+ */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
+          {/* Inventory mega-dropdown (CSS hover + focus-within; no JS timing) */}
+          {(() => {
+            const inventoryActive = ['/cars', '/hire', '/prestige'].some((h) => pathname.startsWith(h))
+            return (
+              <div className="relative group/inv">
+                <Link
+                  href="/cars"
+                  aria-haspopup="true"
+                  className={cn(
+                    'relative flex items-center gap-1.5 font-semibold text-sm uppercase tracking-wider transition-colors duration-300',
+                    inventoryActive ? 'text-[#C8952A]' : 'text-gray-200 hover:text-white'
+                  )}
+                >
+                  Inventory
+                  <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover/inv:rotate-180" />
+                  <span
+                    className={cn(
+                      'absolute -bottom-1.5 left-0 h-[2px] bg-[#C8952A] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
+                      inventoryActive ? 'w-full' : 'w-0 group-hover/inv:w-full'
+                    )}
+                  />
+                </Link>
+
+                {/* Panel — pt-4 bridges the gap so hover isn't lost in transit */}
+                <div className="absolute left-1/2 -translate-x-1/2 top-full pt-4 opacity-0 invisible translate-y-2 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/inv:opacity-100 group-hover/inv:visible group-hover/inv:translate-y-0 group-focus-within/inv:opacity-100 group-focus-within/inv:visible group-focus-within/inv:translate-y-0">
+                  <div className="w-[440px] bg-[#141312]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_24px_60px_rgba(0,0,0,0.55)] p-2.5">
+                    {inventoryMenu.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/[0.06] transition-colors group/item"
+                      >
+                        <span className="mt-0.5 w-10 h-10 shrink-0 rounded-lg bg-[#C8952A]/12 flex items-center justify-center group-hover/item:bg-[#C8952A]/20 transition-colors">
+                          <item.icon className="w-5 h-5 text-[#C8952A]" />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block text-white font-semibold text-[15px] group-hover/item:text-[#C8952A] transition-colors">{item.label}</span>
+                          <span className="block text-gray-400 text-xs mt-0.5 leading-relaxed">{item.desc}</span>
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
+
+          {topLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}

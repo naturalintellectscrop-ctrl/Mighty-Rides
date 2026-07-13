@@ -1,6 +1,7 @@
 import { db } from '@/lib/db'
 import { Navbar, Footer, WhatsAppButton } from '@/components/shared'
 import { CurrencyToggle } from '@/components/vehicles'
+import { TextReveal } from '@/components/motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { blurProps } from '@/lib/images'
@@ -201,9 +202,11 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
             <span className="text-sm text-[#C8952A] uppercase tracking-widest mb-4 block font-semibold">
               Our Collection
             </span>
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Luxury Cars for Sale
-            </h1>
+            <TextReveal
+              as="h1"
+              lines={['Luxury Cars', 'for Sale']}
+              className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.05]"
+            />
             <p className="text-lg text-gray-400 max-w-xl">
               Discover a curated selection of the world&apos;s most prestigious automotive masterpieces, meticulously maintained for the discerning driver.
             </p>

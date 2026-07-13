@@ -1,10 +1,11 @@
 'use client'
 
-import type { CSSProperties, ElementType } from 'react'
+import type { CSSProperties, ElementType, ReactNode } from 'react'
 
 interface TextRevealProps {
-  /** Each string becomes one masked line that rises into view. */
-  lines: string[]
+  /** Each entry becomes one masked line that rises into view. A line may be a
+   *  string or rich content (e.g. a coloured <span>) to preserve emphasis. */
+  lines: ReactNode[]
   /** Element to render as (h1, h2, p…). Defaults to span. */
   as?: ElementType
   className?: string
