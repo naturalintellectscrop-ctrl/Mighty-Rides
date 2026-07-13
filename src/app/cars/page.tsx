@@ -145,6 +145,12 @@ function InventoryCard({ vehicle, currency }: {
         <div className="absolute top-4 right-4 px-3 py-1.5 backdrop-blur-md rounded-full text-xs font-bold uppercase">
           <span className={statusStyles}>{statusLabel}</span>
         </div>
+
+        {/* Hover reveal — cinematic affordance */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        <div className="absolute bottom-4 left-4 flex items-center gap-2 text-white text-xs font-semibold uppercase tracking-[0.15em] opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-none">
+          View details <ArrowRight className="w-4 h-4" />
+        </div>
       </div>
 
       {/* Content */}

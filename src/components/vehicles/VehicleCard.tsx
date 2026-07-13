@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useCurrency } from '@/context'
 import { cn } from '@/lib/utils'
 import { blurProps } from '@/lib/images'
-import { Car, Plus } from 'lucide-react'
+import { Car, Plus, ArrowRight } from 'lucide-react'
 
 interface VehicleCardProps {
   vehicle: {
@@ -108,6 +108,13 @@ export function VehicleCard({ vehicle, hrefPrefix = '/cars', showDailyRate = fal
         
         {/* Hover gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-brand-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+        {/* Hover reveal affordance */}
+        {!isSold && (
+          <div className="absolute bottom-3 left-3 flex items-center gap-2 text-white text-[11px] font-semibold uppercase tracking-[0.15em] opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] pointer-events-none">
+            View details <ArrowRight className="w-3.5 h-3.5" />
+          </div>
+        )}
 
         {/* Status Badge - Per Visual Design Specification */}
         <div className="absolute top-3 right-3">
