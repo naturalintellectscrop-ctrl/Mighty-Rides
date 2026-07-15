@@ -667,6 +667,11 @@ label {
   html.js-motion .reveal-group.is-visible > *:nth-child(6) { transition-delay: 0.35s; }
   html.js-motion .reveal-group.is-visible > *:nth-child(7) { transition-delay: 0.42s; }
   html.js-motion .reveal-group.is-visible > *:nth-child(8) { transition-delay: 0.49s; }
+  html.js-motion .reveal-group.is-visible > *:nth-child(9) { transition-delay: 0.56s; }
+  html.js-motion .reveal-group.is-visible > *:nth-child(10){ transition-delay: 0.63s; }
+  html.js-motion .reveal-group.is-visible > *:nth-child(11){ transition-delay: 0.70s; }
+  html.js-motion .reveal-group.is-visible > *:nth-child(12){ transition-delay: 0.77s; }
+  /* Beyond 12 the cascade would drag; those simply arrive with the last wave. */
 }
 
 /* Slow, cinematic zoom for hero backdrops (Ken Burns). Paused for reduced motion. */

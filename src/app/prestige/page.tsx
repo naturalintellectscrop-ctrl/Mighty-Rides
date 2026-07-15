@@ -107,7 +107,7 @@ export default async function PrestigePage() {
       {/* Trust Signals */}
       <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 section-neutral">
         <div className="">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 reveal">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 reveal-group">
             {[
               { icon: Shield, title: 'Verified Provenance', subtitle: 'Complete history' },
               { icon: Award, title: 'Certified Quality', subtitle: '175-point inspection' },
@@ -142,7 +142,7 @@ export default async function PrestigePage() {
           </div>
 
           {vehicles.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal-group">
               {vehicles.map((vehicle) => {
                 const photos = vehicle.photos ? JSON.parse(vehicle.photos) : []
                 return (

@@ -43,7 +43,7 @@ export default async function SourcingPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto reveal">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto reveal-group">
             {[
               { step: 1, icon: Search, title: 'Tell Us What You Need', description: 'Fill out the form with your exact vehicle specifications' },
               { step: 2, icon: Globe, title: 'We Search Globally', description: 'Our network searches markets worldwide for your vehicle' },

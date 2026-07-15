@@ -74,7 +74,7 @@ export default async function AboutPage() {
       {/* By the Numbers */}
       <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 section-neutral">
         <div className="">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center reveal">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center reveal-group">
             <div>
               <p className="text-4xl font-bold text-[#8A6410]">2018</p>
               <p className="text-[#5C574F] text-sm mt-1">Founded</p>

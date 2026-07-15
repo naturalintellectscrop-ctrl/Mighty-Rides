@@ -138,7 +138,7 @@ export default async function ServicesPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 reveal">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 reveal-group">
             {services.map((service) => (
               <div
                 key={service.id}

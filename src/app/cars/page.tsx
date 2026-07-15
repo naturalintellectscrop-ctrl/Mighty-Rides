@@ -327,7 +327,7 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
 
       {/* Vehicle Grid */}
       <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 relative z-0 section-light">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal-group">
           {vehicles.map(vehicle => (
             <InventoryCard key={vehicle.id} vehicle={vehicle} currency={currency} />
           ))}

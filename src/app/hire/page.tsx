@@ -235,7 +235,7 @@ export default async function HirePage({ searchParams }: HirePageProps) {
             <div className="w-20 h-1 bg-[#C8952A] mx-auto" />
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-6 reveal">
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-4 md:gap-6 reveal-group">
             {/* All Vehicles Tile */}
             <Link
               href="/hire"
@@ -300,7 +300,7 @@ export default async function HirePage({ searchParams }: HirePageProps) {
           </div>
 
           {vehicles.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 reveal">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 reveal-group">
               {vehicles.map(vehicle => (
                 <RentalCard key={vehicle.id} vehicle={vehicle} currency={currency} />
               ))}
@@ -330,7 +330,7 @@ export default async function HirePage({ searchParams }: HirePageProps) {
               <h2 className="text-2xl md:text-3xl font-bold text-white">Simple 4-Step Process</h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 reveal">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 reveal-group">
               {[
                 { step: 1, title: 'Register', description: 'Create an account and verify your ID' },
                 { step: 2, title: 'Book & Pay Deposit', description: 'Select dates and pay 30% deposit online' },

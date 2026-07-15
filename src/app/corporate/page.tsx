@@ -130,7 +130,7 @@ export default async function CorporatePage() {
               Trusted By
             </span>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 reveal">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 reveal-group">
             {clientTypes.map((client) => (
               <div key={client.name} className="text-center p-4 bg-white rounded-lg border border-[#ECEAE3] shadow-[0_1px_2px_rgba(26,24,21,0.04)] hover:border-brand-gold/40 transition-colors">
                 <p className="text-[#1A1815] font-medium">{client.name}</p>
@@ -153,7 +153,7 @@ export default async function CorporatePage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal-group">
             {services.map((service) => (
               <div
                 key={service.title}

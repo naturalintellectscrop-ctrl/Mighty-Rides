@@ -47,22 +47,30 @@ const HERO_FOCUS = '58% center'
 // ============================================================================
 
 function Hero() {
-  // svh (not vh) on mobile: 100vh sits under the browser chrome and jumps as it
-  // hides. The shorter mobile hero also lets more of the 16:9 backdrop show
-  // instead of it being cropped to the middle third.
+  // Mobile vs desktop are genuinely different compositions, not a resize.
+  //
+  // A 16:9 photograph inside a portrait phone viewport can only ever show ~30%
+  // of its width under object-cover — the rest is cropped away, however the
+  // height or object-position is tuned. So on mobile the photo gets its own
+  // natural 16:9 band (the whole frame, zero crop) and the copy sits beneath it
+  // on the charcoal. On md+ the viewport is roughly 16:9 already, so the classic
+  // full-bleed cover works and the copy overlays it.
   return (
-    <section className="relative min-h-[88svh] md:min-h-screen w-full flex items-center overflow-hidden py-24 md:py-28">
-      <HeroMedia
-        image={HERO_IMG}
-        video={HERO_VIDEO}
-        alt="A black Range Rover overlooking the hills at sunset"
-        priority
-        mediaClassName="kenburns"
-        bloomAt={HERO_BLOOM_AT}
-        objectPosition={HERO_FOCUS}
-      />
+    <section className="relative w-full overflow-hidden pt-20 md:pt-0 md:min-h-screen md:flex md:items-center md:py-28">
+      {/* Backdrop: a natural-aspect band on mobile, full-bleed on md+ */}
+      <div className="relative w-full aspect-[16/9] md:absolute md:inset-0 md:aspect-auto md:h-full">
+        <HeroMedia
+          image={HERO_IMG}
+          video={HERO_VIDEO}
+          alt="A black Range Rover overlooking the hills at sunset"
+          priority
+          mediaClassName="kenburns"
+          bloomAt={HERO_BLOOM_AT}
+          objectPosition={HERO_FOCUS}
+        />
+      </div>
 
-      <div className={`relative z-10 w-full ${PAD} pt-20`}>
+      <div className={`relative z-10 w-full ${PAD} py-10 md:py-0 md:pt-20`}>
         <p className="reveal text-xs md:text-sm text-[#C8952A] uppercase tracking-[0.3em] mb-7 font-semibold">Kampala · Est. 2018</p>
         <TextReveal
           as="h1"
@@ -153,7 +161,7 @@ function EditorialIntro() {
         </p>
       </div>
 
-      <div className="mt-16 md:mt-20 border-t border-white/10 pt-10 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-8 reveal">
+      <div className="mt-16 md:mt-20 border-t border-white/10 pt-10 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-8 reveal-group">
         {assurances.map((a) => (
           <div key={a.k}>
             <p className="text-[#C8952A] text-xs uppercase tracking-[0.2em] mb-2 font-semibold">{a.k}</p>
