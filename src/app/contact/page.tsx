@@ -65,7 +65,7 @@ export default async function ContactPage() {
         <div className="">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
             {/* Contact Info */}
-            <div className="space-y-6 sm:space-y-8 reveal">
+            <div className="space-y-6 sm:space-y-8 reveal reveal-left">
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold text-[#1A1815] mb-4 sm:mb-6">
                   Contact Information
@@ -161,7 +161,7 @@ export default async function ContactPage() {
             </div>
 
             {/* Contact Form */}
-            <div className="reveal">
+            <div className="reveal reveal-right">
               <div className="bg-white border border-[#ECEAE3] rounded-xl p-6 sm:p-8 shadow-[0_10px_30px_rgba(26,24,21,0.07)]">
                 <h2 className="text-lg sm:text-xl font-bold text-[#1A1815] mb-4 sm:mb-6">
                   Send Us a Message

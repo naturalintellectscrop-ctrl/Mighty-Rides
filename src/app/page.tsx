@@ -251,14 +251,14 @@ function Collection({ vehicles }: { vehicles: FleetCard[] }) {
       ) : (
         <>
           {/* Lead vehicle — split showcase */}
-          <Link href={lead.href} className="group grid lg:grid-cols-2 gap-8 lg:gap-16 items-center reveal">
-            <div className="relative aspect-[16/11] overflow-hidden rounded-2xl bg-[#EFEDE7] shadow-[0_18px_44px_rgba(26,24,21,0.13)]">
+          <Link href={lead.href} className="group grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            <div className="reveal reveal-left relative aspect-[16/11] overflow-hidden rounded-2xl bg-[#EFEDE7] shadow-[0_18px_44px_rgba(26,24,21,0.13)]">
               {lead.image
                 ? <Image src={lead.image} alt={lead.name} fill {...blurProps} className="object-cover transition-transform duration-[900ms] group-hover:scale-105" sizes="(max-width:1024px) 100vw, 50vw" />
                 : <div className="w-full h-full flex items-center justify-center"><Car className="w-12 h-12 text-[#C9C4BA]" /></div>}
               <span className="absolute top-5 left-5 bg-black/70 backdrop-blur-md px-4 py-1.5 rounded-full text-[11px] font-bold text-[#C8952A] uppercase tracking-wider">{lead.status}</span>
             </div>
-            <div>
+            <div className="reveal reveal-right">
               <p className="text-xs text-[#8A6410] uppercase tracking-[0.3em] mb-4 font-semibold">Featured</p>
               <h3 className="text-3xl md:text-5xl font-bold text-[#1A1815] leading-tight mb-5">{lead.name}</h3>
               <div className="flex flex-wrap gap-2 mb-6">
@@ -344,7 +344,7 @@ function Services() {
   return (
     <section className={`w-full section-neutral ${PAD} py-20 md:py-32`} aria-labelledby="services-heading">
       <div className="grid lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-24">
-        <div className="reveal lg:sticky lg:top-28 lg:self-start">
+        <div className="reveal reveal-left lg:sticky lg:top-28 lg:self-start">
           <p className="text-xs text-[#8A6410] uppercase tracking-[0.3em] mb-6 font-semibold">What we do</p>
           <h2 id="services-heading" className="text-4xl md:text-6xl font-bold text-[#1A1815] leading-[1.05] tracking-tight">Six disciplines,<br />one standard.</h2>
           <p className="text-lg text-[#5C574F] mt-7 max-w-md leading-relaxed">
@@ -352,7 +352,7 @@ function Services() {
           </p>
         </div>
 
-        <div className="reveal">
+        <div className="reveal reveal-right">
           {services.map((s) => (
             <Link key={s.title} href={s.href} aria-label={s.title} className="group flex items-center gap-6 py-7 border-b border-[#DDD8CE] first:border-t">
               <s.icon className="w-6 h-6 text-[#8A6410] shrink-0" />
@@ -418,10 +418,10 @@ function Craftsmanship() {
   return (
     <section className={`ambient-top w-full bg-[#0A0A0A] ${PAD} py-20 md:py-32`}>
       <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-        <div className="relative aspect-[4/5] md:aspect-[4/4.4] overflow-hidden rounded-2xl bg-[#141210] reveal">
+        <div className="relative aspect-[4/5] md:aspect-[4/4.4] overflow-hidden rounded-2xl bg-[#141210] reveal reveal-left">
           <Image src={CRAFT_IMG} alt="Close attention to a luxury vehicle's detail" fill className="object-cover" sizes="(max-width:1024px) 100vw, 50vw" />
         </div>
-        <div className="reveal">
+        <div className="reveal reveal-right">
           <p className="text-xs text-[#C8952A] uppercase tracking-[0.3em] mb-6 font-semibold">Why Mighty Rides</p>
           <h2 className="text-4xl md:text-6xl font-bold text-white leading-[1.05] tracking-tight">A standard,<br />not a service.</h2>
           <p className="text-lg text-gray-400 mt-7 max-w-lg leading-relaxed">

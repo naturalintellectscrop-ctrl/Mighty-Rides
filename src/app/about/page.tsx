@@ -201,7 +201,7 @@ export default async function AboutPage() {
       <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 section-dark">
         <div className="">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="reveal">
+            <div className="reveal reveal-left">
               <p className="text-sm md:text-base text-[#C8952A] uppercase tracking-widest mb-2 font-semibold">
                 VISIT US
               </p>
@@ -233,7 +233,7 @@ export default async function AboutPage() {
             </div>
 
             {/* Map Embed */}
-            <div className="aspect-video bg-[#1B1A18] rounded-lg overflow-hidden reveal">
+            <div className="aspect-video bg-[#1B1A18] rounded-lg overflow-hidden reveal reveal-right">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.7573776545!2d32.5824!3d0.3142!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMMKwMTgnNTEuMiJOIDMywrAzNCc1Ni42IkU!5e0!3m2!1sen!2sug!4v1234567890"
                 title="Mighty Rides Location"

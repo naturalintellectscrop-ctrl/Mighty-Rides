@@ -634,10 +634,17 @@ label {
     transition-delay: var(--reveal-delay, 0ms);
     will-change: opacity, transform;
   }
-  html.js-motion .reveal.reveal-left  { transform: translateX(-36px); }
-  html.js-motion .reveal.reveal-right { transform: translateX(36px); }
   html.js-motion .reveal.reveal-scale { transform: scale(0.955); }
   html.js-motion .reveal.reveal-blur  { filter: blur(10px); transition: opacity 0.85s var(--ease-lux), transform 0.85s var(--ease-lux), filter 0.85s var(--ease-lux); }
+
+  /* Directional move-ins pair with side-by-side layouts: each column enters
+     from its own side, so the motion mirrors the composition. Scoped to lg+ —
+     below that the columns stack, the horizontal slide loses its meaning, and
+     these fall back to the default vertical rise above. */
+  @media (min-width: 1024px) {
+    html.js-motion .reveal.reveal-left  { transform: translateX(-42px); }
+    html.js-motion .reveal.reveal-right { transform: translateX(42px); }
+  }
 
   html.js-motion .reveal.is-visible {
     opacity: 1;

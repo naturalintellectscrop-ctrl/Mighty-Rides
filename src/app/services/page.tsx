@@ -193,7 +193,7 @@ export default async function ServicesPage() {
       <section className="w-full px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 py-16 md:py-24 section-light">
         <div className="">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="reveal">
+            <div className="reveal reveal-left">
               <span className="text-xs text-[#8A6410] uppercase tracking-widest mb-4 block font-semibold">
                 Why Choose Us
               </span>
@@ -237,7 +237,7 @@ export default async function ServicesPage() {
             </div>
 
             {/* Service Request Form */}
-            <div id="inquiry" className="card-light p-8 md:p-10 reveal">
+            <div id="inquiry" className="card-light p-8 md:p-10 reveal reveal-right">
               <h3 className="text-2xl font-bold text-[#1A1815] mb-8">
                 Request Service
               </h3>

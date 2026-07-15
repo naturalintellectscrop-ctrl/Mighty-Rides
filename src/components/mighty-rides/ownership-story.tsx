@@ -110,7 +110,7 @@ export function OwnershipStory() {
                   <Image src={c.img} alt="" fill sizes="100vw" {...blurProps} className="object-cover" />
                 </div>
 
-                <div className="reveal reveal-group">
+                <div className="reveal reveal-right reveal-group">
                   <p className="text-xs text-[#C8952A] uppercase tracking-[0.3em] mb-5 font-semibold">
                     {c.eyebrow}
                   </p>

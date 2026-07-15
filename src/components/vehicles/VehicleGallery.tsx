@@ -32,7 +32,7 @@ export function VehicleGallery({ photos, alt }: { photos: string[]; alt: string 
   }
 
   return (
-    <div className="reveal space-y-4">
+    <div className="reveal reveal-left space-y-4">
       {/* Hero frame */}
       <div
         className="group relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#141210] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]"
