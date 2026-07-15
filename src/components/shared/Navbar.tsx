@@ -82,7 +82,7 @@ export function Navbar() {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 h-20 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
         scrolled || mobileMenuOpen
-          ? 'bg-[#121414]/90 backdrop-blur-xl border-b border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.35)]'
+          ? 'nav-glass border-b border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.35)]'
           : 'bg-transparent border-b border-transparent',
       )}
     >
@@ -206,47 +206,38 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile Menu - Only renders on mobile/tablet */}
+      {/* Mobile Menu — sits BELOW the header bar (top-20) rather than over it.
+          Covering the header meant the logo and the hamburger ghosted through
+          the translucent panel, and the panel's own close button doubled up on
+          the header's X. Now the bar stays crisp and owns the close action. */}
       <div className={cn(
-        "md:hidden fixed inset-0 z-40 transition-all duration-500 ease-out",
-        mobileMenuOpen 
-          ? "opacity-100 visible" 
+        "md:hidden fixed inset-x-0 top-20 bottom-0 z-40 transition-all duration-500 ease-out",
+        mobileMenuOpen
+          ? "opacity-100 visible"
           : "opacity-0 invisible pointer-events-none"
       )}>
-        {/* Backdrop */}
+        {/* Backdrop — explicit glass (see .nav-glass), never a maybe-generated tint */}
         <div
-          className="absolute inset-0 bg-[#121414]/95 backdrop-blur-xl"
+          className="absolute inset-0 nav-glass"
           onClick={() => setMobileMenuOpen(false)}
         />
 
-        {/* Explicit close button (in addition to the header toggle) */}
-        <button
-          type="button"
-          onClick={() => setMobileMenuOpen(false)}
-          className="absolute top-5 right-5 z-10 text-white p-2 rounded-full hover:bg-white/10 transition-colors"
-          aria-label="Close menu"
-        >
-          <X className="w-7 h-7" />
-        </button>
-
         {/* Menu Content */}
-        <nav className="relative px-4 md:px-8 py-8 pt-24 max-h-[calc(100vh-80px)] overflow-y-auto">
-          <div className="space-y-1">
+        <nav className="relative px-4 md:px-8 py-8 h-full overflow-y-auto">
+          <div className="space-y-2">
             {navLinks.map((link, index) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
-                  'block text-lg font-semibold py-4 px-4 border-l-2 transition-all duration-300',
-                  pathname === link.href 
-                    ? 'text-[#C8952A] border-[#C8952A] bg-[#C8952A]/10' 
-                    : 'text-white border-transparent hover:border-[#C8952A]/50 hover:bg-[#1A1A1A]'
+                  'nav-item block text-lg font-semibold py-4 px-5 rounded-xl',
+                  pathname === link.href ? 'nav-item-active text-[#F0C060]' : 'text-white'
                 )}
-                style={{ 
+                style={{
                   transitionDelay: mobileMenuOpen ? `${index * 50}ms` : '0ms',
                   transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-20px)',
-                  opacity: mobileMenuOpen ? 1 : 0
+                  opacity: mobileMenuOpen ? 1 : 0,
                 }}
               >
                 {link.label}

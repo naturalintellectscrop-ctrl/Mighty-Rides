@@ -678,6 +678,39 @@ label {
   .kenburns { animation: kenburns 18s ease-out both; }
 }
 
+/* ----------------------------------------------------------------------------
+   MOBILE NAV GLASS
+   The open mobile menu floats over whatever is behind it — often the bright
+   sunset hero — so its tint is defined explicitly here rather than via an
+   arbitrary `bg-[...]/xx` utility, which must never silently fail to generate
+   for something this legibility-critical.
+   At 86% over a bright hero, white text still clears ~6:1 (WCAG AA), while the
+   blur + saturation keep the translucent glass read.
+   ---------------------------------------------------------------------------- */
+.nav-glass {
+  background: linear-gradient(180deg, rgba(16, 15, 14, 0.88), rgba(12, 11, 10, 0.86));
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  backdrop-filter: blur(28px) saturate(150%);
+}
+/* Fallback: if the browser can't blur, go opaque rather than leave text floating
+   over a bright, unblurred photo. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .nav-glass { background: #100F0E; }
+}
+
+/* Each menu row gets its own faint glass surface, so items read as discrete
+   elements instead of text blending into the panel. */
+.nav-item {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s var(--ease-lux);
+}
+.nav-item:hover { background: rgba(255, 255, 255, 0.09); border-color: rgba(200, 149, 42, 0.45); }
+.nav-item-active {
+  background: rgba(200, 149, 42, 0.16);
+  border-color: rgba(200, 149, 42, 0.55);
+}
+
 /* Hero ambient sun-bloom — a slow warm light that breathes and drifts across
    the still. Together with the Ken Burns push and scroll parallax this makes a
    static hero read as "living" footage, with none of a video's weight. */

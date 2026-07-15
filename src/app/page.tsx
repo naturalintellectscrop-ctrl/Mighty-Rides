@@ -36,14 +36,22 @@ const HERO_VIDEO: string | undefined = '/hero.mp4'
 // Where the light source sits in the hero photo, as `x% y%`. The ambient bloom
 // drifts around this point — set it to the sun/key light of your image.
 const HERO_BLOOM_AT = '9% 31%'
+// object-position for the backdrop. A 16:9 photo in a portrait phone viewport is
+// cropped to roughly its middle third (the full height shows; only width is
+// cut), so bias the crop toward the subject — here, the vehicle sits right of
+// centre. Barely matters on desktop, where the viewport aspect ~matches 16:9.
+const HERO_FOCUS = '58% center'
 
 // ============================================================================
 // HERO — cinematic full-bleed
 // ============================================================================
 
 function Hero() {
+  // svh (not vh) on mobile: 100vh sits under the browser chrome and jumps as it
+  // hides. The shorter mobile hero also lets more of the 16:9 backdrop show
+  // instead of it being cropped to the middle third.
   return (
-    <section className="relative min-h-screen w-full flex items-center overflow-hidden py-32 md:py-28">
+    <section className="relative min-h-[88svh] md:min-h-screen w-full flex items-center overflow-hidden py-24 md:py-28">
       <HeroMedia
         image={HERO_IMG}
         video={HERO_VIDEO}
@@ -51,6 +59,7 @@ function Hero() {
         priority
         mediaClassName="kenburns"
         bloomAt={HERO_BLOOM_AT}
+        objectPosition={HERO_FOCUS}
       />
 
       <div className={`relative z-10 w-full ${PAD} pt-20`}>
