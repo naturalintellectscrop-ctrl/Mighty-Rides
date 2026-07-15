@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useSession, signIn } from 'next-auth/react'
 import { useState, useEffect } from 'react'
-import { Menu, X, User, ChevronDown, Car, Key, Crown } from 'lucide-react'
+import { Menu, X, User, ChevronDown, Car, Key, Crown, Camera } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 // Desktop "Inventory" mega-dropdown destinations.
@@ -13,6 +13,7 @@ const inventoryMenu = [
   { href: '/cars', label: 'Cars for Sale', desc: 'Premium vehicles, verified & documented', icon: Car },
   { href: '/hire', label: 'Cars for Hire', desc: 'Weddings, arrivals & executive travel', icon: Key },
   { href: '/prestige', label: 'The Prestige Collection', desc: 'Rare & exceptional — by appointment', icon: Crown },
+  { href: '/gallery', label: 'Gallery', desc: 'Every angle of the collection, up close', icon: Camera },
 ]
 // Desktop top-level links shown alongside the Inventory dropdown.
 const topLinks = [
@@ -24,6 +25,7 @@ const navLinks = [
   { href: '/cars', label: 'Cars for Sale' },
   { href: '/hire', label: 'Cars for Hire' },
   { href: '/prestige', label: 'Prestige' },
+  { href: '/gallery', label: 'Gallery' },
   { href: '/services', label: 'Services' },
   { href: '/about', label: 'Heritage' },
 ]
@@ -104,7 +106,7 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           {/* Inventory mega-dropdown (CSS hover + focus-within; no JS timing) */}
           {(() => {
-            const inventoryActive = ['/cars', '/hire', '/prestige'].some((h) => pathname.startsWith(h))
+            const inventoryActive = ['/cars', '/hire', '/prestige', '/gallery'].some((h) => pathname.startsWith(h))
             return (
               <div className="relative group/inv">
                 <Link

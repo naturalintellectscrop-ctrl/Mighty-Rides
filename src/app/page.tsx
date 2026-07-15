@@ -22,9 +22,18 @@ const HERO_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuCdTMemLRrV
 const CTA_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDDAik8snEDPDURyMU2fIsYO5mCJ7Bm0HrmXtayEjjcwp-bmZtP9bUQ0FL5Tli094AGPxpj686I_vEr7JxmPg8wWgfsH55lYhuG3Zf316EJsTDpQ3D28e2eE__bmtYDP1hKjFZPOARqgYRmXu6GaMt--PujbpdSQIM9JDETU_bm5ZNZNUQ0fFlNXMvZ79IoPsOtt5RlSi6ylDsOqWWwfTlOaNeOuFtXsFEmb9fRg4ApexTDgnZvsXpqGYVDP60oVXbuyNE-zxXl-A8'
 const BAND_IMG = 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=1900&q=80'
 const CRAFT_IMG = 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1400&q=80'
-// Cinematic hero clip — drop an .mp4 in /public and set this (e.g. '/hero.mp4').
-// Until then the high-res still below is used as a graceful fallback/poster.
+// ── Hero art direction ──────────────────────────────────────────────────────
+// To use your own photograph: save it to `public/hero.jpg` and change HERO_IMG
+// to '/hero.jpg'. Nothing else needs to change — the Ken Burns push, sun bloom
+// and scroll parallax all adapt to whatever image is supplied.
+//
+// To use real footage instead: drop an .mp4 in /public and set HERO_VIDEO to
+// its path (e.g. '/hero.mp4'). The still automatically becomes its poster, so
+// the hero is never blank while the clip buffers.
 const HERO_VIDEO: string | undefined = undefined
+// Where the light source sits in the hero photo, as `x% y%`. The ambient bloom
+// drifts around this point — set it to the sun/key light of your image.
+const HERO_BLOOM_AT = '20% 35%'
 
 // ============================================================================
 // HERO — cinematic full-bleed
@@ -39,6 +48,7 @@ function Hero() {
         alt="A luxury vehicle in a Mighty Rides showroom"
         priority
         mediaClassName="kenburns"
+        bloomAt={HERO_BLOOM_AT}
       />
 
       <div className={`relative z-10 w-full ${PAD} pt-20`}>
