@@ -18,7 +18,7 @@ export const dynamic = 'force-dynamic'
 const PAD = 'px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28'
 
 // Photography (placeholders — swap for real Mighty Rides photography).
-const HERO_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuCdTMemLRrVabyjdaNkQ3eKs7D2lhbijccitbB8uaR_GGIxo4-ES3iZD7yzxoBzZzV59N9za37N_kt6xdwTzXsayy-Dvie16JEbeKplzGs1IoaQdQqgiL-OMXFkCoBBAr5irWZlMNmD0uHEtZ0NjOWzyzXGfFiU0C4snXoGBwMHqIihLRB4lcWqvKd7LXjuVVsDpCozDfkqCvL6t5tK9uzVT_NLmo_Lmv3LC_YN_A6Ey0zv93fyd6D_-0UFQNy6x6a7lc-oE9Z3WXU'
+const HERO_IMG = '/hero_image.jpeg'
 const CTA_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuDDAik8snEDPDURyMU2fIsYO5mCJ7Bm0HrmXtayEjjcwp-bmZtP9bUQ0FL5Tli094AGPxpj686I_vEr7JxmPg8wWgfsH55lYhuG3Zf316EJsTDpQ3D28e2eE__bmtYDP1hKjFZPOARqgYRmXu6GaMt--PujbpdSQIM9JDETU_bm5ZNZNUQ0fFlNXMvZ79IoPsOtt5RlSi6ylDsOqWWwfTlOaNeOuFtXsFEmb9fRg4ApexTDgnZvsXpqGYVDP60oVXbuyNE-zxXl-A8'
 const BAND_IMG = 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=1900&q=80'
 const CRAFT_IMG = 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1400&q=80'
@@ -30,10 +30,12 @@ const CRAFT_IMG = 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?
 // To use real footage instead: drop an .mp4 in /public and set HERO_VIDEO to
 // its path (e.g. '/hero.mp4'). The still automatically becomes its poster, so
 // the hero is never blank while the clip buffers.
-const HERO_VIDEO: string | undefined = undefined
+// Ambient hero clip — a seamless 12s Ken Burns loop rendered from HERO_IMG.
+// Regenerate after swapping the photo: `node scripts/make-hero-clip.mjs`
+const HERO_VIDEO: string | undefined = '/hero.mp4'
 // Where the light source sits in the hero photo, as `x% y%`. The ambient bloom
 // drifts around this point — set it to the sun/key light of your image.
-const HERO_BLOOM_AT = '20% 35%'
+const HERO_BLOOM_AT = '9% 31%'
 
 // ============================================================================
 // HERO — cinematic full-bleed
@@ -45,7 +47,7 @@ function Hero() {
       <HeroMedia
         image={HERO_IMG}
         video={HERO_VIDEO}
-        alt="A luxury vehicle in a Mighty Rides showroom"
+        alt="A black Range Rover overlooking the hills at sunset"
         priority
         mediaClassName="kenburns"
         bloomAt={HERO_BLOOM_AT}

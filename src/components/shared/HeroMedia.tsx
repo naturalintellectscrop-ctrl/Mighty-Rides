@@ -12,7 +12,8 @@ interface HeroMediaProps {
   video?: string
   alt: string
   priority?: boolean
-  /** Extra classes for the media element (e.g. `kenburns` for the still). */
+  /** Extra classes for the STILL only (e.g. `kenburns`). Never applied to the
+   *  video — a clip carries its own motion, so a CSS push would double up. */
   mediaClassName?: string
   /** Overlay gradient for text legibility. Defaults to the shared hero-gradient. */
   overlayClassName?: string
@@ -52,17 +53,44 @@ export function HeroMedia({
   const videoRef = useRef<HTMLVideoElement>(null)
   const layerRef = useRef<HTMLDivElement>(null)
 
+  // Play only while the hero is actually on screen. Decoding video that nobody
+  // can see burns battery and main-thread time for nothing, so we pause the
+  // moment it scrolls away and resume when it returns. Reduced-motion keeps it
+  // paused on the poster frame permanently.
   useEffect(() => {
     const v = videoRef.current
     if (!v) return
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduce) {
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       v.removeAttribute('autoplay')
       v.pause()
       return
     }
-    // Muted autoplay is permitted; ignore the promise rejection on strict browsers.
-    v.play().catch(() => {})
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Muted autoplay is permitted; ignore rejection on strict browsers.
+          v.play().catch(() => {})
+        } else {
+          v.pause()
+        }
+      },
+      { threshold: 0.01 },
+    )
+    io.observe(v)
+
+    // Browsers already pause hidden tabs, but be explicit so we never resume
+    // a clip in a background tab when the observer re-fires.
+    const onVisibility = () => {
+      if (document.hidden) v.pause()
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+
+    return () => {
+      io.disconnect()
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
   }, [])
 
   // Scroll parallax: the backdrop drifts slower than the page, adding depth.
@@ -98,7 +126,7 @@ export function HeroMedia({
         {video ? (
           <video
             ref={videoRef}
-            className={cn('h-full w-full object-cover', mediaClassName)}
+            className="h-full w-full object-cover"
             poster={image}
             muted
             loop
