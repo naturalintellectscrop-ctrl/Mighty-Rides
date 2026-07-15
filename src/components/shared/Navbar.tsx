@@ -78,6 +78,7 @@ export function Navbar() {
   }, [mobileMenuOpen])
 
   return (
+    <>
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 h-20 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
@@ -205,11 +206,15 @@ export function Navbar() {
           </button>
         </div>
       </nav>
+    </header>
 
-      {/* Mobile Menu — sits BELOW the header bar (top-20) rather than over it.
-          Covering the header meant the logo and the hamburger ghosted through
-          the translucent panel, and the panel's own close button doubled up on
-          the header's X. Now the bar stays crisp and owns the close action. */}
+      {/* Mobile Menu — deliberately a SIBLING of <header>, not a child.
+          The header carries backdrop-filter (.nav-glass), and backdrop-filter on
+          an ancestor makes it the containing block for position:fixed children —
+          which collapsed this panel to the header's 80px box. Outside the header
+          it resolves against the viewport again and fills the screen.
+          It sits below the bar (top-20) so the logo/X stay crisp rather than
+          ghosting through the glass; the header's X owns the close action. */}
       <div className={cn(
         "md:hidden fixed inset-x-0 top-20 bottom-0 z-40 transition-all duration-500 ease-out",
         mobileMenuOpen
@@ -268,6 +273,6 @@ export function Navbar() {
           </div>
         </nav>
       </div>
-    </header>
+    </>
   )
 }
