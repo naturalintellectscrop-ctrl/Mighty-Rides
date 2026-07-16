@@ -39,13 +39,15 @@ const REDUCED = '(prefers-reduced-motion: reduce)'
  * on a Ken Burns push, a warm bloom at the photo's light source, and gentle
  * scroll parallax.
  *
- * IMPORTANT — mobile. A 16:9 backdrop inside a portrait phone viewport is
- * already cropped to roughly its middle third by object-cover. Anything that
- * scales the media further compounds that crop, so on mobile we deliberately
- * drop all three: no clip (also saving its download on cellular), no Ken Burns,
- * and no parallax over-sizing. The still renders at its natural cover scale and
- * `objectPosition` keeps the subject in frame. Everything also respects
- * prefers-reduced-motion.
+ * The clip plays on mobile too — the mobile hero gives this backdrop its own
+ * 16:9 band, which matches the clip's aspect exactly, so nothing is cropped.
+ * (Do NOT place this full-bleed behind a portrait viewport: object-cover would
+ * then show only ~30% of a 16:9 frame's width.) Parallax stays desktop-only
+ * because its layer over-sizing exists purely to give the full-bleed backdrop
+ * drift headroom.
+ *
+ * Everything honours prefers-reduced-motion, and the clip is withheld when the
+ * browser reports Save-Data.
  */
 export function HeroMedia({
   image,
@@ -62,9 +64,12 @@ export function HeroMedia({
   const videoRef = useRef<HTMLVideoElement>(null)
   const layerRef = useRef<HTMLDivElement>(null)
 
-  // 'unknown' until mounted so SSR renders the still (also the best LCP element).
-  const [isDesktop, setIsDesktop] = useState<boolean | null>(null)
+  // false until mounted so SSR ships the still — it's the better LCP element and
+  // the clip then takes over seamlessly (the still is its poster).
+  const [mounted, setMounted] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
   const [reduced, setReduced] = useState(false)
+  const [saveData, setSaveData] = useState(false)
 
   useEffect(() => {
     const dq = window.matchMedia(DESKTOP)
@@ -74,6 +79,10 @@ export function HeroMedia({
       setReduced(rq.matches)
     }
     sync()
+    // Don't push a 1MB clip at someone who asked their browser to save data.
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+    setSaveData(Boolean(conn?.saveData))
+    setMounted(true)
     dq.addEventListener('change', sync)
     rq.addEventListener('change', sync)
     return () => {
@@ -82,8 +91,13 @@ export function HeroMedia({
     }
   }, [])
 
-  const showVideo = Boolean(video) && isDesktop === true && !reduced
-  const parallaxOn = parallax && isDesktop === true && !reduced
+  // The clip plays on mobile too: the mobile hero gives the backdrop its own
+  // 16:9 band, and the clip is 16:9, so it fits exactly with no crop. (The
+  // earlier reason for withholding it — the portrait full-bleed crop — is gone.)
+  const showVideo = Boolean(video) && mounted && !reduced && !saveData
+  // Parallax stays desktop-only: it's a property of the full-bleed backdrop, and
+  // its layer over-sizing would only add zoom to the in-flow mobile band.
+  const parallaxOn = parallax && isDesktop && !reduced
 
   // Play only while the hero is on screen — decoding video nobody can see burns
   // battery and main-thread time. Also pauses when the tab is hidden.
@@ -167,8 +181,8 @@ export function HeroMedia({
             priority={priority}
             sizes="100vw"
             style={objectPosition ? { objectPosition } : undefined}
-            // Ken Burns only where it doesn't worsen the mobile crop.
-            className={cn('object-cover', isDesktop === true && !reduced && mediaClassName)}
+            // Safe on mobile now that the backdrop has its own 16:9 band.
+            className={cn('object-cover', !reduced && mediaClassName)}
           />
         )}
       </div>
